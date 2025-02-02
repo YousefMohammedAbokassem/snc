@@ -50,7 +50,7 @@ export default function ThirdStep({
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder={t("password")}
+          placeholder={t("newPassword")}
           className="border-[#CDCDCD] border-[1px] text-black dark:text-white rounded-md bg-transparent px-3 py-5 w-full focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]"
         />
         <button
@@ -80,7 +80,7 @@ export default function ThirdStep({
           name="confirm_password"
           value={password_confirmation}
           onChange={(e) => setPassword_confirmation(e.target.value)}
-          placeholder={t("confirm_password")}
+          placeholder={t("newConfirmPassword")}
           className="border-[#CDCDCD] border-[1px] text-black dark:text-white rounded-md bg-transparent px-3 py-5 w-full focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]"
         />
         <button

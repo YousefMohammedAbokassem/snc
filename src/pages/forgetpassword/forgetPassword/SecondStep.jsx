@@ -9,10 +9,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import OtpInput from "react-otp-input";
 import { useTranslation } from "react-i18next";
-export default function SecondStep({ lng,otp,setOtp }) {
+export default function SecondStep({ lng, otp, setOtp, errors }) {
   const { t } = useTranslation(lng);
-
-
   return (
     <div className="">
       <OtpInput
@@ -38,7 +36,11 @@ export default function SecondStep({ lng,otp,setOtp }) {
           marginTop: "100px",
         }}
       />
-
+      {errors?.code && (
+        <p className="mt-1 block text-red-500 font-bold">
+          {t("pleaseTryAgain")}
+        </p>
+      )}
       <p className="text-[#1D1D1D] dark:text-[#fff] mt-10">
         {t("youDidNot")}{" "}
         <u className="text-[#275963] dark:text-[#E1B145] cursor-pointer">

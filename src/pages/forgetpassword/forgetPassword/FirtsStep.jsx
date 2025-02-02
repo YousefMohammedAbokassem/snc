@@ -11,26 +11,13 @@ import { useTranslation } from "react-i18next";
 
 export default function FirstStep({
   lng,
-  card_number,
-  setCard_number,
-  country_id,
-  setCountry_id,
-  password,
-  password_confirmation,
-  setPassword,
-  setPassword_confirmation,
   isChecked,
   setIsChecked,
-  showIsChecked,
-  setShowIsChecked,
-  address,
-  setAddress,
   setCountry_code,
   country_code,
   phone_number,
   setPhone_number,
   errors,
-  setErrors,
 }) {
   const { t } = useTranslation(lng);
   const [selectedDate, setSelectedDate] = useState(null);

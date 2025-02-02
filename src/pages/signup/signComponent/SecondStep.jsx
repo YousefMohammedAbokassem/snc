@@ -31,12 +31,15 @@ export default function SecondStep({
   setPhone_number,
   errors,
   setErrors,
+  countries,
+  setPhoneLoading,
+  phoneLoading,
 }) {
   const { t } = useTranslation(lng);
   const [selectedDate, setSelectedDate] = useState(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-
+  console.log(countries);
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
@@ -78,39 +81,53 @@ export default function SecondStep({
       </div>
 
       {/* رقم الهاتف */}
-      <div className="flex flex-col">
-        <PhoneInput
-          country={"SY"}
-          inputProps={{
-            name: "phone_number",
-            required: true,
-            placeholder: t("phone_number"),
-            className:
-              "border-[#CDCDCD] border-[1px] text-black dark:text-white rounded-md bg-transparent px-16 py-5 w-full focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]",
-          }}
-          containerClass={`w-full ${
-            localStorage.getItem("i18next") === "ar"
-              ? "phoneDirAr"
-              : "phoneDirEn"
-          }`}
-          buttonStyle={{
-            background: "transparent",
-          }}
-          dropdownStyle={{
-            zIndex: 1000,
-          }}
-          value={`${phone_number}`}
-          onChange={(value, country, e, formattedValue) => {
-            setPhone_number(value);
-            setCountry_code(country.dialCode);
-          }}
-        />
-        {errors?.phone_number && (
-          <p className="mt-1 block text-red-500 font-bold">
-            {errors.phone_number[0]}
-          </p>
-        )}
-      </div>
+      {phoneLoading ? (
+        <div className="flex flex-col">
+          <PhoneInput
+            country={"in"}
+            onlyCountries={countries}
+            inputProps={{
+              name: "phone_number",
+              required: true,
+              placeholder: t("phone_number"),
+              className:
+                "border-[#CDCDCD] border-[1px] text-black dark:text-white rounded-md bg-transparent px-16 py-5 w-full focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]",
+            }}
+            containerClass={`w-full ${
+              localStorage.getItem("i18next") === "ar"
+                ? "phoneDirAr"
+                : "phoneDirEn"
+            }`}
+            buttonStyle={{
+              background: "transparent",
+            }}
+            dropdownStyle={{
+              zIndex: 1000,
+            }}
+            value={`${phone_number}`}
+            onChange={(value, country, e, formattedValue) => {
+              setPhone_number(value);
+              setCountry_code(country.dialCode);
+            }}
+          />
+          {errors?.phone_number && (
+            <p className="mt-1 block text-red-500 font-bold">
+              {errors.phone_number[0]}
+            </p>
+          )}
+        </div>
+      ) : (
+        <div className="flex flex-col">
+          <div className="animate-pulse flex space-x-4">
+            <div className="flex flex-col space-y-2 w-full">
+              <div className="h-14 w-full bg-gray-300 rounded-md"></div>{" "}
+              {/* Placeholder for PhoneInput */}
+              {/* <div className="h-8 w-32 bg-gray-300 rounded-md"></div>{" "} */}
+              {/* Placeholder for error message */}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* كلمة المرور */}
       <div className="relative flex flex-col">

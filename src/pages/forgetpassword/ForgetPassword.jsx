@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment/moment";
 import CryptoJS from "crypto-js";
+import { FaSpinner } from "react-icons/fa";
 const people = [
   {
     id: 1,
@@ -149,62 +150,63 @@ export default function Page() {
     return true;
   };
   // sing up logic
-  const signUp = async (e) => {
-    e.preventDefault();
-    setProgressLog(true);
-
-    const formData = new FormData(); // استخدام FormData لإرسال البيانات
-    formData.append("first_name", first_name);
-    formData.append("last_name", last_name);
-    formData.append("display_name", display_name);
-    formData.append("phone_number", phone_number.slice(country_code.length));
-
-    formData.append("password", password);
-    formData.append("password_confirmation", password_confirmation);
-    formData.append("national_id", national_id);
-    formData.append("gender", gender.gender === "male" ? "m" : "f");
-    formData.append("place_of_birth", place_of_birth);
-    formData.append("country_id", 1);
-    formData.append("birthday", moment(birthday).format("YYYY-MM-DD"));
-    // const aa = moment(birthday).format('YYYY-MM-DD')
-    const secretKey = "N2PRVPj2dQoK60vBxURUXZ/OH9UWFQkurx6ySVGEuWo=";
-
-    const ciphertext = CryptoJS.AES.encrypt(card_number, secretKey).toString();
-    // console.log(card_number);
-    console.log(ciphertext);
-    const iv = CryptoJS.enc.Hex.parse("00000000000000000000000000000000"); // IV ثابت
-    const key = CryptoJS.enc.Base64.parse(secretKey);
-    const encrypted = CryptoJS.AES.encrypt(card_number, key, {
-      iv: iv,
-      mode: CryptoJS.mode.CBC, // وضع التشفير
-      padding: CryptoJS.pad.Pkcs7, // padding
-    }).toString();
-    console.log(encrypted);
-
-    formData.append("card_number", encrypted);
-    formData.append("country_code", country_code);
-    formData.append("address", address);
-    if (isChecked === false) {
-      setShowIsChecked(true);
-      return null;
-    } else {
-    }
+  // sing up logic
+  const [codeLoading, setCodeLoading] = useState(false);
+  const sendCode = async () => {
+    setCodeLoading(true);
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}register`,
-        formData
-      );
-      console.log(res.data);
-      setProgressLog(false);
-    } catch (error) {
-      setProgressLog(false);
-      setErrors(error?.response?.data.errors);
-      console.log(error);
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}send_code`);
+      setCodeLoading(false);
+      setErrors({});
       goToNextStep();
+    } catch (error) {
+      setErrors(error?.response?.data?.errors || {}); // تخزين الأخطاء
+      setCodeLoading(false);
     }
   };
-  // sing up logic
-
+  const [verifyLoading, setVerifyLoading] = useState(false);
+  const verifyCode = async () => {
+    setVerifyLoading(true);
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}verify_code`,
+        {
+          // phone_number,
+          // code,
+          // is_active,
+        }
+      );
+      setVerifyLoading(false);
+      setErrors({});
+      goToNextStep();
+    } catch (error) {
+      console.log(error);
+      setErrors(error?.response?.data?.errors || {}); // تخزين الأخطاء
+      setVerifyLoading(false);
+    }
+  };
+  // new password
+  const [newPasswordLoading, setNewPasswordLoading] = useState(false);
+  const newPassword = async () => {
+    setNewPasswordLoading(true);
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}reset_password`,
+        {
+          // phone_number,
+          // code,
+          // is_active,
+        }
+      );
+      setNewPasswordLoading(false);
+      setErrors({});
+      goToNextStep();
+    } catch (error) {
+      console.log(error);
+      setErrors(error?.response?.data?.errors || {}); // تخزين الأخطاء
+      setNewPasswordLoading(false);
+    }
+  };
   return (
     <div className="signUp flex items-center ">
       <div className="FormAccount w-full sm:w-[60%] md:w-[50%] px-5 md:px-10">
@@ -223,7 +225,7 @@ export default function Page() {
           </div>
           <form className="createAn">
             <h1 className="text-[#1D1D1D] dark:text-[#fff] flex items-center justify-center text-2xl font-bold mt-12 mb-4">
-              {t("createAnAcoount")}
+              {t("didYouForget")}
             </h1>
           </form>
           <Stepper
@@ -260,6 +262,7 @@ export default function Page() {
               lng={localStorage.getItem("i18next")}
               otp={otp}
               setOtp={setOtp}
+              errors={errors}
             />
           )}
           {currentStep === 2 && (
@@ -299,18 +302,38 @@ export default function Page() {
                  font-bold`}
               onClick={
                 currentStep === 0
-                  ? goToNextStep
+                  ? sendCode
                   : currentStep === 1
-                  ? (e) => signUp(e)
-                  : ""
+                  ? verifyCode
+                  : newPassword
               }
               // disabled={currentStep === 2}
             >
-              {currentStep === 0
-                ? t("send")
-                : currentStep === 1
-                ? t("verification")
-                : t("save")}
+              {currentStep === 0 ? (
+                codeLoading ? (
+                  <p className="flex justify-center">
+                    <FaSpinner className="animate-spin" />
+                  </p>
+                ) : (
+                  t("send")
+                )
+              ) : currentStep === 1 ? (
+                // t("verification")
+                verifyLoading ? (
+                  <p className="flex justify-center">
+                    <FaSpinner className="animate-spin" />
+                  </p>
+                ) : (
+                  t("verification")
+                )
+              ) : // t("save")
+              newPasswordLoading ? (
+                <p className="flex justify-center">
+                  <FaSpinner className="animate-spin" />
+                </p>
+              ) : (
+                t("save")
+              )}
             </button>
           </div>
         </div>

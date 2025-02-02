@@ -31,5 +31,8 @@
   "youHaveTo": "يجب عليك الموافقة على سياسة الموقع أولا",
   "send": "إرسال",
   "verification": "تأكيد",
-  "save": "حفظ"
+  "save": "حفظ",
+  "pleaseTryAgain":"الرجاء المحاولة مرة أخرى",
+  "newConfirmPassword":"تأكيد كلمة المرور الجديدة",
+  "newPassword":"كلمة المرور الجديدة"
 }

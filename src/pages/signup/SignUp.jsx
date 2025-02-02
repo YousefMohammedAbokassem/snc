@@ -6,10 +6,12 @@ import Stepper from "./signComponent/Stepper";
 import { useState, useEffect } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment/moment";
 import CryptoJS from "crypto-js";
+import { useDispatch } from "react-redux";
+import { logIn } from "../../store/slices/auth/authSlice";
 const people = [
   {
     id: 1,
@@ -23,6 +25,8 @@ const people = [
 
 export default function Page() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(0);
   const [selected, setSelected] = useState(people[0]);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -44,6 +48,8 @@ export default function Page() {
   const [progressLog, setProgressLog] = useState(false);
   const [address, setAddress] = useState("");
   const [country_code, setCountry_code] = useState("963");
+  const [countries, setCountries] = useState(["963"]);
+  const [countrySend, setCountrySend] = useState("");
   const [errors, setErrors] = useState({
     address,
     birthday,
@@ -82,6 +88,7 @@ export default function Page() {
       setOtp(data.otp || "");
       setCurrentStep(data.currentStep || 0);
     }
+    fetchCountries();
   }, []);
 
   // حفظ البيانات في sessionStorage عند تغيير أي من الحقول
@@ -149,6 +156,26 @@ export default function Page() {
     return true;
   };
   // sing up logic
+  const [phoneLoading, setPhoneLoading] = useState(false);
+  const fetchCountries = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}countries`);
+      setPhoneLoading(false);
+      console.log(res.data.data);
+      setCountries([""]);
+      res.data.data.map((ele) => {
+        console.log(ele);
+        setCountries(res.data.data.map((ele) => ele.iso.toLowerCase()));
+        setCountrySend(res.data.data.map((ele) => ele));
+        setCountry_code(res.data.data[0].code);
+        console.log(countrySend);
+      });
+      setPhoneLoading(true);
+    } catch (error) {
+      setPhoneLoading(true);
+      console.log(error);
+    }
+  };
   const signUp = async (e) => {
     e.preventDefault();
     setProgressLog(true);
@@ -164,24 +191,30 @@ export default function Page() {
     formData.append("national_id", national_id);
     formData.append("gender", gender.gender === "male" ? "m" : "f");
     formData.append("place_of_birth", place_of_birth);
-    formData.append("country_id", 1);
+    const idCountry = countrySend.filter((ele) => {
+      if (parseInt(ele.code) == parseInt(country_code)) {
+        console.log(ele.id);
+        return ele.id;
+      }
+    });
+    formData.append("country_id", idCountry[0]);
     formData.append("birthday", moment(birthday).format("YYYY-MM-DD"));
-    // const aa = moment(birthday).format('YYYY-MM-DD')
-    const secretKey = "N2PRVPj2dQoK60vBxURUXZ/OH9UWFQkurx6ySVGEuWo=";
+    // // const aa = moment(birthday).format('YYYY-MM-DD')
+    // const secretKey = "N2PRVPj2dQoK60vBxURUXZ/OH9UWFQkurx6ySVGEuWo=";
 
-    const ciphertext = CryptoJS.AES.encrypt(card_number, secretKey).toString();
-    // console.log(card_number);
-    console.log(ciphertext);
-    const iv = CryptoJS.enc.Hex.parse("00000000000000000000000000000000"); // IV ثابت
-    const key = CryptoJS.enc.Base64.parse(secretKey);
-    const encrypted = CryptoJS.AES.encrypt(card_number, key, {
-      iv: iv,
-      mode: CryptoJS.mode.CBC, // وضع التشفير
-      padding: CryptoJS.pad.Pkcs7, // padding
-    }).toString();
-    console.log(encrypted);
+    // const ciphertext = CryptoJS.AES.encrypt(card_number, secretKey).toString();
+    // // console.log(card_number);
+    // console.log(ciphertext);
+    // const iv = CryptoJS.enc.Hex.parse("00000000000000000000000000000000"); // IV ثابت
+    // const key = CryptoJS.enc.Base64.parse(secretKey);
+    // const encrypted = CryptoJS.AES.encrypt(card_number, key, {
+    //   iv: iv,
+    //   mode: CryptoJS.mode.CBC, // وضع التشفير
+    //   padding: CryptoJS.pad.Pkcs7, // padding
+    // }).toString();
+    // console.log(encrypted);
 
-    formData.append("card_number", encrypted);
+    formData.append("card_number", "eHdyekRNTnB1YXVXb3gxOFd5OHgyUT09");
     formData.append("country_code", country_code);
     formData.append("address", address);
     if (isChecked === false) {
@@ -195,6 +228,9 @@ export default function Page() {
         formData
       );
       console.log(res.data);
+
+      dispatch(logIn());
+      navigate("/home");
       setProgressLog(false);
     } catch (error) {
       setProgressLog(false);
@@ -275,6 +311,9 @@ export default function Page() {
               setErrors={setErrors}
               showIsChecked={showIsChecked}
               setShowIsChecked={setShowIsChecked}
+              countries={countries}
+              setPhoneLoading={setPhoneLoading}
+              phoneLoading={phoneLoading}
             />
           )}
           {currentStep === 2 && (
@@ -327,7 +366,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-        <div className="image hidden sm:block sm:w-[40%] md:w-[50%] h-full fixed left-0 top-0">
+      <div className="image hidden sm:block sm:w-[40%] md:w-[50%] h-full fixed left-0 top-0">
         <img
           src="/images/SingUp.jpg"
           alt="signUp image"

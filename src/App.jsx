@@ -24,9 +24,9 @@ export default function Container() {
       {!isAuth ? (
         <Routes>
           <Route path="*" element={<Navigate to="/SignUp" />} />
-          <Route path="SignUp" element={<SignUp />} />
-          <Route path="SignIn" element={<SignIn />} />
-          <Route path="ForgotPassword" element={<ForgetPassword />} />
+          <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/SignIn" element={<SignIn />} />
+          <Route path="/ForgotPassword" element={<ForgetPassword />} />
           {/* <Route path="SignIn" element={<SignIn />} /> */}
           {/* <Route path="VerifyCode" element={<VerifyCode />} /> */}
           {/* <Route path="*" element={<Navigate to="SignUp" />} /> */}
