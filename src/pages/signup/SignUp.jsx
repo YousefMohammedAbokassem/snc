@@ -179,7 +179,7 @@ export default function Page() {
   const signUp = async (e) => {
     e.preventDefault();
     setProgressLog(true);
-
+    setErrors({});
     const formData = new FormData(); // استخدام FormData لإرسال البيانات
     formData.append("first_name", first_name);
     formData.append("last_name", last_name);

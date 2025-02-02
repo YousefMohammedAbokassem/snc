@@ -153,11 +153,13 @@ export default function Page() {
   // sing up logic
   const [codeLoading, setCodeLoading] = useState(false);
   const sendCode = async () => {
+    setErrors({});
+
     setCodeLoading(true);
     try {
       const res = await axios.post(`${import.meta.env.VITE_API_URL}send_code`);
       setCodeLoading(false);
-      setErrors({});
+      // setErrors({});
       goToNextStep();
     } catch (error) {
       setErrors(error?.response?.data?.errors || {}); // تخزين الأخطاء
@@ -167,6 +169,8 @@ export default function Page() {
   const [verifyLoading, setVerifyLoading] = useState(false);
   const verifyCode = async () => {
     setVerifyLoading(true);
+    setErrors({});
+
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}verify_code`,
@@ -177,7 +181,6 @@ export default function Page() {
         }
       );
       setVerifyLoading(false);
-      setErrors({});
       goToNextStep();
     } catch (error) {
       console.log(error);
@@ -188,6 +191,8 @@ export default function Page() {
   // new password
   const [newPasswordLoading, setNewPasswordLoading] = useState(false);
   const newPassword = async () => {
+    setErrors({});
+
     setNewPasswordLoading(true);
     try {
       const res = await axios.post(
@@ -199,7 +204,6 @@ export default function Page() {
         }
       );
       setNewPasswordLoading(false);
-      setErrors({});
       goToNextStep();
     } catch (error) {
       console.log(error);

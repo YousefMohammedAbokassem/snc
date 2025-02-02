@@ -29,7 +29,6 @@ export default function Page() {
     formData.append("phone_number", phone_number.trim());
     formData.append("password", password.trim());
     formData.append("display_name", display_name.trim()); // إضافة الاسم التعريفي
-
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}login`,
@@ -81,7 +80,7 @@ export default function Page() {
                   onChange={(value) => setPhone_number(value)}
                 />
                 {errors?.phone_number && (
-                  <p className="text-red-500 text-sm">
+                  <p className="text-red-500 text-sm font-bold">
                     {errors.phone_number[0]}
                   </p>
                 )}
@@ -98,7 +97,7 @@ export default function Page() {
                   className={`border-[#CDCDCD] border-[1px] text-black dark:text-white rounded-md bg-transparent px-3 py-5 w-full focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]`}
                 />
                 {errors?.display_name && (
-                  <p className="text-red-500 text-sm">
+                  <p className="text-red-500 text-sm font-bold">
                     {errors.display_name[0]}
                   </p>
                 )}
@@ -115,7 +114,7 @@ export default function Page() {
                   className={`border-[#CDCDCD] px-3 border-[1px] text-black dark:text-white rounded-md bg-transparent  py-5 w-full focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]`}
                 />
                 {errors?.password && (
-                  <p className="text-red-500 text-sm">{errors.password[0]}</p>
+                  <p className="text-red-500 text-sm font-bold">{errors.password[0]}</p>
                 )}
                 <button
                   type="button"
