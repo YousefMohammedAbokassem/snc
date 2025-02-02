@@ -1,0 +1,18 @@
+{
+  "signup": "Sign Up",
+  "createAnAcoount": "Create an Account",
+  "firstStep": "Step One: Enter your basic information",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "gender": "Gender",
+  "male": "Male",
+  "female": "Female",
+  "national_number": "National Number",
+  "birth_place": "Place of Birth",
+  "birthDate": "Date of Birth",
+  "next": "Next",
+  "doYou": "Already have an account?",
+  "logIn": "Log In",
+  "secondStep": "Step Two: Enter your registration information",
+  "thirdStep": "Step Three: Enter the verification code sent to your phone number"
+}
