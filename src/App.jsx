@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import SignUp from "./pages/signup/SignUp";
 import SignIn from "./pages/signin/SignIn";
 import ForgetPassword from "./pages/forgetpassword/ForgetPassword";
+import Page404 from "./pages/Page404";
 
 export default function Container() {
   const isAuth = useSelector((state) => state.auth.authenticate);
@@ -36,6 +37,7 @@ export default function Container() {
           {/* <Nav /> */}
           <Routes>
             <Route path="/" element={<Navigate to="/home" />} />
+            <Route path="*" element={<Page404 />} />
             {/* <Route path="/SignUp" element={<Navigate to="/home" />} />
             <Route path="/SignIn" element={<Navigate to="/home" />} />
             <Route path="/VerifyCode" element={<Navigate to="/home" />} />

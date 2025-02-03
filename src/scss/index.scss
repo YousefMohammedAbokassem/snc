@@ -45,3 +45,12 @@
   background-image: url("/images/sy2.jpg") !important;
   background-size: cover;
 }
+.page404 {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  opacity: .1;
+  font-weight: bold;
+}
