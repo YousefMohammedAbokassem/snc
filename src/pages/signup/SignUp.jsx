@@ -176,6 +176,49 @@ export default function Page() {
       console.log(error);
     }
   };
+  // تشفير
+  const [data, setData] = useState("");
+  const [encryptedData, setEncryptedData] = useState("");
+  const [decryptedData, setDecryptedData] = useState("");
+
+  const APP_KEY = "base64:N2PRVPj2dQoK60vBxURUXZ/OH9UWFQkurx6ySVGEuWo=";
+  const KEY = CryptoJS.enc.Utf8.parse(APP_KEY.substring(7, 39)); // Mimics Laravel's substr(7, 32)
+
+  // Encrypt function (React)
+  const encryptData = (data) => {
+    const iv = CryptoJS.lib.WordArray.random(16);
+    const encrypted = CryptoJS.AES.encrypt(data, KEY, {
+      iv: iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7,
+    });
+
+    const encryptedPayload = CryptoJS.enc.Base64.stringify(
+      iv.concat(encrypted.ciphertext)
+    );
+    setEncryptedData(encryptedPayload);
+
+    // In your case, you would send encryptedPayload directly to Laravel here
+    // For this example, we're just logging it to demonstrate the result.
+    console.log("Encrypted data (React):", encryptedPayload);
+  };
+  // Decrypt function (React)
+  const decryptData = (encryptedPayload) => {
+    const decodedPayload = CryptoJS.enc.Base64.parse(encryptedPayload);
+    const iv = CryptoJS.lib.WordArray.create(decodedPayload.words.slice(0, 4));
+    const encryptedData = CryptoJS.lib.WordArray.create(
+      decodedPayload.words.slice(4)
+    );
+
+    const decrypted = CryptoJS.AES.decrypt({ ciphertext: encryptedData }, KEY, {
+      iv: iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7,
+    });
+
+    setDecryptedData(decrypted.toString(CryptoJS.enc.Utf8));
+  };
+  // تشفير
   const signUp = async (e) => {
     e.preventDefault();
     setProgressLog(true);
@@ -184,7 +227,7 @@ export default function Page() {
     formData.append("first_name", first_name);
     formData.append("last_name", last_name);
     formData.append("display_name", display_name);
-    formData.append("phone_number", phone_number.slice(country_code.length));
+    formData.append("phone_number", phone_number.slice(country_code?.length));
 
     formData.append("password", password);
     formData.append("password_confirmation", password_confirmation);
@@ -213,8 +256,8 @@ export default function Page() {
     //   padding: CryptoJS.pad.Pkcs7, // padding
     // }).toString();
     // console.log(encrypted);
-
-    formData.append("card_number", "eHdyekRNTnB1YXVXb3gxOFd5OHgyUT09");
+    console.log(encryptedData);
+    formData.append("card_number", encryptedData);
     formData.append("country_code", country_code);
     formData.append("address", address);
     if (isChecked === false) {
@@ -241,6 +284,9 @@ export default function Page() {
   };
   // sing up logic
 
+  useEffect(() => {
+    encryptData(card_number);
+  }, [card_number]);
   return (
     <div className="signUp flex items-center ">
       <div className="FormAccount w-full sm:w-[60%] md:w-[50%] px-5 md:px-10">

@@ -19,16 +19,20 @@ export default function Page() {
   const [display_name, setDisplay_name] = useState("");
   const [progressLog, setProgressLog] = useState(false);
   const [errors, setErrors] = useState({}); // إضافة حالة الأخطاء
+  const [MessageError, setMessageError] = useState(""); // إضافة حالة الأخطاء
 
   const signIn = async (e) => {
     e.preventDefault();
     setProgressLog(true);
     setErrors({}); // إعادة تعيين الأخطاء قبل إرسال الطلب
-
+    setMessageError("");
+    console.log(phone_number);
     const formData = new FormData();
-    formData.append("phone_number", phone_number.trim());
+    formData.append("phone_number", phone_number);
+    // formData.append("phone_number", `0${phone_number.trim().slice(3)}`);
     formData.append("password", password.trim());
     formData.append("display_name", display_name.trim()); // إضافة الاسم التعريفي
+
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}login`,
@@ -37,11 +41,13 @@ export default function Page() {
       setProgressLog(false);
       dispatch(logIn());
       navigate("/home");
+      localStorage.setItem("access_token", res.data.data.token);
       // Handle successful login (e.g., redirect or store token)
     } catch (error) {
       setProgressLog(false);
       console.log(error);
       setErrors(error?.response?.data?.errors || {}); // تخزين الأخطاء
+      setMessageError(error?.response?.data?.message);
     }
   };
 
@@ -113,8 +119,10 @@ export default function Page() {
                   placeholder={`${t("password")}`}
                   className={`border-[#CDCDCD] px-3 border-[1px] text-black dark:text-white rounded-md bg-transparent  py-5 w-full focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]`}
                 />
-                {errors?.password && (
-                  <p className="text-red-500 text-sm font-bold">{errors.password[0]}</p>
+                {MessageError && (
+                  <p className="text-red-500 text-sm font-bold">
+                    {t("theInfoIsIncorrect")}
+                  </p>
                 )}
                 <button
                   type="button"

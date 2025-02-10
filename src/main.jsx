@@ -5,6 +5,7 @@ import "./i18.js";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import App from "./App";
+import { HelmetProvider } from "react-helmet-async";
 
 // import { ThemeProvider, createTheme } from "@mui/material/styles";
 // const theme = createTheme({
@@ -14,10 +15,13 @@ import App from "./App";
 //     },
 //   },
 // });
+
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    {/* <ThemeProvider theme={theme}> */}
-    <App />
+    <HelmetProvider>
+      {/* <ThemeProvider theme={theme}> */}
+      <App />
+    </HelmetProvider>
     {/* <Notification /> */}
     {/* </ThemeProvider> */}
   </Provider>
