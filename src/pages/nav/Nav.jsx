@@ -10,7 +10,7 @@ export default function Nav() {
   );
   return (
     <>
-      <nav className="flex items-center justify-between mainNav px-4  h-[80px] max-h-[100px] container mx-auto">
+      <nav className="flex items-center justify-between mainNav h-[80px] max-h-[100px] container mx-auto">
         <div className="logo w-24">
           <img
             src={`/icons/${theme}.svg`}
@@ -43,6 +43,14 @@ export default function Nav() {
                 to=""
               >
                 {t("transfare")}
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="block w-full h-full p-4 mx-2 bg:text-[#1D1D1D] dark:text-[#fff] hover:scale-110 hover:font-bold"
+                to="/events"
+              >
+                {t("events")}
               </NavLink>
             </li>
             <li>

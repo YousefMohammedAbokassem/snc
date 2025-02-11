@@ -30,7 +30,7 @@ export default function StoresSlider() {
     <div className="container mx-auto mt-10">
       <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
         <span className="font-bold text-lg">{t("stores")}</span>
-        <Link to="#" className="opacity-40 text-lg">
+        <Link to="/allEvents" className="opacity-40 text-lg">
           {t("showAll")}
         </Link>
       </div>

@@ -22,7 +22,7 @@ export default function Office() {
         effect="fade" // تطبيق تأثير الفيد
         loop={true} // تفعيل الـ loop اللا نهائي
         modules={[Pagination, Autoplay, EffectFade]} // إضافة الوحدات المطلوبة
-        className="mySwiper HomeSwiper "
+        className="mySwiper EventsSlider "
         dir="rtl"
       >
         <SwiperSlide className="swiperSlide">

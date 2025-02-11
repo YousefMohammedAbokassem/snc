@@ -13,17 +13,20 @@ import Page404 from "./pages/Page404";
 import Home from "./pages/home/Home";
 import Office from "./pages/office/Office";
 import Nav from "./pages/nav/Nav";
+import Categories from "./pages/Categories/Categories";
+import Events from "./pages/events/Events";
+import AllEvents from "./pages/AllEvents/AllEvents";
+import Event from "./pages/Event/Event";
 
 export default function Container() {
   const isAuth = useSelector((state) => state.auth.authenticate);
   const language = useSelector((state) => state.language.language);
-  const [t] = useTranslation(); 
+  const [t] = useTranslation();
   useEffect(() => {
     document.documentElement.dir = dir(language);
     document.documentElement.lang = language;
   }, [language]);
 
-  
   return (
     <BrowserRouter>
       {!isAuth ? (
@@ -40,11 +43,15 @@ export default function Container() {
             <Route path="/Home" element={<Home />} />
             <Route path="/" element={<Navigate to="/Home" />} />
             <Route path="/NotFound" element={<Page404 />} />
+            <Route path="/Categories" element={<Categories />} />
             <Route path="*" element={<Navigate to={"/NotFound"} />} />
             <Route path="/SignUp" element={<Navigate to="/Home" />} />
             <Route path="/SignIn" element={<Navigate to="/Home" />} />
             <Route path="/ForgotPassword" element={<Navigate to="/home" />} />
             <Route path="/Office" element={<Office />} />
+            <Route path="/Events" element={<Events />} />
+            <Route path="/allEvents" element={<AllEvents />} />
+            <Route path="allEvents/:store" element={<Event />} />
             {localStorage.getItem("role") !== "user" ? (
               <>
                 {/* <Route path="courts" element={<Coutrs />} />

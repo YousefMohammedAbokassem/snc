@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import HomeSlider from "../../components/HomeSlider/HomeSlider";
+import EventsSlider from "../../components/EventsSlider/EventsSlider";
 import Categories from "../../components/Categories/Categories";
 import StoresSlider from "../../components/StoresSlider/StoresSlider";
 import ModernProducts from "../../components/ModernProducts/ModernProducts";
@@ -11,13 +11,13 @@ export default function Events() {
   return (
     <>
       <Helmet>
-        <title>{t("home")}</title>
+        <title>{t("events")}</title>
       </Helmet>
-      <HomeSlider />
-      {/* <Categories />
+      <EventsSlider />
+      <Categories />
       <StoresSlider />
       <ModernProducts />
-      <Offers /> */}
+      <Offers />
       <Footer />
     </>
   );

@@ -8,14 +8,12 @@ export default function Categories() {
     <div className="container mx-auto">
       <div className="flex justify-between items-center text-[#1D1D1D] mb-6 ">
         <span className="font-bold text-lg">{t("categories")}</span>
-        <Link to="#" className="opacity-40 text-lg">
+        <Link to="/Categories" className="opacity-40 text-lg">
           {t("showAll")}
         </Link>
       </div>
       {/* Grid Layout */}
       <div className="grid grid-cols-3 gap-4">
-     
-
         {/* Remaining Items - Each 2 Items Take 1/3 */}
         <div className="col-span-2 grid grid-cols-2 gap-4">
           {/* Item 1 */}
@@ -226,8 +224,8 @@ export default function Categories() {
 
           {/* Item 2 */}
         </div>
-           {/* First Item - Takes 1/3 */}
-           <div className="col-span-1 bg-[#F3F5F7] p-5 h-full">
+        {/* First Item - Takes 1/3 */}
+        <div className="col-span-1 bg-[#F3F5F7] p-5 h-full">
           <div className="flex flex-col h-full">
             <div className="info self-end flex flex-col justify-center items-center">
               <h3 className="font-bold text-lg">Furniture</h3>

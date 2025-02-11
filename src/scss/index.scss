@@ -115,22 +115,19 @@
   gap: 30px;
   @media (max-width: 1536px) {
     grid-template-columns: repeat(3, minmax(200px, 1fr));
-    gap: 20px;
-  
+    // gap: 20px;
   }
   @media (max-width: 991px) {
     grid-template-columns: repeat(2, minmax(200px, 1fr));
-    gap: 20px;
-  
+    // gap: 20px;
   }
   @media (max-width: 700px) {
     grid-template-columns: repeat(1, minmax(200px, 1fr));
-    gap: 20px;
-    >div{
+    // gap: 20px;
+    > div {
       width: 90%;
       margin: 0 auto;
     }
-  
   }
   > div {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.12);
