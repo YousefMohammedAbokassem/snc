@@ -14,6 +14,8 @@ const head = [
   { content: "displayName" },
   { content: "digitTheExport" },
   { content: "Value" },
+  { content: "commission" },
+  { content: "discountedAmount" },
 ];
 
 export default function ExportIntern() {
