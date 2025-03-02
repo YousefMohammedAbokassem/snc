@@ -17,6 +17,9 @@ import Categories from "./pages/Categories/Categories";
 import Events from "./pages/events/Events";
 import AllEvents from "./pages/AllEvents/AllEvents";
 import Event from "./pages/Event/Event";
+import Profile from "./pages/Profile/Profile";
+import Card from "./components/Cards/Card";
+import BuyCard from "./components/Cards/BuyCard";
 
 export default function Container() {
   const isAuth = useSelector((state) => state.auth.authenticate);
@@ -41,6 +44,8 @@ export default function Container() {
           <Nav />
           <Routes>
             <Route path="/Home" element={<Home />} />
+            <Route path="/Home/:cardType" element={<Card />} />
+            <Route path="/Home/:cardType/:buyCard" element={<BuyCard />} />
             <Route path="/" element={<Navigate to="/Home" />} />
             <Route path="/NotFound" element={<Page404 />} />
             <Route path="/Categories" element={<Categories />} />
@@ -52,6 +57,7 @@ export default function Container() {
             <Route path="/Events" element={<Events />} />
             <Route path="/allEvents" element={<AllEvents />} />
             <Route path="allEvents/:store" element={<Event />} />
+            <Route path="/Profile" element={<Profile />} />
             {localStorage.getItem("role") !== "user" ? (
               <>
                 {/* <Route path="courts" element={<Coutrs />} />
