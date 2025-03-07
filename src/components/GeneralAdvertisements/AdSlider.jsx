@@ -1,49 +1,50 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 import { Autoplay, Navigation } from "swiper/modules";
-
-const stores = [
-  {
-    name: "شركة محتوى للتسويق الرقمي.",
-    date: "03 نوفمبر 2025",
-    logo: "/images/Elements/Paste image.png",
-  },
-  {
-    name: "شركة محتوى للتسويق الرقمي.",
-    date: "03 نوفمبر 2025",
-    logo: "/images/Elements/Paste image.png",
-  },
-  {
-    name: "شركة محتوى للتسويق الرقمي.",
-    date: "03 نوفمبر 2025",
-    logo: "/images/Elements/Paste image.png",
-  },
-  {
-    name: "شركة محتوى للتسويق الرقمي.",
-    date: "03 نوفمبر 2025",
-    logo: "/images/Elements/Paste image.png",
-  },
-  {
-    name: "شركة محتوى للتسويق الرقمي.",
-    date: "03 نوفمبر 2025",
-    logo: "/images/Elements/Paste image.png",
-  },
-];
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../store/slices/auth/authSlice";
 
 export default function AdSlider() {
   const { t } = useTranslation();
-  const swiperRef = useRef(null); // مرجع للتحكم في السلايدر
+  const swiperRef = useRef(null);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+  const [ads, setAds] = useState([]);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}adds`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+      setAds(res.data?.data || []);
+    } catch (error) {
+      console.error(error);
+      if (error.response?.status === 401) {
+        dispatch(logoutUser());
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="container mx-auto relative">
       {/* أزرار التنقل الخارجية */}
       <div
         onClick={() => swiperRef.current?.slidePrev()}
-        className="absolute top-0 left-0  z-10 bg-[#275963] h-[80%] flex items-center justify-center p-3 cursor-pointer"
+        className="absolute top-0 left-0 z-10 bg-[#275963] h-[80%] flex items-center justify-center p-3 cursor-pointer"
       >
         <button className="text-white rounded-full">
           <svg
@@ -61,10 +62,7 @@ export default function AdSlider() {
         onClick={() => swiperRef.current?.slideNext()}
         className="absolute top-0 right-0 z-10 bg-[#275963] h-[80%] flex items-center justify-center p-3 cursor-pointer"
       >
-        <button
-        //   onClick={() => swiperRef.current?.slideNext()}
-          className=" text-white rounded-full"
-        >
+        <button className="text-white rounded-full">
           <svg
             width="21"
             height="36"
@@ -80,10 +78,10 @@ export default function AdSlider() {
       {/* Swiper Slider */}
       <Swiper
         loop={true}
-        autoplay={{ delay: 20000 }}
+        autoplay={{ delay: 5000 }}
         grabCursor={true}
         spaceBetween={10}
-        onSwiper={(swiper) => (swiperRef.current = swiper)} // تعيين المرجع للسوايبر
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
         breakpoints={{
           1024: { slidesPerView: 3 },
           768: { slidesPerView: 2 },
@@ -94,21 +92,35 @@ export default function AdSlider() {
         className="w-full"
         dir="rtl"
       >
-        {stores.map((store, index) => (
-          <SwiperSlide key={index} className="w-auto">
-            <div className="flex flex-col">
-              <div className="image h-3/4">
-                <img
-                  src={store.logo}
-                  alt={store.name}
-                  className="rounded-lg shadow-md w-full h-full"
-                />
-              </div>
-              <span className="mt-2 text-lg opacity-50">{store.date}</span>
-              <span className="mt-2 text-xl">{store.name}</span>
-            </div>
-          </SwiperSlide>
-        ))}
+        {loading
+          ? Array(3)
+              .fill(null)
+              .map((_, index) => (
+                <SwiperSlide key={index} className="w-auto">
+                  <div className="flex flex-col animate-pulse">
+                    <div className="image h-48 bg-gray-300 rounded-lg"></div>
+                    <div className="h-4 bg-gray-300 rounded w-1/2 mt-3"></div>
+                    <div className="h-4 bg-gray-300 rounded w-3/4 mt-2"></div>
+                  </div>
+                </SwiperSlide>
+              ))
+          : ads.map((ad) => (
+              <SwiperSlide key={ad.id} className="w-auto">
+                <div className="flex flex-col">
+                  <div className="image h-48">
+                    <img
+                      src={`${import.meta.env.VITE_API_URL_IMAGE}${ad.image}`}
+                      alt={ad.title}
+                      className="rounded-lg shadow-md w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="mt-2 text-lg opacity-50">
+                    {new Date(ad.date).toLocaleDateString("ar-EG")}
+                  </span>
+                  <span className="mt-2 text-xl">{ad.title}</span>
+                </div>
+              </SwiperSlide>
+            ))}
       </Swiper>
     </div>
   );

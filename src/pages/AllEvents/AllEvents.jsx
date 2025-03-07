@@ -1,18 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
-const stores = [
-  { name: "Belle Store", logo: "/images/Elements/Paste image.png" },
-  { name: "Belle Store", logo: "/images/Elements/Paste image.png" },
-  { name: "Belle Store", logo: "/images/Elements/Paste image.png" },
-  { name: "Belle Store", logo: "/images/Elements/Paste image.png" },
-  { name: "Belle Store", logo: "/images/Elements/Paste image.png" },
-  { name: "Belle Store", logo: "/images/Elements/Paste image.png" },
-];
+import axios from "axios";
+import { logoutUser } from "../../store/slices/auth/authSlice";
+import { useDispatch } from "react-redux";
+
 export default function AllEvents() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [events, setEvents] = useState([]);
+  const dispatch = useDispatch();
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}get_events`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+      setEvents(res.data?.data?.data || []);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        dispatch(logoutUser());
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <>
       <div className="container mx-auto px-4">
@@ -47,7 +68,7 @@ export default function AllEvents() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g clip-path="url(#clip0_486_272)">
+              <g clipPath="url(#clip0_486_272)">
                 <path
                   d="M40 27.5H32.5V0H27.5L27.5 27.5H20V30L30 40L40 30V27.5Z"
                   fill="#275963"
@@ -76,18 +97,29 @@ export default function AllEvents() {
         </div>
         {/*  */}
         <div className="flex flex-wrap justify-center items-center gap-5">
-          {stores.map((store, index) => (
-            // <SwiperSlide key={index} className="w-auto">
-            <div className="flex flex-col items-center" key={index}>
-              <img
-                src={store.logo}
-                alt={store.name}
-                className=" w-32 h-32 rounded-full"
-              />
-              <span className="mt-2 text-xl ">{store.name}</span>
-            </div>
-            // </SwiperSlide>
-          ))}
+          {loading
+            ? Array(7)
+                .fill(null)
+                .map((_, index) => (
+                  <div className="flex flex-col items-center animate-pulse">
+                    <div className="w-32 h-32 bg-gray-300 dark:bg-gray-700 rounded-full"></div>
+                    <div className="w-24 h-5 mt-2 bg-gray-300 dark:bg-gray-700 rounded"></div>
+                  </div>
+                ))
+            : events.map((event) => (
+                <div
+                  className="flex flex-col items-center cursor-pointer"
+                  key={event.id}
+                  onClick={() => navigate(`/allEvents/${event.id}`)}
+                >
+                  <img
+                    src={`${import.meta.env.VITE_API_URL_IMAGE}${event.logo}`}
+                    alt={event.name}
+                    className="w-32 h-32 rounded-full object-cover"
+                  />
+                  <span className="mt-2 text-xl ">{event.name}</span>
+                </div>
+              ))}
         </div>
 
         {/*  */}

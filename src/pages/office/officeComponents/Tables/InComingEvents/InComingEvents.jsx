@@ -19,7 +19,7 @@ const head = [
   { content: "amount" },
 ];
 
-export default function ExportEventsNational() {
+export default function InComingEvents() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
@@ -60,7 +60,7 @@ export default function ExportEventsNational() {
       const res = await axios.get(
         `${
           import.meta.env.VITE_API_URL
-        }international_event/get_money_sended_transfers?page=${currentPage}`,
+        }local_event/get_money_received_transfers?page=${currentPage}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,

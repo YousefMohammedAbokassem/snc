@@ -20,6 +20,8 @@ import Event from "./pages/Event/Event";
 import Profile from "./pages/Profile/Profile";
 import Card from "./components/Cards/Card";
 import BuyCard from "./components/Cards/BuyCard";
+import Product from "./pages/Product/Product";
+import Basket from "./pages/Basket/Basket";
 
 export default function Container() {
   const isAuth = useSelector((state) => state.auth.authenticate);
@@ -32,7 +34,7 @@ export default function Container() {
 
   return (
     <BrowserRouter>
-      {!isAuth ? (
+      {isAuth ? (
         <Routes>
           <Route path="*" element={<Navigate to="/SignIn" />} />
           <Route path="/SignUp" element={<SignUp />} />
@@ -55,9 +57,11 @@ export default function Container() {
             <Route path="/ForgotPassword" element={<Navigate to="/home" />} />
             <Route path="/Office" element={<Office />} />
             <Route path="/Events" element={<Events />} />
+            <Route path="/Product" element={<Product />} />
             <Route path="/allEvents" element={<AllEvents />} />
             <Route path="allEvents/:store" element={<Event />} />
             <Route path="/Profile" element={<Profile />} />
+            <Route path="/basket" element={<Basket />} />
             {localStorage.getItem("role") !== "user" ? (
               <>
                 {/* <Route path="courts" element={<Coutrs />} />

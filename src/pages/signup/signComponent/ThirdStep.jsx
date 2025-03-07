@@ -9,7 +9,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import OtpInput from "react-otp-input";
 import { useTranslation } from "react-i18next";
-export default function Example({ lng, otp, setOtp }) {
+export default function Example({ lng, otp, setOtp, progressLog }) {
   const { t } = useTranslation(lng);
 
   return (

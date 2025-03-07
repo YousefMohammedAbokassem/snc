@@ -10,16 +10,13 @@ const head = [
   { content: "sequence" },
   { content: "date" },
   { content: "Timing" },
-  { content: "phone" },
-  { content: "displayName" },
-  { content: "digitTheExport" },
+  { content: "senderPhone" },
+  { content: "reciverPhone" },
+  { content: "reason" },
   { content: "Value" },
-  { content: "commission" },
-  { content: "discount" },
-  { content: "amount" },
 ];
 
-export default function ExportEventsNational() {
+export default function FinancialCommission() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
@@ -60,7 +57,7 @@ export default function ExportEventsNational() {
       const res = await axios.get(
         `${
           import.meta.env.VITE_API_URL
-        }international_event/get_money_sended_transfers?page=${currentPage}`,
+        }get_commissions?page=${currentPage}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -116,7 +113,7 @@ export default function ExportEventsNational() {
                 className="bg-[#275963] dark:bg-[#E1B145] text-[#fff] py-[6px] px-2 mx-2 rounded-sm"
               >
                 {/* <option value="5">5</option> */}
-                <option value="10">100</option>
+                <option value="100">100</option>
                 {/* <option value="20">20</option> */}
               </select>
               <p className="text-[#1D1D1D] dark:text-[#fff]">

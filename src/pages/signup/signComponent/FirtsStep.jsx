@@ -65,7 +65,7 @@ export default function FirstStep({
           />
           {errors?.first_name && (
             <p className="mt-1 block text-red-500 font-bold">
-              {errors.first_name[0]}
+              {t(errors.first_name[0])}
             </p>
           )}
         </div>
@@ -80,7 +80,7 @@ export default function FirstStep({
           />
           {errors?.last_name && (
             <p className="mt-1 block text-red-500 font-bold">
-              {errors.last_name[0]}
+              {t(errors.last_name[0])}
             </p>
           )}
         </div>
@@ -97,7 +97,7 @@ export default function FirstStep({
         />
         {errors?.display_name && (
           <p className="mt-1 block text-red-500 font-bold">
-            {errors.display_name[0]}
+            {t(errors.display_name[0])}
           </p>
         )}
       </div>
@@ -152,7 +152,7 @@ export default function FirstStep({
         {/* يمكنك إضافة رسائل خطأ للقائمة المنسدلة إذا كانت هناك أخطاء مخصصة لها */}
         {errors?.gender && (
           <p className="mt-1 block text-red-500 font-bold">
-            {errors.gender[0]}
+            {t(errors.gender[0])}
           </p>
         )}
       </div>
@@ -169,7 +169,7 @@ export default function FirstStep({
         />
         {errors?.national_id && (
           <p className="mt-1 block text-red-500 font-bold">
-            {errors.national_id[0]}
+            {t(errors.national_id[0])}
           </p>
         )}
       </div>
@@ -186,7 +186,7 @@ export default function FirstStep({
         />
         {errors?.place_of_birth && (
           <p className="mt-1 block text-red-500 font-bold">
-            {errors.place_of_birth[0]}
+            {t(errors.place_of_birth[0])}
           </p>
         )}
       </div>
@@ -210,7 +210,7 @@ export default function FirstStep({
         />
         {errors?.birthday && (
           <p className="mt-1 block text-red-500 font-bold">
-            {errors.birthday[0]}
+            {t(errors.birthday[0])}
           </p>
         )}
       </div>

@@ -14,9 +14,12 @@ const head = [
   { content: "displayName" },
   { content: "digitTheExport" },
   { content: "Value" },
+  { content: "commission" },
+  { content: "discount" },
+  { content: "amount" },
 ];
 
-export default function InComingNational() {
+export default function ExportEventsInter() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);

@@ -39,7 +39,6 @@ export default function SecondStep({
   const [selectedDate, setSelectedDate] = useState(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  console.log(countries);
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
@@ -58,7 +57,7 @@ export default function SecondStep({
         />
         {errors?.card_number && (
           <p className="mt-1 block text-red-500 font-bold">
-            {errors.card_number[0]}
+            {t(errors.card_number[0])}
           </p>
         )}
       </div>
@@ -75,7 +74,7 @@ export default function SecondStep({
         />
         {errors?.address && (
           <p className="mt-1 block text-red-500 font-bold">
-            {errors.address[0]}
+            {t(errors.address[0])}
           </p>
         )}
       </div>
@@ -84,8 +83,9 @@ export default function SecondStep({
       {phoneLoading ? (
         <div className="flex flex-col">
           <PhoneInput
-            country={"in"}
-            onlyCountries={countries}
+            country={"sy"}
+            countryCodeEditable={false}
+            // onlyCountries={countries}
             inputProps={{
               name: "phone_number",
               required: true,
@@ -110,9 +110,11 @@ export default function SecondStep({
               setCountry_code(country.dialCode);
             }}
           />
-          {errors?.phone_number && (
+          {(errors?.phone_number ||
+            errors?.country_code ||
+            errors?.country_id) && (
             <p className="mt-1 block text-red-500 font-bold">
-              {errors.phone_number[0]}
+              {t("enterValid")}
             </p>
           )}
         </div>
@@ -154,7 +156,7 @@ export default function SecondStep({
         </button>
         {errors?.password && (
           <p className="mt-1 block text-red-500 font-bold">
-            {errors.password[0]}
+            {t(errors.password[0])}
           </p>
         )}
       </div>
@@ -184,7 +186,7 @@ export default function SecondStep({
         </button>
         {errors?.password_confirmation && (
           <p className="mt-1 block text-red-500 font-bold">
-            {errors.password_confirmation[0]}
+            {t(errors.password_confirmation[0])}
           </p>
         )}
       </div>
@@ -210,7 +212,6 @@ export default function SecondStep({
             >
               {t("conditions")}
             </a>
-            .
           </label>
         </div>
         {showIsChecked === true && isChecked === false && (

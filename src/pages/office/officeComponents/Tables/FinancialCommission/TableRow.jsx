@@ -16,10 +16,11 @@ export default function TableRow({ currentData }) {
           <td className="px-6 py-8 text-center">{item.date}</td>
           <td className="px-6 py-8 text-center">{item.time}</td>
           <td className="px-6 py-8 text-center">{item.sender_phone_number}</td>
-          <td className="px-6 py-8 text-center">{item.full_name}</td>
-          <td className="px-6 py-8 text-center">{item.number_of_process}</td>
+          <td className="px-6 py-8 text-center">{item.receiver_phone_number}</td>
+          <td className="px-6 py-8 text-center">{item.reason}</td>
           <td className="px-6 py-8 text-center">{item.amount}</td>
-          
+          {/* <td className="px-6 py-8 text-center">{item.commission}</td>
+          <td className="px-6 py-8 text-center">{item.discounted_amount}</td> */}
         </tr>
       ))}
     </>

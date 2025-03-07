@@ -8,18 +8,13 @@ import TableSkeleton from "../../../../../components/TableSkeleton";
 
 const head = [
   { content: "sequence" },
-  { content: "date" },
-  { content: "Timing" },
-  { content: "phone" },
-  { content: "displayName" },
-  { content: "digitTheExport" },
-  { content: "Value" },
-  { content: "commission" },
-  { content: "discount" },
-  { content: "amount" },
+  { content: "cardType" },
+  { content: "reason" },
+  { content: "quantity" },
+  { content: "reward" },
 ];
 
-export default function ExportEventsNational() {
+export default function BuyCards() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
@@ -58,9 +53,7 @@ export default function ExportEventsNational() {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${
-          import.meta.env.VITE_API_URL
-        }international_event/get_money_sended_transfers?page=${currentPage}`,
+        `${import.meta.env.VITE_API_URL}get_rewards?page=${currentPage}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -116,7 +109,7 @@ export default function ExportEventsNational() {
                 className="bg-[#275963] dark:bg-[#E1B145] text-[#fff] py-[6px] px-2 mx-2 rounded-sm"
               >
                 {/* <option value="5">5</option> */}
-                <option value="10">100</option>
+                <option value="100">100</option>
                 {/* <option value="20">20</option> */}
               </select>
               <p className="text-[#1D1D1D] dark:text-[#fff]">

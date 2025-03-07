@@ -1,11 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
+import axios from "axios";
+import { logoutUser } from "../../store/slices/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 export default function Categories() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}get_categories`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      );
+      setCategories(res.data?.data || []);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        dispatch(logoutUser());
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <div className="container mx-auto px-4">
@@ -29,72 +61,95 @@ export default function Categories() {
           </ul>
         </div>
 
-        {/* Grid Layout - Responsive */}
-        <div className="text-center text-2xl font-bold mb-5">{t("categories")}</div>
-        {/*  */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {/* Category Item */}
-
-          <div className="bg-[#F3F5F7] p-5 flex rounded-md">
-            <div className="flex flex-row-reverse w-full">
-              {/* Info Section */}
-              <div className="info flex flex-col justify-center items-center self-end mb-4 w-[100px]">
-                <h3 className="font-bold text-lg">Wooden</h3>
-                <a
-                  href="#"
-                  className="flex items-center gap-1 underline categoryShop"
-                >
-                  <span>
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M4.16699 10H15.8337"
-                        stroke="#141718"
-                        strokeWidth="1.25"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M10.833 15L15.833 10"
-                        stroke="#141718"
-                        strokeWidth="1.25"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M10.833 5L15.833 10"
-                        stroke="#141718"
-                        strokeWidth="1.25"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                  <span>{t("shopNow")}</span>
-                </a>
-              </div>
-
-              {/* Image Section */}
-              <div className="image w-full">
-                <img
-                  src="/images/Elements/Paste image.png"
-                  alt="noImage"
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-            </div>
-          </div>
+        <div className="text-center text-2xl font-bold mb-5">
+          {t("categories")}
         </div>
 
-        {/*  */}
+        {/* Skeleton أثناء تحميل البيانات */}
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div key={index} className="bg-[#F3F5F7] p-5 flex rounded-md">
+                <div className="flex flex-row-reverse w-full animate-pulse">
+                  {/* Skeleton المعلومات */}
+                  <div className="info flex flex-col justify-center items-center self-end mb-4 w-[100px]">
+                    <div className="w-20 h-6 bg-gray-300 rounded-md"></div>
+                    <div className="w-16 h-4 bg-gray-300 mt-2 rounded-md"></div>
+                  </div>
+
+                  {/* Skeleton الصورة */}
+                  <div className="image w-full">
+                    <div className="w-full h-[200px] bg-gray-300 rounded-md"></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* عرض الفئات باستخدام map */}
+            {categories.map((category) => (
+              <div key={category.id} className="bg-[#F3F5F7] p-5 flex rounded-md">
+                <div className="flex flex-row-reverse w-full">
+                  {/* قسم المعلومات */}
+                  <div className="info flex flex-col justify-center items-center self-end mb-4 w-[100px]">
+                    <h3 className="font-bold text-lg">{category.name}</h3>
+                    <Link
+                      to={`/category/${category.id}`}
+                      className="flex items-center gap-1 underline categoryShop"
+                    >
+                      <span>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M4.16699 10H15.8337"
+                            stroke="#141718"
+                            strokeWidth="1.25"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M10.833 15L15.833 10"
+                            stroke="#141718"
+                            strokeWidth="1.25"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M10.833 5L15.833 10"
+                            stroke="#141718"
+                            strokeWidth="1.25"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                      <span>{t("shopNow")}</span>
+                    </Link>
+                  </div>
+
+                  {/* قسم الصورة */}
+                  <div className="image w-full">
+                    <img
+                      src={`${import.meta.env.VITE_API_URL_IMAGE}${category.image}`}
+                      alt={category.name}
+                      className="w-full h-[200px] object-cover rounded-md"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
         <button
           type="button"
-          className="more border-solid border border-[#CDCDCD] block w-full my-10 p-4 font-bold text-xl cursor-pointer rounded-md  text-[#275963]"
+          className="more border-solid border border-[#CDCDCD] block w-full my-10 p-4 font-bold text-xl cursor-pointer rounded-md text-[#275963]"
         >
           {t("more")}
         </button>

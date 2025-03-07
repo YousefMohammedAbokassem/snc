@@ -15,6 +15,8 @@ const menuItems = [
   "completedReward",
   "buyCards",
   "transfareEvent",
+  "eventInfo",
+  "eventProducts",
 ];
 
 export default function Aside() {
