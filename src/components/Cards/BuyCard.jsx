@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import Nav from "../../pages/nav/Nav";
 
 export default function BuyCard() {
   const { cardType } = useParams();
@@ -8,6 +9,7 @@ export default function BuyCard() {
 
   return (
     <>
+    <Nav/>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
           <ul className="flex gap-2 opacity-25">

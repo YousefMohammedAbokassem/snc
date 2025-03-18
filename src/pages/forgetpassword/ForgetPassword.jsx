@@ -162,7 +162,7 @@ export default function Page() {
       // setErrors({});
       goToNextStep();
     } catch (error) {
-      setErrors(error?.response?.data?.errors || {}); // تخزين الأخطاء
+      setErrors(error?.res?.data?.errors || {}); // تخزين الأخطاء
       setCodeLoading(false);
     }
   };
@@ -184,7 +184,7 @@ export default function Page() {
       goToNextStep();
     } catch (error) {
       console.log(error);
-      setErrors(error?.response?.data?.errors || {}); // تخزين الأخطاء
+      setErrors(error?.res?.data?.errors || {}); // تخزين الأخطاء
       setVerifyLoading(false);
     }
   };
@@ -207,7 +207,7 @@ export default function Page() {
       goToNextStep();
     } catch (error) {
       console.log(error);
-      setErrors(error?.response?.data?.errors || {}); // تخزين الأخطاء
+      setErrors(error?.res?.data?.errors || {}); // تخزين الأخطاء
       setNewPasswordLoading(false);
     }
   };
@@ -342,7 +342,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="image hidden sm:block sm:w-[40%] md:w-[50%] h-full fixed left-0 top-0">
+      <div className="image hidden sm:block sm:w-[40%] md:w-[50%] h-full fixed left-0 top-0 -z-10">
         <img
           src="/images/SingUp.jpg"
           alt="signUp image"

@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { EyeIcon } from "@heroicons/react/16/solid";
-import axios from "axios";
+import Nav from "../nav/Nav";
+import Footer from "../../components/Footer/Footer";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../../../../../store/slices/auth/authSlice";
-import AddProduct from "./AddProduct";
-export default function EventProducts() {
+import axios from "axios";
+import { logoutUser } from "../../store/slices/auth/authSlice";
+import { useTranslation } from "react-i18next";
+
+export default function CategoryProducts() {
+  const { id } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const category = searchParams.get("category");
+  console.log(category);
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  const [showAddProduct, setShowAddProduct] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}product/get_my_products`,
+        `${import.meta.env.VITE_API_URL}get_products/category/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -33,67 +40,33 @@ export default function EventProducts() {
     }
   };
 
-  const [loadingM, setLoadingM] = useState(true);
-  const [measures, setMeasures] = useState([]);
-
-  const fetchMeasure = async () => {
-    setLoadingM(true);
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}get_measures`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        }
-      );
-      setMeasures(res.data?.data || []);
-    } catch (error) {
-      if (error.response?.status === 401) {
-        dispatch(logoutUser());
-      }
-    } finally {
-      setLoadingM(false);
-    }
-  };
-  const [colors, setColors] = useState([]);
-  const [loadingC, setLoadingC] = useState(true);
-
-  const fetchColors = async () => {
-    setLoadingC(true);
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}get_measures`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        }
-      );
-      setColors(res.data?.data || []);
-    } catch (error) {
-      if (error.response?.status === 401) {
-        dispatch(logoutUser());
-      }
-    } finally {
-      setLoadingM(false);
-    }
-  };
   useEffect(() => {
     fetchData();
-    fetchMeasure();
-    fetchColors();
-  }, []);
+  }, [id]);
+  console.log(products);
   return (
-    <div className="px-8">
-      {/* map here */}
-      <button
-        onClick={() => setShowAddProduct(!showAddProduct)} // عكس الحالة عند الضغط
-        className="bg-[#275963] text-white px-4 py-2 rounded-md mb-4 mr-auto block w-full"
-      >
-        {showAddProduct ? t("رجوع إلى المنتجات") : t("إضافة منتج")}
-      </button>
-      {!showAddProduct && (
+    <>
+      <Nav />
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
+          <ul className="flex gap-2 opacity-25">
+            <li className="cursor-pointer" onClick={() => navigate("/Events")}>
+              <span className="font-bold text-lg">{t("events")}</span>
+            </li>
+            <li>
+              <span className="font-bold text-lg">{t(">")}</span>
+            </li>
+            <li>
+              <span className="font-bold text-lg">{t("categories")}</span>
+            </li>
+            <li>
+              <span className="font-bold text-lg">{t(">")}</span>
+            </li>
+            <li>
+              <span className="font-bold text-lg">{category}</span>
+            </li>
+          </ul>
+        </div>
         <div className="modern">
           {loading
             ? Array.from({ length: 8 }).map((_, index) => (
@@ -126,8 +99,7 @@ export default function EventProducts() {
                     <p className="type my-2 font-semibold text-md">
                       {item?.name}
                     </p>
-                    {(localStorage.getItem("authenticate") == "true") &
-                    (
+                    {localStorage.getItem("authenticate") == "true" && (
                       <p className="priceLocal my-2">
                         السعر الوطني:
                         {item?.discount ? (
@@ -141,7 +113,7 @@ export default function EventProducts() {
                             </p>
                           </>
                         ) : (
-                          <span>{item?.price_in_country} LSL</span>
+                          <span>{item?.price_in_country}</span>
                         )}
                       </p>
                     )}
@@ -164,7 +136,14 @@ export default function EventProducts() {
                       )}
                     </p>
 
-                    <div className="flex justify-between items-center gap-2">
+                    <div
+                      className="flex justify-between items-center gap-2"
+                      onClick={() =>
+                        navigate(
+                          `/Product?categoryProduct=${item?.product_category_name}&product=${item?.id}&product_category=${item?.product_category_id}&categoryStore=${item?.product_category_id}`
+                        )
+                      }
+                    >
                       <button
                         className="bg-[#275963] rounded-sm flex-1 h-[30px] text-white font-bold"
                         type="button"
@@ -199,15 +178,34 @@ export default function EventProducts() {
                 </div>
               ))}
         </div>
-      )}
-      {showAddProduct && (
-        <AddProduct
-          colors={colors}
-          loadingM={loadingM}
-          loadingC={loadingC}
-          measures={measures}
-        />
-      )}
-    </div>
+        {/* {loading ? (
+          ""
+        ) : categories.data?.length > 0 ? (
+          <button
+            type="button"
+            className={`more border-solid border border-[#CDCDCD] flex justify-center w-full mt-10 p-4 font-bold text-xl cursor-pointer rounded-md text-[#275963] 
+            ${categories?.next_page_url === null ? "cursor-no-drop" : ""}`}
+            onClick={() => {
+              setPage((prev) => {
+                fetchMore(prev + 8);
+                return prev + 8;
+              });
+            }}
+            disabled={LoadingButton || categories?.next_page_url === null}
+          >
+            {LoadingButton ? (
+              <FaSpinner className="animate-spin" />
+            ) : categories?.next_page_url === null ? (
+              t("لا يوجد المزيد")
+            ) : (
+              t("more")
+            )}
+          </button>
+        ) : (
+          <NoDataFounded />
+        )} */}
+      </div>
+      <Footer />
+    </>
   );
 }

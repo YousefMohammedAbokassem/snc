@@ -5,6 +5,9 @@ import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 import { logoutUser } from "../../store/slices/auth/authSlice";
 import { useDispatch } from "react-redux";
+import Nav from "../nav/Nav";
+import NoDataFounded from "../../components/NoDataFounded/NoDataFounded";
+import { FaSpinner } from "react-icons/fa";
 
 export default function AllEvents() {
   const { t } = useTranslation();
@@ -16,12 +19,15 @@ export default function AllEvents() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}get_events`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      });
-      setEvents(res.data?.data?.data || []);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}get_events?perPage=${page}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      );
+      setEvents(res.data?.data || []);
     } catch (error) {
       if (error.response?.status === 401) {
         dispatch(logoutUser());
@@ -34,9 +40,34 @@ export default function AllEvents() {
   useEffect(() => {
     fetchData();
   }, []);
+  const [LoadingButton, setLoadingButton] = useState(false);
+  const [page, setPage] = useState(100);
+  const fetchMore = async (newPage) => {
+    setLoadingButton(true);
+    try {
+      const res = await axios.get(
+        `${
+          import.meta.env.VITE_API_URL
+        }get_market_categories?paginate=1&perPage=${newPage}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      );
+      setEvents(res.data?.data || []);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        dispatch(logoutUser());
+      }
+    } finally {
+      setLoadingButton(false);
+    }
+  };
   return (
     <>
-      <div className="container mx-auto px-4">
+      <Nav />
+      <div className="container mx-auto px-4 pb-12">
         <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
           <ul className="flex gap-2 opacity-25">
             <li className="cursor-pointer" onClick={() => navigate("/Events")}>
@@ -106,7 +137,7 @@ export default function AllEvents() {
                     <div className="w-24 h-5 mt-2 bg-gray-300 dark:bg-gray-700 rounded"></div>
                   </div>
                 ))
-            : events.map((event) => (
+            : events?.data.map((event) => (
                 <div
                   className="flex flex-col items-center cursor-pointer"
                   key={event.id}
@@ -115,7 +146,7 @@ export default function AllEvents() {
                   <img
                     src={`${import.meta.env.VITE_API_URL_IMAGE}${event.logo}`}
                     alt={event.name}
-                    className="w-32 h-32 rounded-full object-cover"
+                    className="w-32 h-32 rounded-full "
                   />
                   <span className="mt-2 text-xl ">{event.name}</span>
                 </div>
@@ -123,13 +154,34 @@ export default function AllEvents() {
         </div>
 
         {/*  */}
-        <button
-          type="button"
-          className="more border-solid border border-[#CDCDCD] block w-full my-10 p-4 font-bold text-xl cursor-pointer rounded-md  text-[#275963]"
-        >
-          {t("more")}
-        </button>
+        {loading ? (
+          ""
+        ) : events.data?.length > 0 ? (
+          <button
+            type="button"
+            className={`more border-solid border border-[#CDCDCD] flex justify-center w-full mt-10 p-4 font-bold text-xl cursor-pointer rounded-md text-[#275963] 
+            ${events?.next_page_url === null ? "cursor-no-drop" : ""}`}
+            onClick={() => {
+              setPage((prev) => {
+                fetchMore(prev + 8);
+                return prev + 8;
+              });
+            }}
+            disabled={LoadingButton || events?.next_page_url === null}
+          >
+            {LoadingButton ? (
+              <FaSpinner className="animate-spin" />
+            ) : events?.next_page_url === null ? (
+              t("لا يوجد المزيد")
+            ) : (
+              t("more")
+            )}
+          </button>
+        ) : (
+          <NoDataFounded />
+        )}
       </div>
+
       <Footer />
     </>
   );

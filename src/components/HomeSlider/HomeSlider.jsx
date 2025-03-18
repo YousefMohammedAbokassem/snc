@@ -39,7 +39,7 @@ export default function HomeSlider() {
     <Swiper
       pagination={{ dynamicBullets: true }}
       autoplay={{
-        delay: 3000,
+        delay: 300000,
         disableOnInteraction: false,
       }}
       effect="fade"
@@ -61,7 +61,7 @@ export default function HomeSlider() {
               <img
                 src={`${import.meta.env.VITE_API_URL_IMAGE}${banner.image}`}
                 alt=""
-                className="w-full h-[300px] object-cover rounded-lg"
+                className="w-full h-[300px]  rounded-lg"
                 loading="lazy"
               />
             </SwiperSlide>

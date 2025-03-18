@@ -6,6 +6,8 @@ import Footer from "../../components/Footer/Footer";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../store/slices/auth/authSlice";
 import axios from "axios";
+import Nav from "../nav/Nav";
+import NoDataFounded from "../../components/NoDataFounded/NoDataFounded";
 
 export default function Event() {
   const { store } = useParams();
@@ -39,9 +41,9 @@ export default function Event() {
     }
   };
   const [products, setProducts] = useState([]);
-
+  const [loadingStore, setLoadingStore] = useState(true);
   const fetchProduct = async () => {
-    setLoading(true);
+    setLoadingStore(true);
     try {
       const res = await axios.get(
         `${import.meta.env.VITE_API_URL}get_products/event/${store}`,
@@ -58,7 +60,7 @@ export default function Event() {
         dispatch(logoutUser());
       }
     } finally {
-      setLoading(false);
+      setLoadingStore(false);
     }
   };
 
@@ -76,7 +78,8 @@ export default function Event() {
   console.log(market);
   return (
     <>
-      <div className="container mx-auto">
+      <Nav />
+      <div className="container mx-auto pb-12">
         <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
           <ul className="flex gap-2 opacity-25">
             <li className="cursor-pointer" onClick={() => navigate("/Events")}>
@@ -97,32 +100,44 @@ export default function Event() {
           </ul>
         </div>
         {/* image store */}
-        <div
-          style={{
-            backgroundImage: `url("${import.meta.env.VITE_API_URL_IMAGE}${
-              market?.background
-            }")`,
-            backgroundSize: "cover",
-          }}
-          className="w-full h-[350px] mx-4 flex items-center justify-center rounded-lg"
-        >
-          <div className="flex flex-col items-center info gap-2 ">
-            <img
-              src={`${import.meta.env.VITE_API_URL_IMAGE}${market?.logo}`}
-              alt={"noImage"}
-              className=" w-32 h-32 rounded-full"
-            />
-            <h4 className="mt-2 text-xl text-white font-bold">
-              {market?.name}
-            </h4>
-            <span className="text-lg text-white">
-              {market?.market_category}
-            </span>
-            <span className="text-white">{market?.address}</span>
+        {loadingStore ? (
+          <div className="w-full h-[350px] flex items-center justify-center rounded-lg bg-gray-300 animate-pulse">
+            <div className="flex flex-col items-center gap-2 z-10">
+              <div className="w-32 h-32 rounded-full bg-gray-400 animate-pulse"></div>
+              <div className="w-40 h-6 bg-gray-400 rounded-md animate-pulse"></div>
+              <div className="w-32 h-4 bg-gray-400 rounded-md animate-pulse"></div>
+              <div className="w-48 h-4 bg-gray-400 rounded-md animate-pulse"></div>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div
+            style={{
+              backgroundImage: `url("${import.meta.env.VITE_API_URL_IMAGE}${
+                market?.background
+              }")`,
+              backgroundSize: "cover",
+            }}
+            className="w-full h-[350px] flex items-center justify-center rounded-lg layerBlack"
+          >
+            <div className="flex flex-col items-center info gap-2 z-10">
+              <img
+                src={`${import.meta.env.VITE_API_URL_IMAGE}${market?.logo}`}
+                alt="noImage"
+                className="w-32 h-32 rounded-full"
+              />
+              <h4 className="mt-2 text-xl text-white font-bold">
+                {market?.name}
+              </h4>
+              <span className="text-lg text-white">
+                {market?.market_category}
+              </span>
+              <span className="text-white">{market?.address}</span>
+            </div>
+          </div>
+        )}
+
         {/* filter */}
-        <div className="flex justify-center gap-4 my-6">
+        {/* <div className="flex justify-center gap-4 my-6">
           {categories.map((category) => (
             <button
               key={category}
@@ -136,9 +151,9 @@ export default function Event() {
               {t(category?.name)}
             </button>
           ))}
-        </div>
+        </div> */}
         {/* products */}
-        <div className="modern pt-5">
+        <div className="modern pt-12">
           {loading
             ? Array.from({ length: 8 }).map((_, index) => (
                 <div
@@ -152,14 +167,7 @@ export default function Event() {
                   className=" h-[400px] rounded-[8px] pb-5 flex flex-col"
                 >
                   <>
-                    <div
-                      className="image flex-1 cursor-pointer"
-                      onClick={() =>
-                        navigate(
-                          `/Product?categoryProduct=${market?.market_category}&product=${market?.id}&categoryStore=${market?.category?.id}`
-                        )
-                      }
-                    >
+                    <div className="image flex-1 cursor-pointer">
                       <img
                         src={`${import.meta.env.VITE_API_URL_IMAGE}${
                           item.image
@@ -168,14 +176,7 @@ export default function Event() {
                         alt={item.name}
                       />
                     </div>
-                    <div
-                      className="p-2 cursor-pointer"
-                      onClick={() =>
-                        navigate(
-                          `/Product?categoryProduct=${market?.market_category}&product=${market?.id}&categoryStore=${market?.category?.id}`
-                        )
-                      }
-                    >
+                    <div className="p-2 cursor-pointer">
                       <div
                         className="show flex items-center justify-between my-2"
                         // onClick={() => navigate(`/Product`)}
@@ -226,7 +227,14 @@ export default function Event() {
                       </p>
                     </div>
 
-                    <div className="flex justify-between items-center gap-2">
+                    <div
+                      className="flex justify-between items-center gap-2"
+                      onClick={() =>
+                        navigate(
+                          `/Product?categoryProduct=${item?.product_category_name}&product=${item?.id}&product_category=${item?.product_category_id}&categoryStore=${item?.product_category_id}`
+                        )
+                      }
+                    >
                       <button
                         className="bg-[#275963] rounded-sm flex-1 h-[30px] text-white font-bold"
                         type="button"
@@ -263,12 +271,7 @@ export default function Event() {
                 </div>
               ))}
         </div>
-        <button
-          type="button"
-          className="more border-solid border border-[#CDCDCD] block w-full my-10 p-4 font-bold text-xl cursor-pointer rounded-md text-[#275963]"
-        >
-          {t("more")}
-        </button>
+        {loading ? "" : products.length > 0 ? null : <NoDataFounded />}
       </div>
       <Footer />
     </>

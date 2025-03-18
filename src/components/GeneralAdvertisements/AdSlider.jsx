@@ -111,7 +111,7 @@ export default function AdSlider() {
                     <img
                       src={`${import.meta.env.VITE_API_URL_IMAGE}${ad.image}`}
                       alt={ad.title}
-                      className="rounded-lg shadow-md w-full h-full object-cover"
+                      className="rounded-lg shadow-md w-full h-full "
                     />
                   </div>
                   <span className="mt-2 text-lg opacity-50">

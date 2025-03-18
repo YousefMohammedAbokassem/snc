@@ -64,13 +64,13 @@ export default function Cards() {
                 }
               >
                 <img
-                  src={`/Elements/${card.type.toLowerCase()}Card.png`}
-                  className="w-full h-[200px] object-cover rounded-lg"
+                  src={`${import.meta.env.VITE_API_URL_IMAGE}${card?.image}`}
+                  className="w-full h-[200px]  rounded-lg"
                   alt={card.type}
                 />
-                <span className="absolute right-0 bottom-0 text-white text-lg mx-4 mb-2">
+                {/* <span className="absolute right-0 bottom-0 text-white text-lg mx-4 mb-2">
                   {t(`${card.type.toLowerCase()}Card`)}
-                </span>
+                </span> */}
               </div>
             ))}
       </div>

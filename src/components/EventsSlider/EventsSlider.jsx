@@ -9,11 +9,14 @@ import { Pagination, Autoplay, EffectFade } from "swiper/modules";
 import axios from "axios";
 import { logoutUser } from "../../store/slices/auth/authSlice";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
+import NoDataFounded from "../NoDataFounded/NoDataFounded";
 
 export default function EventsSlider() {
   const [loading, setLoading] = useState(true);
   const [banners, setBanners] = useState([]);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -36,36 +39,39 @@ export default function EventsSlider() {
     fetchData();
   }, []);
   return (
-    <Swiper
-      pagination={{ dynamicBullets: true }}
-      autoplay={{
-        delay: 3000,
-        disableOnInteraction: false,
-      }}
-      effect="fade"
-      loop={true}
-      modules={[Pagination, Autoplay, EffectFade]}
-      className="mySwiper HomeSwiper"
-      dir="rtl"
-    >
-      {loading
-        ? Array(3)
-            .fill(null)
-            .map((_, index) => (
-              <SwiperSlide key={index} className="swiperSlide">
-                <div className="w-full h-[300px] bg-gray-300 animate-pulse rounded-lg"></div>
+    <>
+      <Swiper
+        pagination={{ dynamicBullets: true }}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        effect="fade"
+        loop={true}
+        modules={[Pagination, Autoplay, EffectFade]}
+        className="mySwiper HomeSwiper"
+        dir="rtl"
+      >
+        {loading
+          ? Array(3)
+              .fill(null)
+              .map((_, index) => (
+                <SwiperSlide key={index} className="swiperSlide">
+                  <div className="w-full h-[300px] bg-gray-300 animate-pulse rounded-lg"></div>
+                </SwiperSlide>
+              ))
+          : banners.map((banner) => (
+              <SwiperSlide key={banner.id} className="swiperSlide">
+                <img
+                  src={`${import.meta.env.VITE_API_URL_IMAGE}${banner.image}`}
+                  alt=""
+                  className="w-full h-[300px]  rounded-lg"
+                  loading="lazy"
+                />
               </SwiperSlide>
-            ))
-        : banners.map((banner) => (
-            <SwiperSlide key={banner.id} className="swiperSlide">
-              <img
-                src={`${import.meta.env.VITE_API_URL_IMAGE}${banner.image}`}
-                alt=""
-                className="w-full h-[300px] object-cover rounded-lg"
-                loading="lazy"
-              />
-            </SwiperSlide>
-          ))}
-    </Swiper>
+            ))}
+      </Swiper>
+      {loading ? "" : banners.length > 0 ? "" : <NoDataFounded />}
+    </>
   );
 }

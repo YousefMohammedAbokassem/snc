@@ -5,6 +5,9 @@ import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 import { logoutUser } from "../../store/slices/auth/authSlice";
 import { useDispatch } from "react-redux";
+import Nav from "../nav/Nav";
+import NoDataFounded from "../../components/NoDataFounded/NoDataFounded";
+import { FaSpinner } from "react-icons/fa";
 
 export default function Categories() {
   const { t } = useTranslation();
@@ -17,7 +20,9 @@ export default function Categories() {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}get_categories`,
+        `${
+          import.meta.env.VITE_API_URL
+        }get_market_categories?paginate=1&perPage=${page}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -37,10 +42,34 @@ export default function Categories() {
   useEffect(() => {
     fetchData();
   }, []);
-
+  const [LoadingButton, setLoadingButton] = useState(false);
+  const [page, setPage] = useState(8);
+  const fetchMore = async (newPage) => {
+    setLoadingButton(true);
+    try {
+      const res = await axios.get(
+        `${
+          import.meta.env.VITE_API_URL
+        }get_market_categories?paginate=1&perPage=${newPage}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      );
+      setCategories(res.data?.data || []);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        dispatch(logoutUser());
+      }
+    } finally {
+      setLoadingButton(false);
+    }
+  };
   return (
     <>
-      <div className="container mx-auto px-4">
+      <Nav />
+      <div className="container mx-auto px-4 pb-12">
         <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
           <ul className="flex gap-2 opacity-25">
             <li className="cursor-pointer" onClick={() => navigate("/Events")}>
@@ -88,14 +117,17 @@ export default function Categories() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* عرض الفئات باستخدام map */}
-            {categories.map((category) => (
-              <div key={category.id} className="bg-[#F3F5F7] p-5 flex rounded-md">
+            {categories?.data?.map((category) => (
+              <div
+                key={category.id}
+                className="bg-[#F3F5F7] p-5 flex rounded-md"
+              >
                 <div className="flex flex-row-reverse w-full">
                   {/* قسم المعلومات */}
                   <div className="info flex flex-col justify-center items-center self-end mb-4 w-[100px]">
                     <h3 className="font-bold text-lg">{category.name}</h3>
                     <Link
-                      to={`/category/${category.id}`}
+                      to={`/Categories/${category.id}?category=${category.name}`}
                       className="flex items-center gap-1 underline categoryShop"
                     >
                       <span>
@@ -136,9 +168,11 @@ export default function Categories() {
                   {/* قسم الصورة */}
                   <div className="image w-full">
                     <img
-                      src={`${import.meta.env.VITE_API_URL_IMAGE}${category.image}`}
+                      src={`${import.meta.env.VITE_API_URL_IMAGE}${
+                        category.image
+                      }`}
                       alt={category.name}
-                      className="w-full h-[200px] object-cover rounded-md"
+                      className="w-full h-[200px]  rounded-md"
                     />
                   </div>
                 </div>
@@ -146,13 +180,32 @@ export default function Categories() {
             ))}
           </div>
         )}
-
-        <button
-          type="button"
-          className="more border-solid border border-[#CDCDCD] block w-full my-10 p-4 font-bold text-xl cursor-pointer rounded-md text-[#275963]"
-        >
-          {t("more")}
-        </button>
+        {loading ? (
+          ""
+        ) : categories.data?.length > 0 ? (
+          <button
+            type="button"
+            className={`more border-solid border border-[#CDCDCD] flex justify-center w-full mt-10 p-4 font-bold text-xl cursor-pointer rounded-md text-[#275963] 
+            ${categories?.next_page_url === null ? "cursor-no-drop" : ""}`}
+            onClick={() => {
+              setPage((prev) => {
+                fetchMore(prev + 8);
+                return prev + 8;
+              });
+            }}
+            disabled={LoadingButton || categories?.next_page_url === null}
+          >
+            {LoadingButton ? (
+              <FaSpinner className="animate-spin" />
+            ) : categories?.next_page_url === null ? (
+              t("لا يوجد المزيد")
+            ) : (
+              t("more")
+            )}
+          </button>
+        ) : (
+          <NoDataFounded />
+        )}
       </div>
       <Footer />
     </>

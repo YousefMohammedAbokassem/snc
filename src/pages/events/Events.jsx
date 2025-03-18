@@ -6,6 +6,7 @@ import StoresSlider from "../../components/StoresSlider/StoresSlider";
 import ModernProducts from "../../components/ModernProducts/ModernProducts";
 import Offers from "../../components/Offers/Offers";
 import Footer from "../../components/Footer/Footer";
+import Nav from "../nav/Nav";
 export default function Events() {
   const { t } = useTranslation();
   return (
@@ -13,6 +14,7 @@ export default function Events() {
       <Helmet>
         <title>{t("events")}</title>
       </Helmet>
+      <Nav />
       <EventsSlider />
       <Categories />
       <StoresSlider />

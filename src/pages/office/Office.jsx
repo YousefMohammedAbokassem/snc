@@ -3,11 +3,13 @@ import { useTranslation } from "react-i18next";
 import { Welcome } from "./officeComponents/Welcome";
 import Aside from "./officeComponents/Aside";
 import TablesAside from "./officeComponents/TablesAside";
+import Nav from "../nav/Nav";
 
 export default function Office() {
   const { t } = useTranslation();
   return (
     <>
+    <Nav/>
       <Helmet>
         <title>{t("office")}</title>
       </Helmet>

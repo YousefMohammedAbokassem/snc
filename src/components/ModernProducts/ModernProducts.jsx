@@ -4,24 +4,28 @@ import { EyeIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
 import { logoutUser } from "../../store/slices/auth/authSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import NoDataFounded from "../NoDataFounded/NoDataFounded";
+import { FaSpinner } from "react-icons/fa";
 export default function ModernProducts() {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}get_products?perPage=8`,
+        `${import.meta.env.VITE_API_URL}get_products?perPage=${page}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
         }
       );
-      setProducts(res.data?.data?.data || []);
+      setProducts(res.data?.data || []);
     } catch (error) {
       if (error.response?.status === 401) {
         dispatch(logoutUser());
@@ -30,10 +34,35 @@ export default function ModernProducts() {
       setLoading(false);
     }
   };
+  const [LoadingButton, setLoadingButton] = useState(false);
+  const [page, setPage] = useState(8);
+  const fetchMore = async (newPage) => {
+    setLoadingButton(true);
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}get_products?perPage=${newPage}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      );
+      setProducts(res.data?.data || []);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        dispatch(logoutUser());
+      }
+    } finally {
+      setLoadingButton(false);
+    }
+  };
 
   useEffect(() => {
     fetchData();
   }, []);
+  // useEffect(() => {
+  //   fetchMore();
+  // }, [page]);
   return (
     <div className="pt-12 container mx-auto">
       <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
@@ -49,35 +78,20 @@ export default function ModernProducts() {
                 className="animate-pulse bg-gray-200 h-[400px] rounded-[8px]"
               />
             ))
-          : products?.map((item, i) => (
+          : products?.data?.map((item, i) => (
               <div
                 key={i}
                 className=" h-[400px] rounded-[8px] pb-5 flex flex-col"
               >
-                <div
-                  className="image flex-1 cursor-pointer"
-                  onClick={() =>
-                    navigate(`/Product?product=${market?.market_category}`)
-                  }
-                >
+                <div className="image flex-1 cursor-pointer">
                   <img
                     src={`${import.meta.env.VITE_API_URL_IMAGE}${item.image}`}
                     className="w-full h-full"
                     alt={item.name}
                   />
                 </div>
-                <div
-                  className="p-2 cursor-pointer"
-                  onClick={() =>
-                    navigate(`/Product?product=${market?.market_category}`)
-                  }
-                >
-                  <div
-                    className="show flex items-center justify-between my-2 cursor-pointer"
-                    onClick={() =>
-                      navigate(`/Product?product=${market?.market_category}`)
-                    }
-                  >
+                <div className="p-2 cursor-pointer">
+                  <div className="show flex items-center justify-between my-2 cursor-pointer">
                     <div className="reviews">
                       <span className="opacity-50">
                         {item?.number_of_reviews} {t("reviews")}
@@ -88,22 +102,24 @@ export default function ModernProducts() {
                   <p className="type my-2 font-semibold text-md">
                     {item?.name}
                   </p>
-                  <p className="priceLocal my-2">
-                    السعر الوطني:
-                    {item?.discount ? (
-                      <>
-                        <del className="text-red-500">
-                          {parseFloat(item?.price_in_country)}
-                        </del>
-                        <p className="ml-2">
-                          {parseFloat(item?.price_in_country) *
-                            (1 - item?.discount / 100)}{" "}
-                        </p>
-                      </>
-                    ) : (
-                      <span>{item?.price_in_country} LSL</span>
-                    )}
-                  </p>
+                  {localStorage.getItem("authenticate") == "true" && (
+                    <p className="priceLocal my-2">
+                      السعر الوطني:
+                      {item?.discount ? (
+                        <>
+                          <del className="text-red-500">
+                            {parseFloat(item?.price_in_country)}
+                          </del>
+                          <p className="ml-2">
+                            {parseFloat(item?.price_in_country) *
+                              (1 - item?.discount / 100)}{" "}
+                          </p>
+                        </>
+                      ) : (
+                        <span>{item?.price_in_country}</span>
+                      )}
+                    </p>
+                  )}
 
                   <p className="priceInter my-2 text-[#275963]">
                     السعر الدولي:
@@ -123,7 +139,14 @@ export default function ModernProducts() {
                     )}
                   </p>
 
-                  <div className="flex justify-between items-center gap-2">
+                  <div
+                    className="flex justify-between items-center gap-2"
+                    onClick={() =>
+                      navigate(
+                        `/Product?categoryProduct=${item?.product_category_name}&product=${item?.id}&product_category=${item?.product_category_id}&categoryStore=${item?.product_category_id}`
+                      )
+                    }
+                  >
                     <button
                       className="bg-[#275963] rounded-sm flex-1 h-[30px] text-white font-bold"
                       type="button"
@@ -161,12 +184,32 @@ export default function ModernProducts() {
             ))}
       </div>
       {/*  */}
-      <button
-        type="button"
-        className="more border-solid border border-[#CDCDCD] block w-full mt-10 p-4 font-bold text-xl cursor-pointer rounded-md text-[#275963]"
-      >
-        {t("more")}
-      </button>
+      {loading ? (
+        ""
+      ) : products.data?.length > 0 ? (
+        <button
+          type="button"
+          className={`more border-solid border border-[#CDCDCD] flex justify-center w-full mt-10 p-4 font-bold text-xl cursor-pointer rounded-md text-[#275963] 
+            ${products?.next_page_url === null ? "cursor-no-drop" : ""}`}
+          onClick={() => {
+            setPage((prev) => {
+              fetchMore(prev + 8);
+              return prev + 8;
+            });
+          }}
+          disabled={LoadingButton || products?.next_page_url === null}
+        >
+          {LoadingButton ? (
+            <FaSpinner className="animate-spin" />
+          ) : products?.next_page_url === null ? (
+            t("لا يوجد المزيد")
+          ) : (
+            t("more")
+          )}
+        </button>
+      ) : (
+        <NoDataFounded />
+      )}
     </div>
   );
 }

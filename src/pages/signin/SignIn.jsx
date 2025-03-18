@@ -9,6 +9,8 @@ import { FaSpinner } from "react-icons/fa"; // استيراد أيقونة ال�
 import { logIn } from "../../store/slices/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { Helmet } from "react-helmet-async";
+import Nav from "../nav/Nav";
+import Footer from "../../components/Footer/Footer";
 
 export default function Page() {
   const navigate = useNavigate();
@@ -33,6 +35,7 @@ export default function Page() {
     // formData.append("phone_number", `0${phone_number.trim().slice(3)}`);
     formData.append("password", password.trim());
     formData.append("display_name", display_name.trim()); // إضافة الاسم التعريفي
+    formData.append("device_token", "asdasd"); // إضافة الاسم التعريفي
 
     try {
       const res = await axios.post(
@@ -43,12 +46,13 @@ export default function Page() {
       dispatch(logIn());
       navigate("/home");
       localStorage.setItem("access_token", res.data.data.token);
-      // Handle successful login (e.g., redirect or store token)
+      localStorage.setItem("role", res.data.data.role_id);
+      // Handle successful login (e.g.,  redirect or store token)
     } catch (error) {
       setProgressLog(false);
       console.log(error);
-      setErrors(error?.response?.data?.errors || {}); // تخزين الأخطاء
-      setMessageError(error?.response?.data?.message);
+      setErrors(error?.res?.data?.errors || {}); // تخزين الأخطاء
+      setMessageError(error?.res?.data?.message);
     }
   };
 
@@ -57,6 +61,7 @@ export default function Page() {
       <Helmet>
         <title>{t("logIn")}</title>
       </Helmet>
+      <Nav />
       <div className="signUp flex items-start ">
         <div className="FormAccount w-full sm:w-[60%] md:w-[50%] px-5 md:px-10 ">
           <div className="relative">
@@ -182,7 +187,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="image hidden sm:block sm:w-[40%] md:w-[50%] h-full fixed left-0 top-0">
+        <div className="image hidden sm:block sm:w-[40%] md:w-[50%] h-full fixed left-0 top-0 -z-10">
           <img
             src="/images/SingUp.jpg"
             alt="signUp image"
@@ -192,6 +197,7 @@ export default function Page() {
           />
         </div>
       </div>
+      <Footer />
     </>
   );
 }

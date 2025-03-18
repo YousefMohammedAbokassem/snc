@@ -39,12 +39,12 @@ export default function GeneralNews() {
         <span className="font-bold text-lg text-[#1D1D1D] dark:text-[#fff]">
           {t("generalNews")}
         </span>
-        <Link
+        {/* <Link
           to="/Categories"
           className="opacity-40 text-lg text-[#1D1D1D] dark:text-[#fff] dark:opacity-70"
         >
           {t("showAll")}
-        </Link>
+        </Link> */}
       </div>
 
       {/* News Container */}
@@ -65,7 +65,10 @@ export default function GeneralNews() {
                 </div>
               ))
           : news?.map((item) => (
-              <div key={item.id} className="flex p-8 gap-4 border-b border-b-[#B1B1B1] last:border-b-0">
+              <div
+                key={item.id}
+                className="flex p-8 gap-4 border-b border-b-[#B1B1B1] last:border-b-0"
+              >
                 <div className="date w-[10%] flex items-center justify-center text-gray-600">
                   {new Date(item.date).toLocaleDateString("ar-EG")}
                 </div>

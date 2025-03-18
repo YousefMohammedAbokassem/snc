@@ -14,8 +14,8 @@ export default function ZeroCard({ cardType }) {
             {t("firstService")}
           </h5>
           <div className="text-lg mt-2">
-            حصولك على مكتب إلكتروني مدى الحياة ضمن منصة HUN عبر موقعنا
-            الإلكتروني WWW.HUN.CASH.
+            حصولك على مكتب إلكتروني مدى الحياة ضمن منصة HUN عبر موقعها
+            الالكتروني WWW.HUN.CASH
           </div>
         </li>
         {/* 2 */}
@@ -37,9 +37,8 @@ export default function ZeroCard({ cardType }) {
           </h5>
           <div className="text-lg mt-2">
             <p className="text-xl">
-              {" "}
               تحصل على عمولة فورية (قسيمة شرائية) عن كل مستخدم جديد عن طريقك
-              ولمرة واحدة فقط وبحسب تصنيفه ضمن رصيدك الدولي لمكتبك الإلكتروني
+              ولمرة واحدة فقط وبحسب تصنيفه ضمن رصيدك الدولي لمكتبك الالكتروني
               ويمكنك تحويله للرصيد المحلي إذا رغبت وفق التسعير الأسبوعي من قبل
               إدارة المنصة لبلدك - كالتالي:
             </p>
@@ -63,7 +62,7 @@ export default function ZeroCard({ cardType }) {
           </h5>
           <div className="text-lg mt-2">
             لا يحق لصاحب هذا التصنيف المشاركة أو الدخول ببرنامج المكافآت المالية
-            المقدم من إدارة المنصة وتنحصر هذه المكافآت للتصنيفات الأعلى.
+            المقدم من إدارة المنصة وتنحصر هذه
           </div>
         </li>
         {/* 5 */}
@@ -73,7 +72,7 @@ export default function ZeroCard({ cardType }) {
           </h5>
           <div className="text-lg mt-2">
             تنحصر قيمة هذه البطاقة بالمستخدم فقط، دون تثبيت أي رصيد دولي له في
-            مكتبه الإلكتروني للبدء بالتبادل التجاري.
+            مكتبه الالكتروني للبدء بالتبادل التجاري.
           </div>
         </li>
 
@@ -83,8 +82,8 @@ export default function ZeroCard({ cardType }) {
             {t("sixthService")}
           </h5>
           <div className="text-lg mt-2">
-            يحق لمستخدم هذه التصنيف بصرف رصيده المالي الإلكتروني بقيمة / 15
-            قسيمة شرائية / كل 24 ساعة من توقيت الصرف.
+            يحق لمستخدم هذه التصنيف بصرف رصيده المالي الالكتروني بقيمة/15 قسيمة
+            شرائية/ كل24ساعة من توقيت الصرف
           </div>
         </li>
 
@@ -138,8 +137,8 @@ export default function ZeroCard({ cardType }) {
               الاستفادة من العروض والحسومات والحجوزات المقدمة لك من الفعاليات
               المتعاقدة مع المنصة في جميع أنحاء العالم.
             </p>
-            <p className="mt-1">
-              <span className="text-[#275963] font-bold">ملاحظة:</span> الأسعار
+            <p className="text-[#C92C2C] text-xl mt-2">
+              <span className="font-bold">ملاحظة:</span> الأسعار
               المسجلة للمنتجات والبضائع والموضحة في صفحة الفعاليات المتعاقدة مع
               المنصة لا تشمل أجور الشحن والتوصيل، وتبقى عمولة الإرسال والاستلام
               على حساب المستخدم.
@@ -160,13 +159,6 @@ export default function ZeroCard({ cardType }) {
           </div>
         </li>
       </ul>
-      <button
-        type="button"
-        className={`my-8 border-[#CDCDCD] bg-[#275963] text-white dark:bg-[#E1B145]  border-[1px]  dark:text-white rounded-md px-3 py-5 w-full focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145] font-bold flex items-center justify-center`}
-        onClick={() => navigate(`/home/${cardType}/buyCard`)}
-      >
-        {t("buyCard")}
-      </button>
     </div>
   );
 }

@@ -13,6 +13,7 @@ import CompletedReward from "./CompletedReward.jsx/CompletedReward";
 import TransfareEvent from "./TransfareEvent/TransfareEvent";
 import EventInfo from "./EventInfo/EventInfo";
 import EventProducts from "./EventProducts/EventProducts";
+import HomeOffice from "./HomeOffice/HomeOffice";
 
 export default function Tables({ theTable }) {
   const { t } = useTranslation();
@@ -41,10 +42,12 @@ export default function Tables({ theTable }) {
         <CompletedReward />
       ) : theTable === "transfareEvent" ? (
         <TransfareEvent />
-      ) : theTable === "eventInfo" ? (
+      ) : theTable === "eventInfo" && localStorage.getItem("role") == 3 ? (
         <EventInfo />
-      ) : theTable === "eventProducts" ? (
+      ) : theTable === "eventProducts" && localStorage.getItem("role") == 3 ? (
         <EventProducts />
+      ) : theTable === "home" ? (
+        <HomeOffice />
       ) : (
         ""
       )}

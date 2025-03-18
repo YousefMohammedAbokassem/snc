@@ -55,9 +55,7 @@ export default function FinancialCommission() {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${
-          import.meta.env.VITE_API_URL
-        }get_commissions?page=${currentPage}`,
+        `${import.meta.env.VITE_API_URL}get_commissions?page=${currentPage}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -67,7 +65,7 @@ export default function FinancialCommission() {
       setBody(res.data?.data);
     } catch (error) {
       if (error.response?.status === 401) {
-        // dispatch(logoutUser());
+        dispatch(logoutUser());
       }
     } finally {
       setLoading(false);

@@ -5,6 +5,7 @@ import Footer from "../../components/Footer/Footer";
 import Cards from "../../components/Cards/Cards";
 import GeneralNews from "../../components/GeneralNews/GeneralNews";
 import GeneralAdvertisements from "../../components/GeneralAdvertisements/GeneralAdvertisements";
+import Nav from "../nav/Nav";
 export default function Events() {
   const { t } = useTranslation();
   return (
@@ -12,6 +13,7 @@ export default function Events() {
       <Helmet>
         <title>{t("home")}</title>
       </Helmet>
+      <Nav />
       <HomeSlider />
       <Cards />
       <GeneralNews />

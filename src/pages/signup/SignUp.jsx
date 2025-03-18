@@ -14,6 +14,8 @@ import { useDispatch } from "react-redux";
 import { logIn } from "../../store/slices/auth/authSlice";
 import { FaSpinner } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
+import Nav from "../nav/Nav";
+import Footer from "../../components/Footer/Footer";
 const people = [
   {
     id: 1,
@@ -88,7 +90,7 @@ export default function Page() {
       // setCard_number(data.card_number || "");
       setIsChecked(data.isChecked || false);
       setOtp(data.otp || "");
-      // setCurrentStep(data.currentStep || 0);
+      setCurrentStep(data.currentStep || 0);
     }
     fetchCountries();
   }, []);
@@ -110,7 +112,7 @@ export default function Page() {
       // card_number,
       isChecked,
       otp,
-      // currentStep,
+      currentStep,
       address,
       // country_code,
     };
@@ -162,7 +164,7 @@ export default function Page() {
   const fetchCountries = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}countries`);
-      console.log(res.data.data)
+      console.log(res.data.data);
       setPhoneLoading(false);
       setCountries([""]);
       res.data.data.map((ele) => {
@@ -238,8 +240,8 @@ export default function Page() {
     formData.append("gender", gender.gender === "male" ? "m" : "f");
     formData.append("place_of_birth", place_of_birth.trim());
     const idCountry = countrySend.filter((ele) => {
-      console.log(ele)
-      console.log(country_code)
+      console.log(ele);
+      console.log(country_code);
       if (parseInt(ele.code) == parseInt(country_code)) {
         console.log(ele.id);
         return ele.id;
@@ -247,31 +249,63 @@ export default function Page() {
     });
     // console.log(idCountry[0]?.id)
     formData.append("country_id", idCountry[0]?.id);
+    console.log(idCountry);
     console.log(idCountry[0]);
     formData.append("birthday", moment(birthday).format("YYYY-MM-DD"));
     formData.append("card_number", encryptedData);
-    console.log(country_code)
+    console.log(country_code);
     formData.append("country_code", country_code);
     formData.append("address", address);
- 
+    formData.append("device_token", "sdxfhcgvhjkl");
+
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}register`,
         formData
       );
 
-      dispatch(logIn());
-      navigate("/home");
+      // dispatch(logIn());
+      localStorage.setItem("phone", phone_number.slice(country_code?.length));
+      localStorage.setItem("code", country_code);
+      // navigate("/home");
+      goToNextStep();
+
       setProgressLog(false);
     } catch (error) {
       setProgressLog(false);
-      setErrors(error?.response?.data.errors);
-      console.log(error)
-      // goToNextStep();
+      setErrors(error?.res?.data.errors);
+      console.log(error);
     }
   };
   // sing up logic
+  const verify = async (e) => {
+    e.preventDefault();
+    setProgressLog(true);
+    setErrors("");
+    const formData = new FormData(); // استخدام FormData لإرسال البيانات
+    formData.append("is_active", 1);
+    formData.append("phone_number", localStorage.getItem("phone"));
+    formData.append("country_code", localStorage.getItem("code"));
+    formData.append("code", otp);
+    console.log(otp);
 
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}verify_code`,
+        formData
+      );
+
+      // dispatch(logIn());
+      localStorage.getItem("phone");
+      alert("تم تسجيل معلوماتك الرجاء تسجيل الدخول للاستمرار");
+      navigate("/signIn");
+      setProgressLog(false);
+    } catch (error) {
+      console.log(error);
+      setProgressLog(false);
+      setErrors(error?.response?.data.message);
+    }
+  };
   useEffect(() => {
     encryptData(card_number.trim());
   }, [card_number]);
@@ -280,6 +314,7 @@ export default function Page() {
       <Helmet>
         <title>{t("createAnAcoount")}</title>
       </Helmet>
+      <Nav />
       <div className="signUp flex items-center ">
         <div className="FormAccount w-full sm:w-[60%] md:w-[50%] px-5 md:px-10">
           <div className="relative">
@@ -365,41 +400,41 @@ export default function Page() {
               />
             )}
 
-            {currentStep !== 2 && (
-              <div className="mt-6">
-                {/* ${
+            {/* {currentStep !== 2 && ( */}
+            <div className="mt-6">
+              {/* ${
                   currentStep === 2 &&
                   "opacity-90 pointer-events-none cursor-not-allowed"
                 } */}
-                <button
-                  type="button"
-                  className={`border-[#CDCDCD] bg-[#275963] text-white dark:bg-[#E1B145]  border-[1px]  dark:text-white rounded-md px-3 py-5 w-full focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]
-                ${
-                  currentStep === 2 &&
-                  "opacity-90 flex justify-center pointer-events-none cursor-not-allowed"
-                }
+              <button
+                type="button"
+                className={`border-[#CDCDCD] bg-[#275963] text-white dark:bg-[#E1B145]  border-[1px]  dark:text-white rounded-md px-3 py-5 w-full focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]
+        
                  font-bold flex justify-center`}
-                  onClick={
-                    currentStep === 0
-                      ? goToNextStep
-                      : currentStep === 1
-                      ? (e) => signUp(e)
-                      : ""
-                  }
-                  disabled={progressLog}
-                >
-                  {progressLog ? (
-                    <FaSpinner className="animate-spin" /> // عرض أيقونة التحميل
-                  ) : currentStep === 0 ? (
-                    t("next")
-                  ) : currentStep === 1 ? (
-                    t("submit")
-                  ) : (
-                    t("verification")
-                  )}
-                </button>
-              </div>
-            )}
+                onClick={
+                  currentStep === 0
+                    ? goToNextStep
+                    : currentStep === 1
+                    ? (e) => signUp(e)
+                    : (e) => verify(e)
+                }
+                disabled={progressLog}
+              >
+                {progressLog ? (
+                  <FaSpinner className="animate-spin" /> // عرض أيقونة التحميل
+                ) : currentStep === 0 ? (
+                  t("next")
+                ) : currentStep === 1 ? (
+                  t("submit")
+                ) : (
+                  t("verification")
+                )}
+              </button>
+              {/* {errors && (
+                <p className="mt-1 block text-red-500 font-bold">{t(errors)}</p>
+              )} */}
+            </div>
+            {/* )} */}
 
             <div className="flex items-center justify-center m-10">
               <Link
@@ -414,15 +449,17 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="image hidden sm:block sm:w-[40%] md:w-[50%] h-full fixed left-0 top-0">
+        <div className="image hidden sm:block sm:w-[40%] md:w-[50%] h-full fixed left-0 top-0 -z-10 ">
           <img
             src="/images/SingUp.jpg"
             alt="signUp image"
             className="w-full h-full "
           />
         </div>
+
         {/* <div className="image w-[60%]"></div> */}
       </div>
+      <Footer />
     </>
   );
 }

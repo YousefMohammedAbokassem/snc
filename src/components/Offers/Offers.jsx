@@ -4,24 +4,28 @@ import { EyeIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
 import { logoutUser } from "../../store/slices/auth/authSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { FaSpinner } from "react-icons/fa";
+import NoDataFounded from "../NoDataFounded/NoDataFounded";
 export default function Offers() {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [Offers, setOffers] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}get_products/discount?perPage=8`,
+        `${import.meta.env.VITE_API_URL}get_products/discount?perPage=${page}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
         }
       );
-      setOffers(res.data?.data?.data || []);
+      setOffers(res.data?.data || []);
     } catch (error) {
       if (error.response?.status === 401) {
         dispatch(logoutUser());
@@ -30,14 +34,37 @@ export default function Offers() {
       setLoading(false);
     }
   };
-
+  const [LoadingButton, setLoadingButton] = useState(false);
+  const [page, setPage] = useState(8);
+  const fetchMore = async (newPage) => {
+    setLoadingButton(true);
+    try {
+      const res = await axios.get(
+        `${
+          import.meta.env.VITE_API_URL
+        }get_products/discount?perPage=${newPage}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      );
+      setOffers(res.data?.data || []);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        dispatch(logoutUser());
+      }
+    } finally {
+      setLoadingButton(false);
+    }
+  };
   useEffect(() => {
     fetchData();
   }, []);
   return (
-    <div className="pt-12 container mx-auto">
+    <div className="py-12 container mx-auto">
       <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
-        <span className="font-bold text-lg">{t("modernProducts")}</span>
+        <span className="font-bold text-lg">{t("offers")}</span>
       </div>
       {/*  */}
       {/* map here */}
@@ -49,8 +76,11 @@ export default function Offers() {
                 className="animate-pulse bg-gray-200 h-[400px] rounded-[8px]"
               />
             ))
-          : Offers?.map((item, i) => (
-              <div key={i} className=" h-[400px] rounded-[8px] pb-5 flex flex-col">
+          : Offers?.data?.map((item, i) => (
+              <div
+                key={i}
+                className=" h-[400px] rounded-[8px] pb-5 flex flex-col"
+              >
                 <div className="image flex-1">
                   <img
                     src={`${import.meta.env.VITE_API_URL_IMAGE}${item.image}`}
@@ -70,26 +100,24 @@ export default function Offers() {
                   <p className="type my-2 font-semibold text-md">
                     {item?.name}
                   </p>
-                  <p className="priceLocal my-2">
-                  السعر الوطني:
-
-                    {item?.discount ? (
-                      <>
-                        <del className="text-red-500">
-                          {parseFloat(item?.price_in_country)} 
-                        </del>
-                        <p className="ml-2">
-                          {(
-                            parseFloat(item?.price_in_country) *
-                            (1 - item?.discount / 100)
-                          )}{" "}
-                          
-                        </p>
-                      </>
-                    ) : (
-                      <span>{item?.price_in_country} LSL</span>
-                    )}
-                  </p>
+                  {localStorage.getItem("authenticate") == "true" && (
+                    <p className="priceLocal my-2">
+                      السعر الوطني:
+                      {item?.discount ? (
+                        <>
+                          <del className="text-red-500">
+                            {parseFloat(item?.price_in_country)}
+                          </del>
+                          <p className="ml-2">
+                            {parseFloat(item?.price_in_country) *
+                              (1 - item?.discount / 100)}{" "}
+                          </p>
+                        </>
+                      ) : (
+                        <span>{item?.price_in_country} LSL</span>
+                      )}
+                    </p>
+                  )}
 
                   <p className="priceInter my-2 text-[#275963]">
                     السعر الدولي:
@@ -99,10 +127,8 @@ export default function Offers() {
                           {parseFloat(item?.price_in_hun)} SNC
                         </del>
                         <p className="ml-2">
-                          {(
-                            parseFloat(item?.price_in_hun) *
-                            (1 - item?.discount / 100)
-                          )}{" "}
+                          {parseFloat(item?.price_in_hun) *
+                            (1 - item?.discount / 100)}{" "}
                           SNC
                         </p>
                       </>
@@ -111,7 +137,14 @@ export default function Offers() {
                     )}
                   </p>
 
-                  <div className="flex justify-between items-center gap-2">
+                  <div
+                    className="flex justify-between items-center gap-2"
+                    onClick={() =>
+                      navigate(
+                        `/Product?categoryProduct=${item?.product_category_name}&product=${item?.id}&product_category=${item?.product_category_id}&categoryStore=${item?.product_category_id}`
+                      )
+                    }
+                  >
                     <button
                       className="bg-[#275963] rounded-sm flex-1 h-[30px] text-white font-bold"
                       type="button"
@@ -149,12 +182,32 @@ export default function Offers() {
             ))}
       </div>
       {/*  */}
-      <button
-        type="button"
-        className="more border-solid border border-[#CDCDCD] block w-full mt-10 p-4 font-bold text-xl cursor-pointer rounded-md text-[#275963]"
-      >
-        {t("more")}
-      </button>
+      {loading ? (
+        ""
+      ) : Offers.data?.length > 0 ? (
+        <button
+          type="button"
+          className={`more border-solid border border-[#CDCDCD] flex justify-center w-full mt-10 p-4 font-bold text-xl cursor-pointer rounded-md text-[#275963] 
+            ${Offers?.next_page_url === null ? "cursor-no-drop" : ""}`}
+          onClick={() => {
+            setPage((prev) => {
+              fetchMore(prev + 8);
+              return prev + 8;
+            });
+          }}
+          disabled={LoadingButton || Offers?.next_page_url === null}
+        >
+          {LoadingButton ? (
+            <FaSpinner className="animate-spin" />
+          ) : Offers?.next_page_url === null ? (
+            t("لا يوجد المزيد")
+          ) : (
+            t("more")
+          )}
+        </button>
+      ) : (
+        <NoDataFounded />
+      )}
     </div>
   );
 }

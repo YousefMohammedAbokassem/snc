@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/autoplay";
@@ -8,12 +8,14 @@ import { Autoplay } from "swiper/modules";
 import axios from "axios";
 import { logoutUser } from "../../store/slices/auth/authSlice";
 import { useDispatch } from "react-redux";
+import NoDataFounded from "../NoDataFounded/NoDataFounded";
 
 export default function StoresSlider() {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [stores, setStores] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     setLoading(true);
@@ -77,18 +79,23 @@ export default function StoresSlider() {
                 </SwiperSlide>
               ))
           : stores.map((store, index) => (
-              <SwiperSlide key={store.id || index} className="w-auto">
+              <SwiperSlide
+                key={store.id || index}
+                className="w-auto cursor-pointer"
+                onClick={() => navigate(`/allEvents/${store.id}`)}
+              >
                 <div className="flex flex-col items-center">
                   <img
                     src={`${import.meta.env.VITE_API_URL_IMAGE}/${store.logo}`}
                     alt={store.name}
-                    className="w-32 h-32 rounded-full object-cover"
+                    className="w-32 h-32 rounded-full "
                   />
                   <span className="mt-2 text-xl">{store.name}</span>
                 </div>
               </SwiperSlide>
             ))}
       </Swiper>
+      {loading ? "" : stores.length > 0 ? "" : <NoDataFounded />}
     </div>
   );
 }

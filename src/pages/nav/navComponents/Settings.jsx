@@ -26,7 +26,8 @@ const languages = [
   { id: 2, code: "en" },
 ];
 
-export default function Settings({ theme, setTheme }) {
+// export default function Settings({ theme, setTheme }) {
+export default function Settings() {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -50,39 +51,39 @@ export default function Settings({ theme, setTheme }) {
   //   localStorage.getItem("currentTheme") || "light"
   // );
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("currentTheme");
-    if (
-      savedTheme === "dark" ||
-      (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedTheme = localStorage.getItem("currentTheme");
+  //   if (
+  //     savedTheme === "dark" ||
+  //     (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+  //   ) {
+  //     setTheme("dark");
+  //   } else {
+  //     setTheme("light");
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
+  // useEffect(() => {
+  //   if (theme === "dark") {
+  //     document.documentElement.classList.add("dark");
+  //   } else {
+  //     document.documentElement.classList.remove("dark");
+  //   }
+  // }, [theme]);
 
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    localStorage.setItem("currentTheme", newTheme); // حفظ الاختيار في localStorage
-    if (newTheme === "dark") {
-      document.documentElement.classList.add("dark"); // تفعيل الوضع الداكن
-    } else {
-      document.documentElement.classList.remove("dark"); // تعطيل الوضع الداكن
-    }
-  };
+  // const toggleTheme = () => {
+  //   const newTheme = theme === "dark" ? "light" : "dark";
+  //   setTheme(newTheme);
+  //   localStorage.setItem("currentTheme", newTheme); // حفظ الاختيار في localStorage
+  //   if (newTheme === "dark") {
+  //     document.documentElement.classList.add("dark"); // تفعيل الوضع الداكن
+  //   } else {
+  //     document.documentElement.classList.remove("dark"); // تعطيل الوضع الداكن
+  //   }
+  // };
   return (
-    <div className="flex items-center gap-3">
-      <div className="languagesList">
+    <div className="flex items-center gap-3 ">
+      {/* <div className="languagesList">
         <div className="flex flex-col">
           <Listbox value={selected} onChange={setSelected}>
             <div className="relative">
@@ -139,9 +140,9 @@ export default function Settings({ theme, setTheme }) {
             </div>
           </Listbox>
         </div>
-      </div>
-      <div className="icons flex items-center gap-3">
-        <div className="w-[30px] h-[30px]">
+      </div> */}
+      <div className="icons flex items-center gap-3 mx-4">
+        {/* <div className="w-[30px] h-[30px]">
           <button onClick={toggleTheme} aria-label="Toggle theme">
             {theme === "dark" ? (
               <svg
@@ -180,7 +181,7 @@ export default function Settings({ theme, setTheme }) {
               </svg>
             )}
           </button>
-        </div>
+        </div> */}
         <div className="w-[30px] cursor-pointer" onClick={() => navigate("/basket")}>
           <svg
             width="30"
@@ -188,7 +189,7 @@ export default function Settings({ theme, setTheme }) {
             viewBox="0 0 45 45"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="stroke-[#1D1D1D] dark:stroke-white"
+            className="stroke-[#fff] dark:stroke-white"
           >
             <path
               d="M9.59201 6.18284H43.4139L38.8123 22.2882H12.0698M41.1131 31.4913H13.5038L8.90231 1.5813H2M15.8046 40.6944C15.8046 41.9651 14.7745 42.9952 13.5038 42.9952C12.2332 42.9952 11.2031 41.9651 11.2031 40.6944C11.2031 39.4237 12.2332 38.3936 13.5038 38.3936C14.7745 38.3936 15.8046 39.4237 15.8046 40.6944ZM41.1131 40.6944C41.1131 41.9651 40.083 42.9952 38.8123 42.9952C37.5416 42.9952 36.5115 41.9651 36.5115 40.6944C36.5115 39.4237 37.5416 38.3936 38.8123 38.3936C40.083 38.3936 41.1131 39.4237 41.1131 40.6944Z"
@@ -206,7 +207,7 @@ export default function Settings({ theme, setTheme }) {
             viewBox="0 0 46 46"
             // fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="stroke-[#1D1D1D] dark:stroke-white"
+            className="stroke-[#fff] dark:stroke-white"
           >
             <path
               // fill-rule="evenodd"
@@ -224,7 +225,7 @@ export default function Settings({ theme, setTheme }) {
             viewBox="0 0 52 52"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="stroke-[#1D1D1D] dark:stroke-white"
+            className="stroke-[#fff] dark:stroke-white"
           >
             <path
               d="M43.3327 45.5V41.1667C43.3327 38.8681 42.4196 36.6637 40.7943 35.0384C39.169 33.4131 36.9646 32.5 34.666 32.5H17.3327C15.0341 32.5 12.8297 33.4131 11.2044 35.0384C9.57911 36.6637 8.66602 38.8681 8.66602 41.1667V45.5"

@@ -3,8 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   token: localStorage.getItem("access_token") || null,
   authenticate: localStorage.getItem("authenticate") || false,
-  role: localStorage.getItem("role") || "user",
-
+  role: localStorage.getItem("role") || "",
 };
 
 const authReducer = createSlice({
@@ -14,9 +13,11 @@ const authReducer = createSlice({
     logoutUser: (state) => {
       state.token = null;
       state.authenticate = false;
-      state.role = "admin";
+      state.role = "";
       localStorage.removeItem("access_token");
       localStorage.removeItem("authenticate");
+      window.location.href = "/signIn";
+      // console.log('first')
     },
     logIn: (state) => {
       state.authenticate = true;

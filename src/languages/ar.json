@@ -89,7 +89,7 @@
   "subscribe": "اشترك",
   "social_media": "وسائل التواصل الاجتماعي",
   "all_rights_reserved": "جميع الحقوق محفوظة",
-  "doyYouWantCreate": "هل تريد إنشاء فعالية؟,",
+  "doyYouWantCreate": "هل تريد إنشاء فعالية؟",
   "filterBy": "فرز حسب",
   "oops": "أُووبس! لم يتم العثور على الصفحة.",
   "orSimply": "أو ببساطة الاستفادة من خبرة فريق الاستشارة لدينا.",
@@ -152,5 +152,7 @@
   "The phone number field is required.": "حقل رقم الهاتف مطلوب.",
   "The selected phone number is invalid.": "رقم الهاتف المحدد غير صالح.",
   "eventInfo": "معلومات الفعالية",
-  "eventProducts": "منتجات الفعالية"
+  "eventProducts": "منتجات الفعالية",
+  "logout":" الخروج",
+  "login":" الدخول"
 }

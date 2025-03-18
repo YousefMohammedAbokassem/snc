@@ -63,10 +63,10 @@ export default function EventInfo() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [logo, setLogo] = useState(
-    `${import.meta.env.VITE_API_URL_IMAGE}${profile?.background}`
+    `${import.meta.env.VITE_API_URL_IMAGE}${profile?.logo}`
   );
   const [background, setBackground] = useState(
-    `${import.meta.env.VITE_API_URL_IMAGE}${profile?.logo}`
+    `${import.meta.env.VITE_API_URL_IMAGE}${profile?.background}`
   );
   const [name, setName] = useState(profile?.name);
   const [address, setAddress] = useState(profile?.address);
@@ -190,7 +190,7 @@ export default function EventInfo() {
           {loadingProfile ? (
             <div className="h-full w-full bg-gray-300 animate-pulse" />
           ) : (
-            // <img src={background} alt="background" className="w-full h-full object-cover" />
+            // <img src={background} alt="background" className="w-full h-full " />
             <div
               className={`logoImage h-52 flex items-center justify-center gap-5 w-full border border-[#BBBBBB] ${
                 isDragging ? "bg-gray-300" : ""
@@ -201,13 +201,13 @@ export default function EventInfo() {
             >
               <label
                 htmlFor="background"
-                className="w-full h-full grid cursor-pointer"
+                className="w-full h-full block cursor-pointer"
               >
                 {background ? (
                   <img
                     src={background}
                     alt="backgroundEvent"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full "
                   />
                 ) : (
                   <div className="w-full flex flex-col items-center justify-center gap-2">
