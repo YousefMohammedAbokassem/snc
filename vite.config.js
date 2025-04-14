@@ -6,26 +6,38 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate',  // يعني أنه سيتم تحديث الـ Service Worker تلقائيًا عند تغييره.
+      registerType: 'autoUpdate',
       includeAssets: [
-        '/snc.png',
-        '/offline.html'  // تأكد من إضافة ملف offline.html إذا كنت تستخدمه.
+        'favicon.svg',
+        'favicon.ico',
+        'robots.txt',
+        'apple-touch-icon.png',
+        'offline.html'
       ],
       manifest: {
         name: 'snc',
         short_name: 'snc',
-        description: 'snc',
-        theme_color: '#111',
+        description: 'snc progressive web app',
+        theme_color: '#ffffff',
+        background_color: '#ffffff',
+        display: 'standalone',
+        start_url: '/',
         icons: [
           {
-            src: 'snc.png',
+            src: 'android-chrome-192x192.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'snc.png',
+            src: 'android-chrome-512x512.png',
             sizes: '512x512',
             type: 'image/png'
+          },
+          {
+            src: 'android-chrome-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable'
           }
         ]
       },
@@ -37,7 +49,7 @@ export default defineConfig({
             options: {
               cacheName: 'pages-cache',
               networkTimeoutSeconds: 3,
-              fallbackURL: '/offline.html'  // تأكد من أن هذا الملف موجود في مجلد public.
+              fallbackURL: '/offline.html'
             }
           }
         ]
