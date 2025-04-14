@@ -1,109 +1,51 @@
-// import { defineConfig } from 'vite'
-// import react from '@vitejs/plugin-react'
-// import { VitePWA } from 'vite-plugin-pwa'
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import { VitePWA } from 'vite-plugin-pwa'
 
-// export default defineConfig({
-//   plugins: [
-//     react(),
-//     VitePWA({
-//       registerType: 'autoUpdate',
-//       includeAssets: [
-//         'favicon.svg',
-//         'favicon.ico',
-//         'robots.txt',
-//         'apple-touch-icon.png',
-//         'offline.html'
-//       ],
-//       manifest: {
-//         name: 'snc',
-//         short_name: 'snc',
-//         description: 'snc progressive web app',
-//         theme_color: '#ffffff',
-//         background_color: '#ffffff',
-//         display: 'standalone',
-//         start_url: '/',
-//         icons: [
-//           {
-//             src: 'android-chrome-192x192.png',
-//             sizes: '192x192',
-//             type: 'image/png'
-//           },
-//           {
-//             src: 'android-chrome-512x512.png',
-//             sizes: '512x512',
-//             type: 'image/png'
-//           },
-//           {
-//             src: 'android-chrome-512x512.png',
-//             sizes: '512x512',
-//             type: 'image/png',
-//             purpose: 'any maskable'
-//           }
-//         ]
-//       },
-//       workbox: {
-//         runtimeCaching: [
-//           {
-//             urlPattern: ({ request }) => request.mode === 'navigate',
-//             handler: 'NetworkFirst',
-//             options: {
-//               cacheName: 'pages-cache',
-//               networkTimeoutSeconds: 3,
-//               fallbackURL: '/offline.html'
-//             }
-//           }
-//         ]
-//       }
-//     })
-//   ]
-// })
-
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugin = {
   registerType: "prompt",
-  includeAssets: ["favicon.ico", "apple-touc-icon.png", "masked-icon.png"],
+  includeAssets: ['favicon.ico', "apple-touc-icon.png", "src.png" ],
   manifest: {
     name: "Weather app",
     short_name: "Weather app",
     description: "An app that can show the weather forecast for your city.",
     icons: [
+      
       {
-        src: "./icon-192x192.png",
+        src: "./android-chrome-192x192.png",
         sizes: "192x192",
-        type: "image/png",
+        type: "image/png"
       },
       {
-        src: "./icon-512x512.png",
+        src: "./android-chrome-512x512.png",
         sizes: "512x512",
         type: "image/png",
-        purpose: "favicon",
+        purpose:'favicon'
       },
       {
-        src: "./apple-touch-icon.png",
-        sizes: "180x180",
-        type: "image/png",
-        purpose: "apple touch icon",
+        src: './apple-touch-icon.png',
+        sizes:'180x180',
+        type:'image/png',
+        purpose:'apple touch icon',
       },
       {
-        src: "./icon-144x144.png",
-        sizes: "144x144",
+        src: "./favicon-16x16.png",
+        sizes: "16x16",
         type: "image/png",
-        purpose: "any",
+        purpose: "any"
       },
       {
-        src: "./icon-256x256.png",
-        sizes: "256x256",
+        src: "./favicon-32x32.png",
+        sizes: "32x32",
         type: "image/png",
-        purpose: "icon",
+        purpose: "icon"
       },
       {
-        src: "./icon-384x384.png",
-        sizes: "384x384",
+        src: "./src.png",
+        // sizes: "32x32",
         type: "image/png",
-        purpose: "any maskable",
+        // purpose: "icon"
       },
     ],
     theme_color: "#181818",
@@ -115,7 +57,13 @@ const manifestForPlugin = {
   },
 };
 
+
+
 // https://vitejs.dev/config/
 export default defineConfig({
+  
   plugins: [react(), VitePWA(manifestForPlugin)],
 });
+
+
+
