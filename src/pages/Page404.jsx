@@ -8,7 +8,7 @@ export default function Page404() {
   const { t } = useTranslation();
   return (
     <>
-      <Nav />
+      {/* <Nav /> */}
       <div>
         <div className="flex justify-center items-center flex-col h-screen gap-2">
           <p className="text-3xl text-[#414651] dark:text-[#ddd]">

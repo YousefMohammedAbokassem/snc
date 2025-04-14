@@ -14,7 +14,7 @@ export default function Events() {
       <Helmet>
         <title>{t("events")}</title>
       </Helmet>
-      <Nav />
+      {/* <Nav /> */}
       <EventsSlider />
       <Categories />
       <StoresSlider />

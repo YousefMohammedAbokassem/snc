@@ -13,7 +13,7 @@ export default function Events() {
       <Helmet>
         <title>{t("home")}</title>
       </Helmet>
-      <Nav />
+      {/* <Nav /> */}
       <HomeSlider />
       <Cards />
       <GeneralNews />

@@ -17,7 +17,7 @@ export default function TransfareEvent() {
             onChange={() => setTransferType("internal")}
             className="accent-[#275963]"
           />
-          مشترك (عملية تحويل بين مشتركين وطنية)
+          حوالات داخلية
         </label>
         <label className="flex items-center gap-2">
           <input
@@ -28,7 +28,7 @@ export default function TransfareEvent() {
             onChange={() => setTransferType("external")}
             className="accent-[#275963]"
           />
-          حوالة (عملية تحويل بين مشترك وفعالية وطنية)
+          حوالات خارجية
         </label>
       </div>
       {transferType === "internal" ? (

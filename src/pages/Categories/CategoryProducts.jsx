@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { logoutUser } from "../../store/slices/auth/authSlice";
 import { useTranslation } from "react-i18next";
+import NoDataFounded from "../../components/NoDataFounded/NoDataFounded";
+import { FaSpinner } from "react-icons/fa";
 
 export default function CategoryProducts() {
   const { id } = useParams();
@@ -23,7 +25,9 @@ export default function CategoryProducts() {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}get_products/category/${id}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }get_products/category/${id}?perPage=${page}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -43,10 +47,33 @@ export default function CategoryProducts() {
   useEffect(() => {
     fetchData();
   }, [id]);
-  console.log(products);
+  const [LoadingButton, setLoadingButton] = useState(false);
+  const [page, setPage] = useState(8);
+  const fetchMore = async (newPage) => {
+    setLoadingButton(true);
+    try {
+      const res = await axios.get(
+        `${
+          import.meta.env.VITE_API_URL
+        }get_products/category/?perPage=${newPage}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      );
+      setProducts(res.data?.data || []);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        dispatch(logoutUser());
+      }
+    } finally {
+      setLoadingButton(false);
+    }
+  };
   return (
     <>
-      <Nav />
+      {/* <Nav /> */}
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
           <ul className="flex gap-2 opacity-25">
@@ -75,12 +102,12 @@ export default function CategoryProducts() {
                   className="animate-pulse bg-gray-200 h-[400px] rounded-[8px]"
                 />
               ))
-            : products?.map((item, i) => (
+            : products?.data?.map((item, i) => (
                 <div
                   key={i}
                   className=" h-[400px] rounded-[8px] pb-5 flex flex-col"
                 >
-                  <div className="image flex-1 cursor-pointer">
+                  <div className="image flex-1 cursor-pointer h-[40%]">
                     <img
                       src={`${import.meta.env.VITE_API_URL_IMAGE}${item.image}`}
                       className="w-full h-full"
@@ -178,24 +205,24 @@ export default function CategoryProducts() {
                 </div>
               ))}
         </div>
-        {/* {loading ? (
+        {loading ? (
           ""
-        ) : categories.data?.length > 0 ? (
+        ) : products.data?.length > 0 ? (
           <button
             type="button"
             className={`more border-solid border border-[#CDCDCD] flex justify-center w-full mt-10 p-4 font-bold text-xl cursor-pointer rounded-md text-[#275963] 
-            ${categories?.next_page_url === null ? "cursor-no-drop" : ""}`}
+            ${products?.next_page_url === null ? "cursor-no-drop" : ""}`}
             onClick={() => {
               setPage((prev) => {
                 fetchMore(prev + 8);
                 return prev + 8;
               });
             }}
-            disabled={LoadingButton || categories?.next_page_url === null}
+            disabled={LoadingButton || products?.next_page_url === null}
           >
             {LoadingButton ? (
               <FaSpinner className="animate-spin" />
-            ) : categories?.next_page_url === null ? (
+            ) : products?.next_page_url === null ? (
               t("لا يوجد المزيد")
             ) : (
               t("more")
@@ -203,7 +230,7 @@ export default function CategoryProducts() {
           </button>
         ) : (
           <NoDataFounded />
-        )} */}
+        )}
       </div>
       <Footer />
     </>

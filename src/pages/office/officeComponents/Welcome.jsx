@@ -5,7 +5,7 @@ export const Welcome = () => {
   const { t } = useTranslation();
   return (
     <div className="px-4 text-[#FFF]">
-      <span>يوسف أبوقاسم</span>
+      <span> يوسف أبوقاسم </span>
       {t("welcome")}
     </div>
   );

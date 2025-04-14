@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { FaSpinner } from "react-icons/fa";
 import NoDataFounded from "../../components/NoDataFounded/NoDataFounded";
+import Swal from "sweetalert2";
 export default function Basket() {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -35,6 +36,7 @@ export default function Basket() {
           },
         }
       );
+      console.log(res.data.data) 
       setItems(res.data?.data || []);
     } catch (error) {
       if (error.response?.status === 401) {
@@ -72,11 +74,13 @@ export default function Basket() {
   useEffect(() => {
     fetchAmount();
   }, []);
+  console.log(amount);
   const [items, setItems] = useState([]);
   const timeout = useRef(null); // تحديد timeout باستخدام useRef
 
   const updateQuantity = (id, change) => {
     setDisabledBuy(true);
+
     setItems((prevItems) =>
       prevItems.map((item) =>
         item.id === id
@@ -88,16 +92,19 @@ export default function Basket() {
     // إلغاء المؤقت القديم إذا كان موجودًا
     clearTimeout(timeout.current);
 
-    // تعيين مؤقت جديد لتحديث الكمية بعد ثانيتين من آخر تعديل
+    // تعيين مؤقت جديد لتحديث الكمية بعد ثانية واحدة من آخر تعديل
     timeout.current = setTimeout(() => {
-      const itemToUpdate = items.find((item) => item.id === id);
-      if (itemToUpdate) {
-        update(itemToUpdate.id, itemToUpdate.quantity); // إرسال التحديث إلى الخادم
-      }
-      setDisabledBuy(false);
-    }, 1000); // 2000 ميلي ثانية = ثانيتين
-  };
+      setItems((prevItems) => {
+        const itemToUpdate = prevItems.find((item) => item.id === id);
+        if (itemToUpdate) {
+          update(itemToUpdate.id, itemToUpdate.quantity); // إرسال التحديث إلى الخادم
+        }
+        return prevItems;
+      });
 
+      setDisabledBuy(false);
+    }, 1000);
+  };
   // update quantity
   const [loadingAmount, setLoadingAmount] = useState(false);
   const [disabledBuy, setDisabledBuy] = useState(false);
@@ -150,7 +157,12 @@ export default function Basket() {
       setOpenDialog(false); // إغلاق النافذة
       fetchAmount();
     } catch (error) {
-      alert("حاول لاحقًا");
+      Swal.fire({
+        icon: "error",
+        title: "حدث خطأ",
+        text: "حاول لاحقًا",
+        confirmButtonText: "حسنًا",
+      });
       if (error.response?.status === 401) {
         dispatch(logoutUser());
         navigate("/signIn");
@@ -177,10 +189,21 @@ export default function Basket() {
         }
       );
       setLoadingPay(false);
-      alert("تم الشراء بنجاح");
+      Swal.fire({
+        icon: "success",
+        title: "نجاح",
+        text: "تم الشراء بنجاح",
+        confirmButtonText: "حسنًا",
+      });
+      navigate("/home");
     } catch (error) {
       setError(error.response.data.message);
-      alert(error.response.data.message);
+      Swal.fire({
+        icon: "error",
+        title: "خطأ",
+        text: error.response.data.message,
+        confirmButtonText: "حسنًا",
+      });
       if (error.response?.status === 401) {
         dispatch(logoutUser());
         navigate("/signIn");
@@ -190,7 +213,7 @@ export default function Basket() {
   };
   return (
     <>
-      <Nav />
+      {/* <Nav /> */}
       <div className="container mx-auto p-6">
         <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
           <ul className="flex gap-2 opacity-25">

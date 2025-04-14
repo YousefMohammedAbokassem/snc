@@ -9,7 +9,7 @@ export default function BuyCard() {
 
   return (
     <>
-    <Nav/>
+    {/* <Nav/> */}
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
           <ul className="flex gap-2 opacity-25">

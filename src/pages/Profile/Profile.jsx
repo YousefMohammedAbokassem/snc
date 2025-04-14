@@ -91,7 +91,7 @@ export default function Profile() {
   console.log(profile);
   return (
     <>
-      <Nav />
+      {/* <Nav /> */}
       <div className="container mx-auto p-6">
         <h4 className="text-center font-bold text-2xl mb-6">{t("profile")}</h4>
 

@@ -15,12 +15,18 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
+import Badge from "@mui/material/Badge";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { ChevronUpDownIcon } from "@heroicons/react/16/solid";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { changeLanguage } from "../../../store/slices/language/languageSlice";
 import { useNavigate } from "react-router-dom";
-
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import NotificationDialog from "./NotificationDialog";
+import axios from "axios";
+// import { logoutUser } from "../../../store/slices/auth/authSlice";
 const languages = [
   { id: 1, code: "ar" },
   { id: 2, code: "en" },
@@ -81,6 +87,33 @@ export default function Settings() {
   //     document.documentElement.classList.remove("dark"); // تعطيل الوضع الداكن
   //   }
   // };
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [notifications, setNotifications] = useState([]);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}notify/get`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+      setNotifications(res.data?.data || []);
+
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+      if (error.response?.status === 401) {
+        // dispatch(logoutUser());
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <div className="flex items-center gap-3 ">
       {/* <div className="languagesList">
@@ -182,66 +215,46 @@ export default function Settings() {
             )}
           </button>
         </div> */}
-        <div className="w-[30px] cursor-pointer" onClick={() => navigate("/basket")}>
-          <svg
-            width="30"
-            height="30"
-            viewBox="0 0 45 45"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="stroke-[#fff] dark:stroke-white"
-          >
-            <path
-              d="M9.59201 6.18284H43.4139L38.8123 22.2882H12.0698M41.1131 31.4913H13.5038L8.90231 1.5813H2M15.8046 40.6944C15.8046 41.9651 14.7745 42.9952 13.5038 42.9952C12.2332 42.9952 11.2031 41.9651 11.2031 40.6944C11.2031 39.4237 12.2332 38.3936 13.5038 38.3936C14.7745 38.3936 15.8046 39.4237 15.8046 40.6944ZM41.1131 40.6944C41.1131 41.9651 40.083 42.9952 38.8123 42.9952C37.5416 42.9952 36.5115 41.9651 36.5115 40.6944C36.5115 39.4237 37.5416 38.3936 38.8123 38.3936C40.083 38.3936 41.1131 39.4237 41.1131 40.6944Z"
-              // stroke="#1D1D1D"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+        <div
+          className="w-[30px] cursor-pointer"
+          onClick={() =>
+            localStorage.getItem("authenticate") === "true"
+              ? navigate("/basket")
+              : navigate("/SignIn")
+          }
+        >
+          <Badge badgeContent={0} color="error">
+            <ShoppingCartIcon fontSize="large" sx={{ color: "white" }} />
+          </Badge>
         </div>
-        <div className="w-[30px]">
-          <svg
-            width="30"
-            height="30"
-            viewBox="0 0 46 46"
-            // fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="stroke-[#fff] dark:stroke-white"
-          >
-            <path
-              // fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M37.375 25.5875C37.6625 27.3125 37.95 28.75 38.525 30.475L40.25 35.3625L38.8125 37.375H28.75C28.75 38.8125 28.175 40.25 27.025 41.4C25.875 42.55 24.4375 43.125 23 43.125C21.5625 43.125 19.8375 42.55 18.975 41.4C17.825 40.25 17.25 38.8125 17.25 37.375H7.1875L5.75 35.3625L7.475 30.475C8.05 28.175 8.625 25.875 8.625 23.575V17.25C8.625 15.2375 8.9125 13.225 9.775 11.5C10.6375 9.4875 11.7875 8.05 13.225 6.6125C14.6625 5.175 16.3875 4.3125 18.4 3.7375C19.8375 3.1625 21.5625 2.875 23 2.875C22.425 3.7375 21.85 4.8875 21.275 6.0375C20.7 6.0375 20.125 6.0375 19.2625 6.6125C17.825 6.9 16.3875 7.7625 15.2375 8.9125C14.0875 9.775 12.9375 11.2125 12.3625 12.65C11.7875 14.0875 11.5 15.525 11.5 17.25V23.575C11.5 26.1625 10.925 28.75 10.35 31.3375L9.2 34.5H36.8L35.65 31.3375C35.1469 29.8252 34.8622 28.0887 34.6064 26.5247L34.5 25.875C35.65 25.875 36.5125 25.875 37.375 25.5875ZM23 40.25C23.575 40.25 24.4375 39.9625 25.0125 39.3875C25.5875 38.8125 25.875 38.2375 25.875 37.375H20.125C20.125 38.2375 20.4125 38.8125 20.9875 39.3875C21.5625 39.9625 22.425 40.25 23 40.25ZM43.125 11.5C43.125 13.7875 42.2163 15.9813 40.5988 17.5988C38.9813 19.2163 36.7875 20.125 34.5 20.125C32.2125 20.125 30.0187 19.2163 28.4012 17.5988C26.7837 15.9813 25.875 13.7875 25.875 11.5C25.875 9.21251 26.7837 7.0187 28.4012 5.4012C30.0187 3.7837 32.2125 2.875 34.5 2.875C36.7875 2.875 38.9813 3.7837 40.5988 5.4012C42.2163 7.0187 43.125 9.21251 43.125 11.5Z"
-              // fill="#1D1D1D"
-            />
-            <circle cx="34.5" cy="11.5" r="8.5" fill="#E8161C" />
-          </svg>
+        <div
+          className="w-[30px] cursor-pointer"
+          onClick={() =>
+            localStorage.getItem("authenticate") === "true"
+              ? setOpen(true)
+              : navigate("/SignIn")
+          }
+        >
+          {/* <Badge badgeContent={notifications.length} color="error"> */}
+          <Badge badgeContent={0} color="error">
+            <NotificationsIcon fontSize="large" sx={{ color: "white" }} />
+          </Badge>
         </div>
-        <div className="w-[30px] cursor-pointer" onClick={() => navigate("/Profile")}>
-          <svg
-            width="30"
-            height="30"
-            viewBox="0 0 52 52"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="stroke-[#fff] dark:stroke-white"
-          >
-            <path
-              d="M43.3327 45.5V41.1667C43.3327 38.8681 42.4196 36.6637 40.7943 35.0384C39.169 33.4131 36.9646 32.5 34.666 32.5H17.3327C15.0341 32.5 12.8297 33.4131 11.2044 35.0384C9.57911 36.6637 8.66602 38.8681 8.66602 41.1667V45.5"
-              // stroke="#1D1D1D"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M26.0007 23.8333C30.7871 23.8333 34.6673 19.9531 34.6673 15.1667C34.6673 10.3802 30.7871 6.5 26.0007 6.5C21.2142 6.5 17.334 10.3802 17.334 15.1667C17.334 19.9531 21.2142 23.8333 26.0007 23.8333Z"
-              // stroke="#1D1D1D"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+        <NotificationDialog
+          count={1}
+          open={open}
+          setOpen={setOpen}
+          notifications={notifications}
+        />
+        <div
+          className="w-[30px] cursor-pointer"
+          onClick={() =>
+            localStorage.getItem("authenticate") === "true"
+              ? navigate("/Profile")
+              : navigate("/SignIn")
+          }
+        >
+          <AccountCircleIcon fontSize="large" sx={{ color: "white" }} />
         </div>
       </div>
     </div>

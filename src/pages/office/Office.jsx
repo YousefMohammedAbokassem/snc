@@ -9,7 +9,7 @@ export default function Office() {
   const { t } = useTranslation();
   return (
     <>
-    <Nav/>
+    {/* <Nav/> */}
       <Helmet>
         <title>{t("office")}</title>
       </Helmet>

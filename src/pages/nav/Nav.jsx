@@ -25,7 +25,7 @@ export default function Nav() {
     <nav className="bg-[#275963] z-50 shadow-lg px-6 py-3 rounded-b-lg mb-3">
       <div className="container mx-auto flex justify-between items-center">
         {/* شعار الموقع */}
-        <div className="w-24">
+        <div className="w-20">
           <img src={`/icons/dark.svg`} className="w-full h-full" alt="logo" />
         </div>
 
@@ -39,7 +39,11 @@ export default function Nav() {
           </NavLink>
           <NavLink
             className="text-white font-medium hover:text-gray-300 transition"
-            to={isAuthenticated ? "/office?table=home" : "/signIn"}
+            to={
+              localStorage.getItem("authenticate") === "true"
+                ? "/office?table=home"
+                : "/signIn"
+            }
           >
             {t("office")}
           </NavLink>
@@ -59,9 +63,9 @@ export default function Nav() {
 
         {/* أدوات البحث والإعدادات */}
         <div className="hidden md:flex items-center space-x-4">
-          <Search />
+          {/* <Search /> */}
           <Settings />
-          {isAuthenticated ? (
+          {localStorage.getItem("authenticate") === "true" ? (
             <button
               onClick={handleLogout}
               className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition shadow-m m-0"
@@ -83,7 +87,11 @@ export default function Nav() {
           className="md:hidden text-white"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? <XIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
+          {isOpen ? (
+            <XIcon className="w-6 h-6" />
+          ) : (
+            <MenuIcon className="w-6 h-6" />
+          )}
         </button>
       </div>
 
@@ -99,7 +107,11 @@ export default function Nav() {
           </NavLink>
           <NavLink
             className="text-white font-medium hover:text-gray-300 transition "
-            to={isAuthenticated ? "/office?table=home" : "/signIn"}
+            to={
+              localStorage.getItem("authenticate") === "true"
+                ? "/office?table=home"
+                : "/signIn"
+            }
             onClick={() => setIsOpen(false)}
           >
             {t("office")}
@@ -118,9 +130,9 @@ export default function Nav() {
           >
             {t("contactUs")}
           </NavLink>
-          <Search />
+          {/* <Search /> */}
           <Settings />
-          {isAuthenticated ? (
+          {localStorage.getItem("authenticate") === "true" ? (
             <button
               onClick={handleLogout}
               className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition shadow-md"

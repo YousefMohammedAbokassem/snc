@@ -83,7 +83,7 @@ export default function ModernProducts() {
                 key={i}
                 className=" h-[400px] rounded-[8px] pb-5 flex flex-col"
               >
-                <div className="image flex-1 cursor-pointer">
+                <div className="image flex-1 cursor-pointer h-[40%]">
                   <img
                     src={`${import.meta.env.VITE_API_URL_IMAGE}${item.image}`}
                     className="w-full h-full"

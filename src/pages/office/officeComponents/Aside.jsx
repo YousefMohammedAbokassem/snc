@@ -14,7 +14,7 @@ const menuItems = [
   "exportEventsInter",
   "financialCommission",
   "completedReward",
-  "buyCards",
+  // "buyCards",
   "transfareEvent",
   "eventInfo",
   "eventProducts",

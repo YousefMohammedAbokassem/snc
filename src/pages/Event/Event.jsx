@@ -78,7 +78,7 @@ export default function Event() {
   console.log(market);
   return (
     <>
-      <Nav />
+      {/* <Nav /> */}
       <div className="container mx-auto pb-12">
         <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
           <ul className="flex gap-2 opacity-25">
@@ -167,7 +167,7 @@ export default function Event() {
                   className=" h-[400px] rounded-[8px] pb-5 flex flex-col"
                 >
                   <>
-                    <div className="image flex-1 cursor-pointer">
+                    <div className="image flex-1 cursor-pointer h-[40%]">
                       <img
                         src={`${import.meta.env.VITE_API_URL_IMAGE}${
                           item.image

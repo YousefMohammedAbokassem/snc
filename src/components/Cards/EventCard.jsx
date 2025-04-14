@@ -85,31 +85,15 @@ export default function EventInfo() {
     }
   };
 
-  const handleDragOver = (event) => {
-    event.preventDefault();
-    setIsDragging(true);
-  };
   const handleDragOverLogo = (event) => {
     event.preventDefault();
     setIsDraggingLogo(true);
   };
-
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
+  
   const handleDragLeaveLogo = () => {
     setIsDraggingLogo(false);
   };
-
-  const handleDrop = (event) => {
-    event.preventDefault();
-    setIsDragging(false);
-    const file = event.dataTransfer.files[0];
-    setBackgroundSend(file);
-    if (file) {
-      setBackground(URL.createObjectURL(file));
-    }
-  };
+  
   const handleDropLogo = (event) => {
     event.preventDefault();
     setIsDraggingLogo(false);
@@ -117,6 +101,23 @@ export default function EventInfo() {
     setLogoSend(file);
     if (file) {
       setLogo(URL.createObjectURL(file));
+    }
+  };
+  // back
+  const handleDragOver = (event) => {
+    event.preventDefault();
+    setIsDragging(true);
+  };
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+  const handleDrop = (event) => {
+    event.preventDefault();
+    setIsDragging(false);
+    const file = event.dataTransfer.files[0];
+    setBackgroundSend(file);
+    if (file) {
+      setBackground(URL.createObjectURL(file));
     }
   };
   const handleSave = () => {
@@ -161,7 +162,7 @@ export default function EventInfo() {
       navigate("/office?table=eventInfo");
     } catch (error) {
       console.log(error);
-      setErrors(error?.res?.data?.errors || {});
+      setErrors(error?.response?.data?.errors || {});
       setMessageError(error?.res?.data?.message);
       if (error.response?.status === 401) {
         dispatch(logoutUser());

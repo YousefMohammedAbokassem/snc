@@ -6,14 +6,16 @@ import axios from "axios";
 import { logoutUser } from "../../../../../store/slices/auth/authSlice";
 import { FaSpinner } from "react-icons/fa";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
-export default function FromInternToOuter() {
+export default function FromInternToIntern() {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     receiver_phone_number: "",
     display_name: "",
     amount: "",
     password: "",
+    country_code: "963",
   });
 
   const handleChange = (e) => {
@@ -42,21 +44,51 @@ export default function FromInternToOuter() {
   const [loading, setLoading] = useState(false);
   const sendTransfare = async () => {
     setLoading(true);
-    const formData = new FormData();
-    formData.append("encrypted_data", encryptData(JSON.stringify(formData)));
+    console.log(formData.receiver_phone_number.slice(3));
+    const encrypted = encryptData(
+      JSON.stringify({
+        receiver_phone_number: formData.receiver_phone_number,
+        display_name: formData.display_name,
+        amount: formData.amount,
+        password: formData.password,
+        country_code: "963",
+      })
+    );
+    console.log(formData.receiver_phone_number);
+    const payload = new FormData();
+    payload.append("encrypted_data", encrypted);
+
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}international/send_money_transfers`,
+        payload,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
         }
       );
+
+      // ✅ عرض رسالة نجاح
+      Swal.fire({
+        icon: "success",
+        title: "نجاح",
+        text: "تم إرسال الحوالة بنجاح",
+        confirmButtonText: "حسنًا",
+      });
     } catch (error) {
+      console.log(error);
       if (error.response?.status === 401) {
-        dispatch(logoutUser());
+        // dispatch(logoutUser());
       }
+
+      // ❌ عرض رسالة فشل
+      Swal.fire({
+        icon: "error",
+        title: "فشل",
+        text: "لم يتم إرسال الحوالة",
+        confirmButtonText: "حسنًا",
+      });
     } finally {
       setLoading(false);
     }

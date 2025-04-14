@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { Helmet } from "react-helmet-async";
 import Nav from "../nav/Nav";
 import Footer from "../../components/Footer/Footer";
+import Swal from "sweetalert2";
 
 export default function Page() {
   const navigate = useNavigate();
@@ -51,8 +52,14 @@ export default function Page() {
     } catch (error) {
       setProgressLog(false);
       console.log(error);
-      setErrors(error?.res?.data?.errors || {}); // تخزين الأخطاء
-      setMessageError(error?.res?.data?.message);
+      setErrors(error?.response?.data?.errors || {}); // تخزين الأخطاء
+      setMessageError(error?.response?.data?.message);
+      Swal.fire({
+        icon: "warning",
+        title: "تنبيه",
+        text: "الرجاء التأكد من جميع الحقول أولاً",
+        confirmButtonText: "حسنًا",
+      });
     }
   };
 
@@ -61,7 +68,7 @@ export default function Page() {
       <Helmet>
         <title>{t("logIn")}</title>
       </Helmet>
-      <Nav />
+      {/* <Nav /> */}
       <div className="signUp flex items-start ">
         <div className="FormAccount w-full sm:w-[60%] md:w-[50%] px-5 md:px-10 ">
           <div className="relative">

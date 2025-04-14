@@ -16,6 +16,7 @@ import { FaSpinner } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import Nav from "../nav/Nav";
 import Footer from "../../components/Footer/Footer";
+import Swal from "sweetalert2";
 const people = [
   {
     id: 1,
@@ -253,7 +254,6 @@ export default function Page() {
     console.log(idCountry[0]);
     formData.append("birthday", moment(birthday).format("YYYY-MM-DD"));
     formData.append("card_number", encryptedData);
-    console.log(country_code);
     formData.append("country_code", country_code);
     formData.append("address", address);
     formData.append("device_token", "sdxfhcgvhjkl");
@@ -272,9 +272,15 @@ export default function Page() {
 
       setProgressLog(false);
     } catch (error) {
-      setProgressLog(false);
-      setErrors(error?.res?.data.errors);
       console.log(error);
+      setProgressLog(false);
+      setErrors(error?.response?.data.errors);
+      Swal.fire({
+        icon: "warning",
+        title: "تنبيه",
+        text: "الرجاء التأكد من جميع الحقول أولاً",
+        confirmButtonText: "حسنًا",
+      });
     }
   };
   // sing up logic
@@ -287,7 +293,6 @@ export default function Page() {
     formData.append("phone_number", localStorage.getItem("phone"));
     formData.append("country_code", localStorage.getItem("code"));
     formData.append("code", otp);
-    console.log(otp);
 
     try {
       const res = await axios.post(
@@ -314,7 +319,7 @@ export default function Page() {
       <Helmet>
         <title>{t("createAnAcoount")}</title>
       </Helmet>
-      <Nav />
+      {/* <Nav /> */}
       <div className="signUp flex items-center ">
         <div className="FormAccount w-full sm:w-[60%] md:w-[50%] px-5 md:px-10">
           <div className="relative">

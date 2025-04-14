@@ -5,6 +5,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../../../store/slices/auth/authSlice";
 import AddProduct from "./AddProduct";
+import NoDataFounded from "../../../../../components/NoDataFounded/NoDataFounded";
 export default function EventProducts() {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
@@ -62,27 +63,48 @@ export default function EventProducts() {
   const fetchColors = async () => {
     setLoadingC(true);
     try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}get_measures`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        }
-      );
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}get_colors`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
       setColors(res.data?.data || []);
     } catch (error) {
       if (error.response?.status === 401) {
         dispatch(logoutUser());
       }
     } finally {
-      setLoadingM(false);
+      setLoadingC(false);
+    }
+  };
+  const [productsCategory, setProductsCategory] = useState([]);
+  const [loadingP, setLoadingP] = useState(true);
+
+  const fetchProductsCategory = async () => {
+    setLoadingP(true);
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}get_categories`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      );
+      setProductsCategory(res.data?.data || []);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        dispatch(logoutUser());
+      }
+    } finally {
+      setLoadingP(false);
     }
   };
   useEffect(() => {
     fetchData();
     fetchMeasure();
     fetchColors();
+    fetchProductsCategory();
   }, []);
   return (
     <div className="px-8">
@@ -107,7 +129,7 @@ export default function EventProducts() {
                   key={i}
                   className=" h-[400px] rounded-[8px] pb-5 flex flex-col"
                 >
-                  <div className="image flex-1 cursor-pointer">
+                  <div className="image flex-1 cursor-pointer h-[40%]">
                     <img
                       src={`${import.meta.env.VITE_API_URL_IMAGE}${item.image}`}
                       className="w-full h-full"
@@ -126,7 +148,7 @@ export default function EventProducts() {
                     <p className="type my-2 font-semibold text-md">
                       {item?.name}
                     </p>
-                    {(localStorage.getItem("authenticate") == "true") &
+                    {(localStorage.getItem("authenticate") == "true") &&
                     (
                       <p className="priceLocal my-2">
                         السعر الوطني:
@@ -141,7 +163,7 @@ export default function EventProducts() {
                             </p>
                           </>
                         ) : (
-                          <span>{item?.price_in_country} LSL</span>
+                          <span>{item?.price_in_country} SNC</span>
                         )}
                       </p>
                     )}
@@ -200,12 +222,19 @@ export default function EventProducts() {
               ))}
         </div>
       )}
+
+      {!showAddProduct &&
+        (loading ? "" : products?.length > 0 ? "" : <NoDataFounded />)}
       {showAddProduct && (
         <AddProduct
+          setProductsCategory={setProductsCategory}
+          setShowAddProduct={setShowAddProduct}
           colors={colors}
           loadingM={loadingM}
           loadingC={loadingC}
           measures={measures}
+          productsCategory={productsCategory}
+          loadingP={loadingP}
         />
       )}
     </div>

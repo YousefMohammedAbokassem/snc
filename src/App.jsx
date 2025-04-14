@@ -22,6 +22,8 @@ import BuyCard from "./components/Cards/BuyCard";
 import Product from "./pages/Product/Product";
 import Basket from "./pages/Basket/Basket";
 import CategoryProducts from "./pages/Categories/CategoryProducts";
+import Nav from "./pages/nav/Nav";
+import NoInternet from "./components/NoInternet/NoInternet";
 
 export default function Container() {
   const isAuth = useSelector((state) => state.auth.authenticate);
@@ -42,31 +44,35 @@ export default function Container() {
           <Route path="/ForgotPassword" element={<ForgetPassword />} />
         </Routes> 
       ) : ( */}
-      <Routes>
-        {/* <Route path="*" element={<Navigate to="/SignIn" />} /> */}
-        <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/SignIn" element={<SignIn />} />
-        <Route path="/ForgotPassword" element={<ForgetPassword />} />
-        <Route path="/Home" element={<Home />} />
-        <Route path="/Home/:cardType" element={<Card />} />
-        <Route path="/Home/:cardType/:buyCard" element={<BuyCard />} />
-        <Route path="/" element={<Navigate to="/Home" />} />
-        <Route path="/NotFound" element={<Page404 />} />
-        <Route path="/Categories" element={<Categories />} />
-        <Route path="/Categories/:id" element={<CategoryProducts />} />
-        <Route path="*" element={<Navigate to={"/NotFound"} />} />
-        {/* <Route path="/SignUp" element={<Navigate to="/Home" />} /> */}
-        {/* <Route path="/SignIn" element={<Navigate to="/Home" />} /> */}
-        <Route path="/ForgotPassword" element={<Navigate to="/home" />} />
-        <Route path="/Office" element={<Office />} />
-        <Route path="/Events" element={<Events />} />
-        <Route path="/Product" element={<Product />} />
-        <Route path="/allEvents" element={<AllEvents />} />
-        <Route path="allEvents/:store" element={<Event />} />
-        <Route path="/Profile" element={<Profile />} />
-        <Route path="/basket" element={<Basket />} />
-        {/* </div> */}
-      </Routes>
+      <div>
+        <Nav />
+        <NoInternet />
+        <Routes>
+          {/* <Route path="*" element={<Navigate to="/SignIn" />} /> */}
+          <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/SignIn" element={<SignIn />} />
+          <Route path="/ForgotPassword" element={<ForgetPassword />} />
+          <Route path="/Home" element={<Home />} />
+          <Route path="/Home/:cardType" element={<Card />} />
+          <Route path="/Home/:cardType/:buyCard" element={<BuyCard />} />
+          <Route path="/" element={<Navigate to="/Home" />} />
+          <Route path="/NotFound" element={<Page404 />} />
+          <Route path="/Categories" element={<Categories />} />
+          <Route path="/Categories/:id" element={<CategoryProducts />} />
+          <Route path="*" element={<Navigate to={"/NotFound"} />} />
+          {/* <Route path="/SignUp" element={<Navigate to="/Home" />} /> */}
+          {/* <Route path="/SignIn" element={<Navigate to="/Home" />} /> */}
+          <Route path="/ForgotPassword" element={<Navigate to="/home" />} />
+          <Route path="/Office" element={<Office />} />
+          <Route path="/Events" element={<Events />} />
+          <Route path="/Product" element={<Product />} />
+          <Route path="/allEvents" element={<AllEvents />} />
+          <Route path="allEvents/:store" element={<Event />} />
+          <Route path="/Profile" element={<Profile />} />
+          <Route path="/basket" element={<Basket />} />
+          {/* </div> */}
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }

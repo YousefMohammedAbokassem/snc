@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { Minus, Plus } from "lucide-react";
 import { FaSpinner } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 export default function Card() {
   const { t } = useTranslation();
@@ -79,7 +80,12 @@ export default function Card() {
           },
         }
       );
-      alert("تم شراء بنجاح");
+      Swal.fire({
+        icon: "success",
+        title: "نجاح",
+        text: "تم الشراء بنجاح",
+        confirmButtonText: "حسنًا",
+      });
     } catch (error) {
       setError(error.response.data.message);
       if (error.response?.status === 401) {
@@ -118,7 +124,7 @@ export default function Card() {
 
   return (
     <>
-      <Nav />
+      {/* <Nav /> */}
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
           <ul className="flex gap-2 opacity-25">

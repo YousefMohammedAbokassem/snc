@@ -25,7 +25,7 @@ export default function EventInfo() {
       setLogo(`${import.meta.env.VITE_API_URL_IMAGE}${res.data?.data?.logo}`);
       setName(res.data?.data?.name);
       setAddress(res.data?.data?.address);
-      setCategory(res.data?.data?.category);
+      setCategory(res.data?.data?.market_category_id);
     } catch (error) {
       if (error.response?.status === 401) {
         dispatch(logoutUser());
@@ -72,7 +72,6 @@ export default function EventInfo() {
   const [address, setAddress] = useState(profile?.address);
   const [category, setCategory] = useState(profile?.market_category_id);
   const [isDragging, setIsDragging] = useState(false);
-
   const handleLogoChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -235,6 +234,7 @@ export default function EventInfo() {
                   </div>
                 )}
                 <input
+                  readOnly
                   type="file"
                   id="background"
                   hidden
@@ -255,6 +255,7 @@ export default function EventInfo() {
             <div className="h-10 w-full bg-gray-300 animate-pulse rounded-md" />
           ) : (
             <input
+              readOnly
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -268,6 +269,7 @@ export default function EventInfo() {
             <div className="h-10 w-full bg-gray-300 animate-pulse rounded-md" />
           ) : (
             <input
+              readOnly
               type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -299,7 +301,7 @@ export default function EventInfo() {
           )}
         </div>
       </div>
-      <button
+      {/* <button
         onClick={handleSave}
         className="mt-4 px-6 py-2 bg-[#275963] text-white rounded-md hover:bg-[#16383f] w-full"
       >
@@ -308,7 +310,7 @@ export default function EventInfo() {
         ) : (
           t("حفظ التغييرات") // عرض نص "تسجيل الدخول"
         )}
-      </button>
+      </button> */}
       {/*  */}
     </div>
   );

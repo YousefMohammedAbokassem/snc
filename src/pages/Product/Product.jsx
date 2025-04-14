@@ -9,6 +9,7 @@ import Nav from "../nav/Nav";
 import { Button } from "@mui/material";
 import NoDataFounded from "../../components/NoDataFounded/NoDataFounded";
 import { FaSpinner } from "react-icons/fa";
+import Swal from "sweetalert2";
 export default function Product() {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ export default function Product() {
       setLoadingProduct(false);
     }
   };
-
+  console.log(productData);
   useEffect(() => {
     fetchData();
     fetchProduct();
@@ -118,11 +119,21 @@ export default function Product() {
           },
         }
       );
-      alert("تم الاضافة للسلة بنجاح");
+      Swal.fire({
+        icon: "success",
+        title: "نجاح",
+        text: "تم الإضافة للسلة بنجاح",
+        confirmButtonText: "حسنًا",
+      });
       navigate("/basket");
     } catch (error) {
       setError(error.response.data.message);
-      alert("قم بإإكمال تحديد الخيارات");
+      Swal.fire({
+        icon: "warning",
+        title: "تنبيه",
+        text: "قم بإكمال تحديد الخيارات",
+        confirmButtonText: "حسنًا",
+      });
       if (error.response?.status === 401) {
         dispatch(logoutUser());
         navigate("/signIn");
@@ -133,7 +144,7 @@ export default function Product() {
   };
   return (
     <>
-      <Nav />
+      {/* <Nav /> */}
       <div className="container mx-auto p-6">
         {/* مسار التصفح */}
         <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
@@ -329,10 +340,13 @@ export default function Product() {
                   {productData?.colors.map((color) => (
                     <button
                       key={color.id}
-                      className={`px-4 py-2 opacity-25 rounded-md border-4 border-transparent ${
+                      className={`px-4 py-2  rounded-md border-4 border-transparent ${
                         selectedColor === color.id ? "opacity-100" : ""
                       }`}
-                      style={{ backgroundColor: color.code }}
+                      style={{
+                        backgroundColor: color.code,
+                        opacity: selectedColor === color.id ? 1 : 0.25,
+                      }}
                       onClick={() => setSelectedColor(color.id)}
                     ></button>
                   ))}
@@ -433,7 +447,7 @@ export default function Product() {
                   key={i}
                   className=" h-[400px] rounded-[8px] pb-5 flex flex-col"
                 >
-                  <div className="image flex-1 cursor-pointer">
+                  <div className="image flex-1 cursor-pointer h-[40%]">
                     <img
                       src={`${import.meta.env.VITE_API_URL_IMAGE}${item.image}`}
                       className="w-full h-full"
