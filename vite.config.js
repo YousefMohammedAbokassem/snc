@@ -1,37 +1,3 @@
-// import { defineConfig } from 'vite'
-// import react from '@vitejs/plugin-react'
-// import { VitePWA } from 'vite-plugin-pwa'
-
-// export default defineConfig({
-//   plugins: [
-//     react(),
-//     VitePWA({
-//       registerType: 'autoUpdate',
-//       includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
-//       manifest: {
-//         name: 'اسم التطبيق',
-//         short_name: 'اسم قصير',
-//         description: 'وصف التطبيق',
-//         theme_color: '#ffffff',
-//         icons: [
-//           {
-//             src: 'pwa-192x192.png',
-//             sizes: '192x192',
-//             type: 'image/png'
-//           },
-//           {
-//             src: 'pwa-512x512.png',
-//             sizes: '512x512',
-//             type: 'image/png'
-//           }
-//         ]
-//       }
-//     })
-//   ]
-// })
-
-
-// 
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -40,19 +6,16 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'autoUpdate',  // يعني أنه سيتم تحديث الـ Service Worker تلقائيًا عند تغييره.
       includeAssets: [
-        'snc.png',
-        'snc.png',
-        'snc.png',
-        'snc.png',
-        'offline.html' // 👈 نضيفها هنا
+        '/snc.png',
+        '/offline.html'  // تأكد من إضافة ملف offline.html إذا كنت تستخدمه.
       ],
       manifest: {
         name: 'snc',
         short_name: 'snc',
         description: 'snc',
-        theme_color: '#ffffff',
+        theme_color: '#111',
         icons: [
           {
             src: 'snc.png',
@@ -74,7 +37,7 @@ export default defineConfig({
             options: {
               cacheName: 'pages-cache',
               networkTimeoutSeconds: 3,
-              fallbackURL: '/offline.html'
+              fallbackURL: '/offline.html'  // تأكد من أن هذا الملف موجود في مجلد public.
             }
           }
         ]
