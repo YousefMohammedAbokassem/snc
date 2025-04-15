@@ -47,6 +47,12 @@ const manifestForPlugin = {
         type: "image/png",
         // purpose: "icon"
       },
+      {
+        src: "icons/dark.svg",
+        // sizes: "32x32",
+        // type: "image/png",
+        // purpose: "icon"
+      },
     ],
     theme_color: "#181818",
     background_color: "#e8eac2",
