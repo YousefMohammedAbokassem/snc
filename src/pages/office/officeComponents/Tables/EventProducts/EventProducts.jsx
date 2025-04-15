@@ -29,6 +29,15 @@ export default function EventProducts() {
       if (error.response?.status === 401) {
         dispatch(logoutUser());
       }
+      if (error?.message === "Network Error") {
+        if (
+          localStorage.setItem("location", location.pathname) === "/noInternet"
+        ) {
+        } else {
+          localStorage.setItem("location", location.pathname + location.search);
+          navigate("/noInternet");
+        }
+      }
     } finally {
       setLoading(false);
     }
@@ -53,6 +62,15 @@ export default function EventProducts() {
       if (error.response?.status === 401) {
         dispatch(logoutUser());
       }
+      if (error?.message === "Network Error") {
+        if (
+          localStorage.setItem("location", location.pathname) === "/noInternet"
+        ) {
+        } else {
+          localStorage.setItem("location", location.pathname + location.search);
+          navigate("/noInternet");
+        }
+      }
     } finally {
       setLoadingM(false);
     }
@@ -72,6 +90,15 @@ export default function EventProducts() {
     } catch (error) {
       if (error.response?.status === 401) {
         dispatch(logoutUser());
+      }
+      if (error?.message === "Network Error") {
+        if (
+          localStorage.setItem("location", location.pathname) === "/noInternet"
+        ) {
+        } else {
+          localStorage.setItem("location", location.pathname + location.search);
+          navigate("/noInternet");
+        }
       }
     } finally {
       setLoadingC(false);
@@ -95,6 +122,15 @@ export default function EventProducts() {
     } catch (error) {
       if (error.response?.status === 401) {
         dispatch(logoutUser());
+      }
+      if (error?.message === "Network Error") {
+        if (
+          localStorage.setItem("location", location.pathname) === "/noInternet"
+        ) {
+        } else {
+          localStorage.setItem("location", location.pathname + location.search);
+          navigate("/noInternet");
+        }
       }
     } finally {
       setLoadingP(false);
@@ -148,8 +184,7 @@ export default function EventProducts() {
                     <p className="type my-2 font-semibold text-md">
                       {item?.name}
                     </p>
-                    {(localStorage.getItem("authenticate") == "true") &&
-                    (
+                    {localStorage.getItem("authenticate") == "true" && (
                       <p className="priceLocal my-2">
                         السعر الوطني:
                         {item?.discount ? (

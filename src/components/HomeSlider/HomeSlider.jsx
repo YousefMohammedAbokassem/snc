@@ -9,11 +9,13 @@ import { Pagination, Autoplay, EffectFade } from "swiper/modules";
 import axios from "axios";
 import { logoutUser } from "../../store/slices/auth/authSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function HomeSlider() {
   const [loading, setLoading] = useState(true);
   const [banners, setBanners] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -24,8 +26,18 @@ export default function HomeSlider() {
       });
       setBanners(res.data?.data);
     } catch (error) {
+      console.log(error);
       if (error.response?.status === 401) {
         dispatch(logoutUser());
+      }
+      if (error?.message === "Network Error") {
+        if (
+          localStorage.setItem("location", location.pathname) === "/noInternet"
+        ) {
+        } else {
+          localStorage.setItem("location", location.pathname + location.search);
+          navigate("/noInternet");
+        }
       }
     } finally {
       setLoading(false);

@@ -85,19 +85,25 @@ export default function AddProduct({
     );
     console.log(product);
     try {
-    const res=  await axios.post(`${import.meta.env.VITE_API_URL}product/add`, formData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-        onUploadProgress: (progress) => {
-          const percent = Math.round((progress.loaded * 100) / progress.total);
-          setUploadProgress(percent);
-          console.log(`Upload Progress: ${percent}%`);
-        },
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}product/add`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+          onUploadProgress: (progress) => {
+            const percent = Math.round(
+              (progress.loaded * 100) / progress.total
+            );
+            setUploadProgress(percent);
+            console.log(`Upload Progress: ${percent}%`);
+          },
+        }
+      );
       setProgressLog(false);
-      console.log(res.data.data)
-      console.log(res.data)
+      console.log(res.data.data);
+      console.log(res.data);
       setUploadProgress(0);
       // setProductsCategory((prev) => ({ ...prev, [name]: value }));
 
@@ -113,6 +119,15 @@ export default function AddProduct({
       console.log(error);
       if (error.response?.status === 401) {
         dispatch(logoutUser());
+      }
+      if (error?.message === "Network Error") {
+        if (
+          localStorage.setItem("location", location.pathname) === "/noInternet"
+        ) {
+        } else {
+          localStorage.setItem("location", location.pathname + location.search);
+          navigate("/noInternet");
+        }
       }
       setProgressLog(false);
 

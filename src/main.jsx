@@ -6,8 +6,8 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import App from "./App";
 import { HelmetProvider } from "react-helmet-async";
-import { registerSW } from 'virtual:pwa-register';
-registerSW();
+// import { registerSW } from 'virtual:pwa-register';
+// registerSW();
 // import { ThemeProvider, createTheme } from "@mui/material/styles";
 // const theme = createTheme({
 //   palette: {

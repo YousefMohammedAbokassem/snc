@@ -24,6 +24,7 @@ import Basket from "./pages/Basket/Basket";
 import CategoryProducts from "./pages/Categories/CategoryProducts";
 import Nav from "./pages/nav/Nav";
 import NoInternet from "./components/NoInternet/NoInternet";
+import NoInternetPage from "./components/NoInternet/NoInternet";
 
 export default function Container() {
   const isAuth = useSelector((state) => state.auth.authenticate);
@@ -46,7 +47,7 @@ export default function Container() {
       ) : ( */}
       <div>
         <Nav />
-        <NoInternet />
+
         <Routes>
           {/* <Route path="*" element={<Navigate to="/SignIn" />} /> */}
           <Route path="/SignUp" element={<SignUp />} />
@@ -70,6 +71,7 @@ export default function Container() {
           <Route path="allEvents/:store" element={<Event />} />
           <Route path="/Profile" element={<Profile />} />
           <Route path="/basket" element={<Basket />} />
+          <Route path="/noInternet" element={<NoInternetPage />} />
           {/* </div> */}
         </Routes>
       </div>

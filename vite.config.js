@@ -43,15 +43,20 @@ const manifestForPlugin = {
       },
       {
         src: "./src.png",
-        // sizes: "32x32",
         type: "image/png",
-        // purpose: "icon"
       },
       {
         src: "icons/dark.svg",
-        // sizes: "32x32",
-        // type: "image/png",
-        // purpose: "icon"
+      },
+      {
+        src: "images/SingUp.jpg",
+      },
+      {
+        src: "images/sy2.jpg",
+      },
+      {
+        src: "snc.png",
+        type: "image/png",
       },
     ],
     theme_color: "#181818",

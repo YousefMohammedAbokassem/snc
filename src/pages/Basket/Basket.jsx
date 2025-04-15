@@ -36,11 +36,20 @@ export default function Basket() {
           },
         }
       );
-      console.log(res.data.data) 
+      console.log(res.data.data);
       setItems(res.data?.data || []);
     } catch (error) {
       if (error.response?.status === 401) {
         dispatch(logoutUser());
+      }
+      if (error?.message === "Network Error") {
+        if (
+          localStorage.setItem("location", location.pathname) === "/noInternet"
+        ) {
+        } else {
+          localStorage.setItem("location", location.pathname + location.search);
+          navigate("/noInternet");
+        }
       }
     } finally {
       setLoading(false);
@@ -66,6 +75,15 @@ export default function Basket() {
     } catch (error) {
       if (error.response?.status === 401) {
         dispatch(logoutUser());
+      }
+      if (error?.message === "Network Error") {
+        if (
+          localStorage.setItem("location", location.pathname) === "/noInternet"
+        ) {
+        } else {
+          localStorage.setItem("location", location.pathname + location.search);
+          navigate("/noInternet");
+        }
       }
     } finally {
       setLoadingAmount(false);

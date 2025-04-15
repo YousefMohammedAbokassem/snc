@@ -154,5 +154,12 @@
   "eventInfo": "معلومات الفعالية",
   "eventProducts": "منتجات الفعالية",
   "logout": " الخروج",
-  "login": " الدخول"
+  "login": " الدخول",
+  "noInternet": "لا يوجد اتصال بالإنترنت",
+  "pleaseCheckConnection": "يرجى التحقق من اتصالك وحاول مرة أخرى",
+  "retryConnection": "محاولة الاتصال مجددًا",
+  "checking": "جارٍ التحقق",
+  "stillOffline": "ما زلت غير متصل!",
+  "backOnline": "تم الاتصال!",
+  "youAreConnected": "أنت الآن متصل بالإنترنت"
 }
