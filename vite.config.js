@@ -7,9 +7,9 @@ const manifestForPlugin = {
   registerType: "prompt",
   includeAssets: ['favicon.ico', "apple-touc-icon.png", "src.png" ],
   manifest: {
-    name: "Weather app",
-    short_name: "Weather app",
-    description: "An app that can show the weather forecast for your city.",
+    name: "SNC APP",
+    short_name: "SNC",
+    description: "this is th syrian new coin",
     icons: [
       
       {
