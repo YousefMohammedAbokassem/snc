@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { logoutUser } from "../../store/slices/auth/authSlice";
 import { useDispatch } from "react-redux";
@@ -11,7 +11,7 @@ export default function Categories() {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -33,10 +33,7 @@ export default function Categories() {
         dispatch(logoutUser());
       }
       if (error?.message === "Network Error") {
-        if (
-          localStorage.setItem("location", location.pathname) === "/noInternet"
-        ) {
-        } else {
+        if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }

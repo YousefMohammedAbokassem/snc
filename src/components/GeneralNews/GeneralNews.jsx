@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../store/slices/auth/authSlice";
 import axios from "axios";
 
 export default function GeneralNews() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [news, setNews] = useState([]);
   const fetchData = async () => {
@@ -25,10 +26,7 @@ export default function GeneralNews() {
         dispatch(logoutUser());
       }
       if (error?.message === "Network Error") {
-        if (
-          localStorage.setItem("location", location.pathname) === "/noInternet"
-        ) {
-        } else {
+        if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }

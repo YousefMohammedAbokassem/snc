@@ -11,11 +11,13 @@ import { logoutUser } from "../../store/slices/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import NoDataFounded from "../NoDataFounded/NoDataFounded";
+import { useNavigate } from "react-router-dom";
 
 export default function EventsSlider() {
   const [loading, setLoading] = useState(true);
   const [banners, setBanners] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const fetchData = async () => {
     setLoading(true);
@@ -31,10 +33,7 @@ export default function EventsSlider() {
         dispatch(logoutUser());
       }
       if (error?.message === "Network Error") {
-        if (
-          localStorage.setItem("location", location.pathname) === "/noInternet"
-        ) {
-        } else {
+        if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }

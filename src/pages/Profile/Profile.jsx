@@ -12,6 +12,7 @@ import {
   Listbox,
   ListboxOption,
 } from "@headlessui/react";
+import { useNavigate } from "react-router-dom";
 // import { Dialog } from "@headlessui/react";
 // import { Listbox } from "@headlessui/react";
 // import { CheckIcon } from "@heroicons/react/solid";
@@ -27,7 +28,7 @@ export default function Profile() {
     birthday: "",
   });
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -42,10 +43,7 @@ export default function Profile() {
         dispatch(logoutUser());
       }
       if (error?.message === "Network Error") {
-        if (
-          localStorage.setItem("location", location.pathname) === "/noInternet"
-        ) {
-        } else {
+        if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }

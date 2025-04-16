@@ -12,6 +12,7 @@ import {
   Skeleton,
   CircularProgress,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function Currencies() {
   const [profile, setProfile] = useState(null);
@@ -23,7 +24,7 @@ export default function Currencies() {
   const [isTransferring, setIsTransferring] = useState(false); // To control the spinner for transfer
 
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -38,10 +39,7 @@ export default function Currencies() {
         dispatch(logoutUser());
       }
       if (error?.message === "Network Error") {
-        if (
-          localStorage.setItem("location", location.pathname) === "/noInternet"
-        ) {
-        } else {
+        if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }

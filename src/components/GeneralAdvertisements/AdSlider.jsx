@@ -8,11 +8,13 @@ import { Autoplay, Navigation } from "swiper/modules";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../store/slices/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function AdSlider() {
   const { t } = useTranslation();
   const swiperRef = useRef(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [ads, setAds] = useState([]);
 
@@ -31,10 +33,7 @@ export default function AdSlider() {
         dispatch(logoutUser());
       }
       if (error?.message === "Network Error") {
-        if (
-          localStorage.setItem("location", location.pathname) === "/noInternet"
-        ) {
-        } else {
+        if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }

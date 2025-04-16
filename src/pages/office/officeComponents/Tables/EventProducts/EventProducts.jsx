@@ -6,12 +6,14 @@ import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../../../store/slices/auth/authSlice";
 import AddProduct from "./AddProduct";
 import NoDataFounded from "../../../../../components/NoDataFounded/NoDataFounded";
+import { useNavigate } from "react-router-dom";
 export default function EventProducts() {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [showAddProduct, setShowAddProduct] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     setLoading(true);
@@ -30,10 +32,7 @@ export default function EventProducts() {
         dispatch(logoutUser());
       }
       if (error?.message === "Network Error") {
-        if (
-          localStorage.setItem("location", location.pathname) === "/noInternet"
-        ) {
-        } else {
+        if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }
@@ -63,10 +62,7 @@ export default function EventProducts() {
         dispatch(logoutUser());
       }
       if (error?.message === "Network Error") {
-        if (
-          localStorage.setItem("location", location.pathname) === "/noInternet"
-        ) {
-        } else {
+        if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }
@@ -92,10 +88,7 @@ export default function EventProducts() {
         dispatch(logoutUser());
       }
       if (error?.message === "Network Error") {
-        if (
-          localStorage.setItem("location", location.pathname) === "/noInternet"
-        ) {
-        } else {
+        if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }
@@ -124,10 +117,7 @@ export default function EventProducts() {
         dispatch(logoutUser());
       }
       if (error?.message === "Network Error") {
-        if (
-          localStorage.setItem("location", location.pathname) === "/noInternet"
-        ) {
-        } else {
+        if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }

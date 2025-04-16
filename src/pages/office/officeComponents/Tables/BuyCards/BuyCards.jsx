@@ -5,6 +5,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../../../store/slices/auth/authSlice";
 import TableSkeleton from "../../../../../components/TableSkeleton";
+import { useNavigate } from "react-router-dom";
 
 const head = [
   { content: "sequence" },
@@ -17,6 +18,7 @@ const head = [
 export default function BuyCards() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [body, setBody] = useState({
@@ -66,10 +68,7 @@ export default function BuyCards() {
         dispatch(logoutUser());
       }
       if (error?.message === "Network Error") {
-        if (
-          localStorage.setItem("location", location.pathname) === "/noInternet"
-        ) {
-        } else {
+        if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }

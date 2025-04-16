@@ -5,6 +5,7 @@ import { FaSpinner } from "react-icons/fa";
 import { logoutUser } from "../../../../../store/slices/auth/authSlice";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function AddProduct({
   loadingM,
@@ -27,6 +28,7 @@ export default function AddProduct({
     color_ids: [],
   });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleInputChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
@@ -121,10 +123,7 @@ export default function AddProduct({
         dispatch(logoutUser());
       }
       if (error?.message === "Network Error") {
-        if (
-          localStorage.setItem("location", location.pathname) === "/noInternet"
-        ) {
-        } else {
+        if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }
