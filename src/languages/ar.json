@@ -59,7 +59,7 @@
   "date": "التاريخ",
   "Timing": "التوقيت",
   "phone": "الهاتف",
-  "digitTheExport": "رقم العملية صادر منه",
+  "digitTheExport": "رقم العملية الصادرة منه",
   "Value": "القيمة",
   "itemsPerPage": "العناصر لكل صفحة:",
   "from": "من",
@@ -161,5 +161,6 @@
   "checking": "جارٍ التحقق",
   "stillOffline": "ما زلت غير متصل!",
   "backOnline": "تم الاتصال!",
-  "youAreConnected": "أنت الآن متصل بالإنترنت"
+  "youAreConnected": "أنت الآن متصل بالإنترنت",
+  "tax":"الضريبة"
 }

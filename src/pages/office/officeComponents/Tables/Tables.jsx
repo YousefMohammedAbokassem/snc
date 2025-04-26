@@ -34,7 +34,7 @@ export default function Tables({ theTable }) {
         <ExportEventsNational />
       ) : theTable === "exportEventsInter" ? (
         <ExportEventsInter />
-      ) : theTable === "inComingEvents" ? (
+      ) : theTable === "inComingEvents"&& localStorage.getItem("role") == 3 ? (
         <InComingEvents />
       ) : theTable === "financialCommission" ? (
         <FinancialCommission />

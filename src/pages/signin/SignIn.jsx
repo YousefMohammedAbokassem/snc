@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
@@ -35,7 +35,7 @@ export default function Page() {
     // console.log()
     // formData.append("phone_number", `0${phone_number.trim().slice(3)}`);
     formData.append("password", password.trim());
-    formData.append("display_name", display_name.trim()); // إضافة الاسم التعريفي
+    // formData.append("display_name", display_name.trim()); // إضافة الاسم التعريفي
     formData.append("device_token", "asdasd"); // إضافة الاسم التعريفي
 
     try {
@@ -62,7 +62,32 @@ export default function Page() {
       });
     }
   };
+  //
+  // countries
 
+  const [phoneLoading, setPhoneLoading] = useState(false);
+  const [country_code, setCountry_code] = useState("");
+  const [countries, setCountries] = useState([]);
+  const [countrySend, setCountrySend] = useState("");
+  const fetchCountries = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}countries`);
+      console.log(res.data.data);
+      setPhoneLoading(false);
+      setCountries([""]);
+      res.data.data.map((ele) => {
+        setCountries(res.data.data.map((ele) => ele.iso.toLowerCase()));
+        setCountrySend(res.data.data.map((ele) => ele));
+        setCountry_code(res.data.data[0].code);
+      });
+      setPhoneLoading(true);
+    } catch (error) {
+      setPhoneLoading(true);
+    }
+  };
+  useEffect(() => {
+    fetchCountries();
+  }, []);
   return (
     <>
       <Helmet>
@@ -78,39 +103,52 @@ export default function Page() {
               </h1>
               <div className="">
                 {/* حقل رقم الهاتف */}
-                <div className="flex gap-2 flex-col mt-6">
-                  <PhoneInput
-                    country={"sy"}
-                    inputProps={{
-                      name: "phone_number",
-                      required: true,
-                      placeholder: t("phone_number"),
-                      className:
-                        "border-[#CDCDCD] border-[1px] text-black dark:text-white rounded-md bg-transparent px-16 py-5 w-full focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]",
-                    }}
-                    containerClass={`w-full ${
-                      localStorage.getItem("i18next") === "ar"
-                        ? "phoneDirAr"
-                        : "phoneDirEn"
-                    }`}
-                    buttonStyle={{
-                      background: "transparent",
-                    }}
-                    dropdownStyle={{
-                      zIndex: 1000,
-                    }}
-                    value={phone_number}
-                    onChange={(value) => setPhone_number(value)}
-                  />
-                  {errors?.phone_number && (
-                    <p className="text-red-500 text-sm font-bold">
-                      {t(errors.phone_number[0])}
-                    </p>
-                  )}
-                </div>
-
+                {phoneLoading ? (
+                  <div className="flex gap-2 flex-col mt-6">
+                    <PhoneInput
+                      country={"sy"}
+                      onlyCountries={countries}
+                      inputProps={{
+                        name: "phone_number",
+                        required: true,
+                        placeholder: t("phone_number"),
+                        className:
+                          "border-[#CDCDCD] border-[1px] text-black dark:text-white rounded-md bg-transparent px-16 py-5 w-full focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]",
+                      }}
+                      containerClass={`w-full ${
+                        localStorage.getItem("i18next") === "ar"
+                          ? "phoneDirAr"
+                          : "phoneDirEn"
+                      }`}
+                      buttonStyle={{
+                        background: "transparent",
+                      }}
+                      dropdownStyle={{
+                        zIndex: 1000,
+                      }}
+                      value={phone_number}
+                      onChange={(value) => setPhone_number(value)}
+                    />
+                    {errors?.phone_number && (
+                      <p className="text-red-500 text-sm font-bold">
+                        {t(errors.phone_number[0])}
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex flex-col">
+                    <div className="animate-pulse flex space-x-4">
+                      <div className="flex flex-col space-y-2 w-full">
+                        <div className="h-14 w-full bg-gray-300 rounded-md"></div>{" "}
+                        {/* Placeholder for PhoneInput */}
+                        {/* <div className="h-8 w-32 bg-gray-300 rounded-md"></div>{" "} */}
+                        {/* Placeholder for error message */}
+                      </div>
+                    </div>
+                  </div>
+                )}
                 {/* حقل الاسم التعريفي */}
-                <div className="flex gap-2 flex-col mt-6">
+                {/* <div className="flex gap-2 flex-col mt-6">
                   <input
                     type="text"
                     name="display_name"
@@ -124,7 +162,7 @@ export default function Page() {
                       {t(errors.display_name[0])}
                     </p>
                   )}
-                </div>
+                </div> */}
 
                 {/* حقل كلمة المرور */}
                 <div className="flex gap-4 mt-6 relative  flex-col ">

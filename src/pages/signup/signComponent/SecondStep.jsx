@@ -85,7 +85,7 @@ export default function SecondStep({
           <PhoneInput
             country={"sy"}
             countryCodeEditable={false}
-            // onlyCountries={countries}
+            onlyCountries={countries}
             inputProps={{
               name: "phone_number",
               required: true,

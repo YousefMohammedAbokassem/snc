@@ -39,7 +39,7 @@ export default function Aside() {
         {menuItems.map((item, index) => {
           if (
             localStorage.getItem("role") != 3 &&
-            (item === "eventInfo" || item === "eventProducts")
+            (item === "eventInfo" || item === "eventProducts"|| item === "inComingEvents")
           ) {
             return null;
           }

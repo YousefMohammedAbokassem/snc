@@ -16,9 +16,7 @@ export default function TableRow({ currentData }) {
           <td className="px-6 py-8 text-center">{item.card_type}</td>
           <td className="px-6 py-8 text-center">{item.reason}</td>
           <td className="px-6 py-8 text-center">{item.quantity}</td>
-          <td className="px-6 py-8 text-center">
-            {item.receiver_phone_number}
-          </td>
+
           <td className="px-6 py-8 text-center">{item.reward}</td>
           {/* <td className="px-6 py-8 text-center">{item.amount}</td> */}
           {/* <td className="px-6 py-8 text-center">{item.commission}</td>

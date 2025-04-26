@@ -26,11 +26,22 @@ export default function EventInfo() {
       if (error.response?.status === 401) {
         dispatch(logoutUser());
       }
-      if (error?.message === "Network Error") {
+      if (
+        error?.message === "Network Error" ||
+        error?.message === "timeout exceeded"
+      ) {
         if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }
+      }
+      if (
+        error.response.data.message ===
+        "the requests are restricted between 11:45 PM and 12:45 AM."
+      ) {
+        alert(
+          "يتم تقييد الطلبات بين الساعة 11:45 مساءً و 12:45 صباحًا. بتوقيت جرينتش"
+        );
       }
     } finally {
       setLoadingProfile(false);
@@ -53,11 +64,22 @@ export default function EventInfo() {
       if (error.response?.status === 401) {
         dispatch(logoutUser());
       }
-      if (error?.message === "Network Error") {
+      if (
+        error?.message === "Network Error" ||
+        error?.message === "timeout exceeded"
+      ) {
         if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }
+      }
+      if (
+        error.response.data.message ===
+        "the requests are restricted between 11:45 PM and 12:45 AM."
+      ) {
+        alert(
+          "يتم تقييد الطلبات بين الساعة 11:45 مساءً و 12:45 صباحًا. بتوقيت جرينتش"
+        );
       }
     } finally {
       setLoadingProfile(false);
@@ -80,13 +102,14 @@ export default function EventInfo() {
   const [category, setCategory] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const [isDraggingLogo, setIsDraggingLogo] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const handleLogoChange = (event) => {
     const file = event.target.files[0];
 
     setLogoSend(file);
     if (file) {
-      setBackground(URL.createObjectURL(file));
+      setLogo(URL.createObjectURL(file));
     }
   };
   const handleBackgroundChange = (event) => {
@@ -144,6 +167,7 @@ export default function EventInfo() {
   const [errors, setErrors] = useState({});
   const [messageError, setMessageError] = useState("");
   const build = async () => {
+    setErrors({});
     setLoadingBuild(true);
     const formData = new FormData();
     // formData.append("_method", "PUT");
@@ -167,28 +191,49 @@ export default function EventInfo() {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
+          onUploadProgress: (progress) => {
+            const percent = Math.round(
+              (progress.loaded * 100) / progress.total
+            );
+            setUploadProgress(percent);
+          },
         }
       );
       localStorage.setItem("role", 3);
       console.log(res.data);
+      setUploadProgress(0);
       navigate("/office?table=eventInfo");
     } catch (error) {
       console.log(error);
       setErrors(error?.response?.data?.errors || {});
       setMessageError(error?.res?.data?.message);
+      setUploadProgress(0);
+
       if (error.response?.status === 401) {
         dispatch(logoutUser());
       }
-      if (error?.message === "Network Error") {
+      if (
+        error?.message === "Network Error" ||
+        error?.message === "timeout exceeded"
+      ) {
         if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }
       }
+      if (
+        error.response.data.message ===
+        "the requests are restricted between 11:45 PM and 12:45 AM."
+      ) {
+        alert(
+          "يتم تقييد الطلبات بين الساعة 11:45 مساءً و 12:45 صباحًا. بتوقيت جرينتش"
+        );
+      }
     } finally {
       setLoadingBuild(false);
     }
   };
+  console.log(uploadProgress);
   // const [name, setName] = useState("");
   const [license, setLicense] = useState("");
   const [purpose, setPurpose] = useState("");
@@ -201,31 +246,30 @@ export default function EventInfo() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   console.log(logo);
   return (
-    <div className="px-8">
-      <div className="infoImages grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="px-4 md:px-8 py-6 bg-white rounded-lg shadow-sm">
+      <div className="infoImages grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* لوغو الفعالية */}
         <div className="logo">
-          <h5 className="text-xl mb-4">اللوغو</h5>
+          <h5 className="text-xl font-medium text-gray-800 mb-4">اللوغو</h5>
           <div
-            className={`logoImage h-52 flex items-center justify-center gap-5 w-full border border-[#BBBBBB] ${
-              isDraggingLogo ? "bg-gray-300" : ""
+            className={`relative h-56 flex items-center justify-center w-full border-2 border-dashed rounded-lg transition-colors ${
+              isDraggingLogo
+                ? "bg-gray-100 border-[#275963]"
+                : "border-gray-300 hover:border-[#275963]"
             }`}
             onDragOver={handleDragOverLogo}
             onDragLeave={handleDragLeaveLogo}
             onDrop={handleDropLogo}
           >
             <label
-              htmlFor="background"
-              className="w-full h-full  flex cursor-pointer"
+              htmlFor="logo"
+              className="absolute inset-0 flex flex-col items-center justify-center cursor-pointer p-4"
             >
               {logo ? (
-                <img
-                  src={logo}
-                  alt="backgroundEvent"
-                  className="w-full h-full "
-                />
+                <img src={logo} alt="Event Logo" className="w-full h-full " />
               ) : (
-                <div className="w-full flex flex-col items-center justify-center gap-2">
-                  <div className="icon">
+                <div className="flex flex-col items-center justify-center text-center">
+                  <div className="icon mb-3">
                     <svg
                       width="44"
                       height="39"
@@ -243,26 +287,35 @@ export default function EventInfo() {
                       />
                     </svg>
                   </div>
-                  <span className="text-[#275963] text-lg">
+                  <span className="text-[#275963] text-lg font-medium">
                     اسحب الصورة هنا أو تصفح الملفات
                   </span>
                 </div>
               )}
               <input
                 type="file"
-                id="background"
+                id="logo"
                 hidden
                 onChange={handleLogoChange}
+                accept="image/*"
               />
             </label>
           </div>
+          {errors?.logo && (
+            <p className="text-red-500 text-xs mt-1">{errors.logo[0]}</p>
+          )}
         </div>
 
+        {/* صورة الغلاف */}
         <div className="background">
-          <h5 className="text-xl mb-4">صورة الغلاف</h5>
+          <h5 className="text-xl font-medium text-gray-800 mb-4">
+            صورة الغلاف
+          </h5>
           <div
-            className={`logoImage h-52 flex items-center justify-center gap-5 w-full border border-[#BBBBBB] ${
-              isDragging ? "bg-gray-300" : ""
+            className={`relative h-56 flex items-center justify-center w-full border-2 border-dashed rounded-lg transition-colors ${
+              isDragging
+                ? "bg-gray-100 border-[#275963]"
+                : "border-gray-300 hover:border-[#275963]"
             }`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
@@ -270,17 +323,17 @@ export default function EventInfo() {
           >
             <label
               htmlFor="background"
-              className="w-full h-full  flex cursor-pointer"
+              className="absolute inset-0 flex flex-col items-center justify-center cursor-pointer p-4"
             >
               {background ? (
                 <img
                   src={background}
-                  alt="backgroundEvent"
+                  alt="Event Cover"
                   className="w-full h-full "
                 />
               ) : (
-                <div className="w-full flex flex-col items-center justify-center gap-2">
-                  <div className="icon">
+                <div className="flex flex-col items-center justify-center text-center">
+                  <div className="icon mb-3">
                     <svg
                       width="44"
                       height="39"
@@ -298,7 +351,7 @@ export default function EventInfo() {
                       />
                     </svg>
                   </div>
-                  <span className="text-[#275963] text-lg">
+                  <span className="text-[#275963] text-lg font-medium">
                     اسحب الصورة هنا أو تصفح الملفات
                   </span>
                 </div>
@@ -308,135 +361,215 @@ export default function EventInfo() {
                 id="background"
                 hidden
                 onChange={handleBackgroundChange}
+                accept="image/*"
               />
             </label>
           </div>
+          {errors?.background && (
+            <p className="text-red-500 text-xs mt-1">{errors.background[0]}</p>
+          )}
         </div>
       </div>
-      {/* هنا */}
 
-      <h5 className="text-xl my-4">معلومات الفعالية</h5>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <TextField
-          label="الاسم"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          fullWidth
-          error={!!errors?.name}
-          helperText={errors?.name ? errors.name[0] : ""}
-        />
-        <TextField
-          label="الترخيص"
-          value={license}
-          onChange={(e) => setLicense(e.target.value)}
-          fullWidth
-          error={!!errors?.license}
-          helperText={errors?.license ? errors.license[0] : ""}
-        />
-        <TextField
-          label="الغرض"
-          value={purpose}
-          onChange={(e) => setPurpose(e.target.value)}
-          fullWidth
-          error={!!errors?.purpose}
-          helperText={errors?.purpose ? errors.purpose[0] : ""}
-        />
-        <TextField
-          label="الوصف"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          fullWidth
-          multiline
-          rows={3}
-          error={!!errors?.description}
-          helperText={errors?.description ? errors.description[0] : ""}
-        />
-        <select
-          className={`w-full border px-3 py-2 rounded-md ${
-            errors?.market_category_id ? "border-red-500" : ""
-          }`}
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="">اختر تصنيفًا</option>
-          {categories.map((cat) => (
-            <option key={cat.id} value={cat.id}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
-        {errors?.market_category_id && (
-          <p className="text-red-500 text-sm">{errors.market_category_id[0]}</p>
-        )}
+      {/* معلومات الفعالية */}
+      <div className="mt-8">
+        <h5 className="text-xl font-medium text-gray-800 mb-6">
+          معلومات الفعالية
+        </h5>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-1">
+            <TextField
+              label="الاسم"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              fullWidth
+              variant="outlined"
+              error={!!errors?.name}
+              helperText={errors?.name ? errors.name[0] : ""}
+              InputProps={{
+                className: "bg-gray-50",
+              }}
+            />
+          </div>
 
-        <select
-          className={`w-full border px-3 py-2 rounded-md ${
-            errors?.city_id ? "border-red-500" : ""
-          }`}
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        >
-          <option value="">اختر مدينة</option>
-          {cities.map((city) => (
-            <option key={city.id} value={city.id}>
-              {city.name}
-            </option>
-          ))}
-        </select>
-        {errors?.city_id && (
-          <p className="text-red-500 text-sm">{errors.city_id[0]}</p>
-        )}
+          <div className="space-y-1">
+            <TextField
+              label="الترخيص"
+              value={license}
+              onChange={(e) => setLicense(e.target.value)}
+              fullWidth
+              variant="outlined"
+              error={!!errors?.license}
+              helperText={errors?.license ? errors.license[0] : ""}
+              InputProps={{
+                className: "bg-gray-50",
+              }}
+            />
+          </div>
 
-        <TextField
-          label="كلمة المرور"
-          type={showPassword ? "text" : "password"}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          fullWidth
-          error={!!errors?.employ_password}
-          helperText={errors?.employ_password ? errors.employ_password[0] : ""}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
+          <div className="space-y-1">
+            <TextField
+              label="الغرض"
+              value={purpose}
+              onChange={(e) => setPurpose(e.target.value)}
+              fullWidth
+              variant="outlined"
+              error={!!errors?.purpose}
+              helperText={errors?.purpose ? errors.purpose[0] : ""}
+              InputProps={{
+                className: "bg-gray-50",
+              }}
+            />
+          </div>
 
-        <TextField
-          label="تأكيد كلمة المرور"
-          type={showConfirmPassword ? "text" : "password"}
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          fullWidth
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
+          <div className="space-y-1">
+            <TextField
+              label="الوصف"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              fullWidth
+              multiline
+              // rows={3}
+              variant="outlined"
+              error={!!errors?.description}
+              helperText={errors?.description ? errors.description[0] : ""}
+              InputProps={{
+                className: "bg-gray-50",
+              }}
+            />
+          </div>
+
+          <div className="space-y-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              التصنيف
+            </label>
+            <select
+              className={`w-full border border-gray-300 rounded-md px-3 py-4 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#275963] focus:border-transparent ${
+                errors?.market_category_id ? "border-red-500" : ""
+              }`}
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="">اختر تصنيفًا</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+            {errors?.market_category_id && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.market_category_id[0]}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              المدينة
+            </label>
+            <select
+              className={`w-full border border-gray-300 rounded-md px-3 py-4 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#275963] focus:border-transparent ${
+                errors?.city_id ? "border-red-500" : ""
+              }`}
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            >
+              <option value="">اختر مدينة</option>
+              {cities.map((city) => (
+                <option key={city.id} value={city.id}>
+                  {city.name}
+                </option>
+              ))}
+            </select>
+            {errors?.city_id && (
+              <p className="text-red-500 text-xs mt-1">{errors.city_id[0]}</p>
+            )}
+          </div>
+
+          <div className="space-y-1">
+            <TextField
+              label="كلمة المرور"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              fullWidth
+              variant="outlined"
+              error={!!errors?.employ_password}
+              helperText={
+                errors?.employ_password ? errors.employ_password[0] : ""
+              }
+              InputProps={{
+                className: "bg-gray-50",
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                      size="small"
+                    >
+                      {showPassword ? (
+                        <VisibilityOff fontSize="small" />
+                      ) : (
+                        <Visibility fontSize="small" />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </div>
+
+          <div className="space-y-1">
+            <TextField
+              label="تأكيد كلمة المرور"
+              type={showConfirmPassword ? "text" : "password"}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              fullWidth
+              variant="outlined"
+              InputProps={{
+                className: "bg-gray-50",
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                      edge="end"
+                      size="small"
+                    >
+                      {showConfirmPassword ? (
+                        <VisibilityOff fontSize="small" />
+                      ) : (
+                        <Visibility fontSize="small" />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </div>
+        </div>
       </div>
 
-      <button
-        onClick={build}
-        className="mt-4 px-6 py-2 bg-[#275963] text-white rounded-md hover:bg-[#16383f] w-full"
-      >
-        {loadingBuild ? (
-          <FaSpinner className="animate-spin" /> // عرض أيقونة التحميل
-        ) : (
-          t("حفظ التغييرات") // عرض نص "تسجيل الدخول"
-        )}
-      </button>
-      {/*  */}
+      {/* زر الحفظ */}
+      <div className="mt-8">
+        <button
+          onClick={build}
+          disabled={loadingBuild}
+          className="w-full px-6 py-3 bg-[#275963] text-white rounded-md hover:bg-[#1d4750] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#275963] focus:ring-opacity-50 disabled:opacity-70 disabled:cursor-not-allowed"
+        >
+          {loadingBuild ? (
+            <div className="flex items-center justify-center">
+              <FaSpinner className="animate-spin mx-2" />
+              {uploadProgress == "100" ? uploadProgress - 1 : uploadProgress}%
+            </div>
+          ) : (
+            "حفظ التغييرات"
+          )}
+        </button>
+      </div>
     </div>
   );
 }

@@ -23,7 +23,7 @@ export default function TableRow({ currentData }) {
           <td className="px-6 py-8 text-center">{item.number_of_process}</td>
           <td className="px-6 py-8 text-center">{item.amount}</td>
           <td className="px-6 py-8 text-center">{item.commission}</td>
-          <td className="px-6 py-8 text-center">{item.discounted_amount}</td>
+          <td className="px-6 py-8 text-center">{item.amount + item.commission} SNC</td>
         </tr>
       ))}
     </>

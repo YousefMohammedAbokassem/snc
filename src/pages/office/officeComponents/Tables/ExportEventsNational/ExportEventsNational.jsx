@@ -11,12 +11,14 @@ const head = [
   { content: "sequence" },
   { content: "date" },
   { content: "Timing" },
-  { content: "phone" },
-  { content: "displayName" },
+  { content: "رقم هاتف المرسل إليه" },
+  { content: "اسم الفعالية" },
+  { content: "اسم المنتج" },
   { content: "digitTheExport" },
   { content: "Value" },
   { content: "commission" },
   { content: "discount" },
+  { content: "tax" },
   { content: "amount" },
 ];
 
@@ -62,7 +64,7 @@ export default function ExportEventsNational() {
       const res = await axios.get(
         `${
           import.meta.env.VITE_API_URL
-        }international_event/get_money_sended_transfers?page=${currentPage}`,
+        }local_event/get_money_sended_transfers?page=${currentPage}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -70,15 +72,27 @@ export default function ExportEventsNational() {
         }
       );
       setBody(res.data?.data);
+      console.log(res.data.data)
     } catch (error) {
       if (error.response?.status === 401) {
         dispatch(logoutUser());
       }
-      if (error?.message === "Network Error") {
+      if (
+        error?.message === "Network Error" ||
+        error?.message === "timeout exceeded"
+      ) {
         if (location.pathname !== "/noInternet") {
           localStorage.setItem("location", location.pathname + location.search);
           navigate("/noInternet");
         }
+      }
+      if (
+        error.response.data.message ===
+        "the requests are restricted between 11:45 PM and 12:45 AM."
+      ) {
+        alert(
+          "يتم تقييد الطلبات بين الساعة 11:45 مساءً و 12:45 صباحًا. بتوقيت جرينتش"
+        );
       }
     } finally {
       setLoading(false);
