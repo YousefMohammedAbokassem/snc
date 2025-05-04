@@ -51,7 +51,7 @@ export default function Nav() {
             className="text-white font-medium hover:text-gray-300 transition"
             to="/events"
           >
-            {t("events")}
+            {t("eventsييييي")}
           </NavLink>
           <NavLink
             className="text-white font-medium hover:text-gray-300 transition"
