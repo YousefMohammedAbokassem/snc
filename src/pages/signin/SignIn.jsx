@@ -33,7 +33,8 @@ export default function Page() {
     setProgressLog(true);
     setErrors({});
     setMessageError("");
-
+    const fcmToken = await requestFirebaseNotificationPermission();
+    console.log({fcmToken});
     try {
       const formData = new FormData();
       formData.append("phone_number", phone_number);
@@ -41,12 +42,11 @@ export default function Page() {
       formData.append("display_name", display_name.trim());
 
       // أولاً: الحصول على FCM Token
-      const fcmToken = await requestFirebaseNotificationPermission();
 
       // إذا وجدنا Token، نضيفه لبيانات تسجيل الدخول
       if (fcmToken) {
         formData.append("device_token", fcmToken);
-        console.log(fcmToken)
+        console.log(fcmToken);
       }
 
       const res = await axios.post(
@@ -57,7 +57,7 @@ export default function Page() {
       // بعد نجاح تسجيل الدخول
       setProgressLog(false);
       dispatch(logIn());
-      console.log(res.data)
+      console.log(res.data);
       localStorage.setItem("access_token", res.data.data.token);
       localStorage.setItem("user_id", res.data.data.role_id);
 
@@ -68,7 +68,7 @@ export default function Page() {
       setErrors(error?.response?.data?.errors || {});
       setMessageError(error?.response?.data?.message);
     }
-};
+  };
   //
   // countries
 
