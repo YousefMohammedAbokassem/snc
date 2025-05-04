@@ -21,7 +21,7 @@ export default function EventInfo() {
         }
       );
       setProfile(res.data?.data);
-      console.log(res.data?.data)
+      console.log(res.data?.data);
       setBackground(
         `${import.meta.env.VITE_API_URL_IMAGE}${res.data?.data?.background}`
       );
@@ -30,9 +30,15 @@ export default function EventInfo() {
       setAddress(res.data?.data?.address);
       setCategory(res.data?.data?.market_category_id);
     } catch (error) {
-      if (error.response?.status === 401) {
-        dispatch(logoutUser());
+      if (
+        error.response.data.message ===
+        "the requests are restricted between 11:45 PM and 12:45 AM."
+      ) {
+        alert(
+          "يتم تقييد الطلبات بين الساعة 11:45 مساءً و 12:45 صباحًا. بتوقيت جرينتش"
+        );
       }
+      //
       if (
         error?.message === "Network Error" ||
         error?.message === "timeout exceeded"
@@ -68,9 +74,15 @@ export default function EventInfo() {
       );
       setCategories(res.data?.data);
     } catch (error) {
-      if (error.response?.status === 401) {
-        dispatch(logoutUser());
+      if (
+        error.response.data.message ===
+        "the requests are restricted between 11:45 PM and 12:45 AM."
+      ) {
+        alert(
+          "يتم تقييد الطلبات بين الساعة 11:45 مساءً و 12:45 صباحًا. بتوقيت جرينتش"
+        );
       }
+      //
       if (
         error?.message === "Network Error" ||
         error?.message === "timeout exceeded"
@@ -175,9 +187,15 @@ export default function EventInfo() {
         }
       );
     } catch (error) {
-      if (error.response?.status === 401) {
-        dispatch(logoutUser());
+      if (
+        error.response.data.message ===
+        "the requests are restricted between 11:45 PM and 12:45 AM."
+      ) {
+        alert(
+          "يتم تقييد الطلبات بين الساعة 11:45 مساءً و 12:45 صباحًا. بتوقيت جرينتش"
+        );
       }
+      //
       if (
         error?.message === "Network Error" ||
         error?.message === "timeout exceeded"

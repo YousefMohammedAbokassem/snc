@@ -66,12 +66,12 @@ export default function ThirdStep({
             <EyeIcon className="w-5 h-5" />
           )}
         </button>
+      </div>
         {errors?.password && (
           <p className="mt-1 block text-red-500 font-bold">
             {errors.password[0]}
           </p>
         )}
-      </div>
 
       {/* تأكيد كلمة المرور */}
       <div className="relative flex flex-col">
@@ -96,12 +96,12 @@ export default function ThirdStep({
             <EyeIcon className="w-5 h-5" />
           )}
         </button>
+      </div>
         {errors?.password_confirmation && (
           <p className="mt-1 block text-red-500 font-bold">
             {errors.password_confirmation[0]}
           </p>
         )}
-      </div>
     </div>
   );
 }

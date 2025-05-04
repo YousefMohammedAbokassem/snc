@@ -8,10 +8,11 @@ const menuItems = [
   "inComingNational",
   "exportNational",
   "exportEvents",
+  "exportEventsInter",
   "inComingEvents",
+  "exportEventsNational",
   "inInter",
   "exportIntern",
-  "exportEventsInter",
   "financialCommission",
   "completedReward",
   // "buyCards",
@@ -39,7 +40,10 @@ export default function Aside() {
         {menuItems.map((item, index) => {
           if (
             localStorage.getItem("role") != 3 &&
-            (item === "eventInfo" || item === "eventProducts"|| item === "inComingEvents")
+            (item === "eventInfo" ||
+              item === "eventProducts" ||
+              item === "inComingEvents" ||
+              item === "exportEventsNational")
           ) {
             return null;
           }

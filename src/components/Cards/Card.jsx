@@ -51,12 +51,18 @@ export default function Card() {
         }
       );
       setCard(res.data?.data);
-      console.log(res.data.data)
+      console.log(res.data.data);
     } catch (error) {
       console.error(error);
-      if (error.response?.status === 401) {
-        dispatch(logoutUser());
+      if (
+        error.response.data.message ===
+        "the requests are restricted between 11:45 PM and 12:45 AM."
+      ) {
+        alert(
+          "يتم تقييد الطلبات بين الساعة 11:45 مساءً و 12:45 صباحًا. بتوقيت جرينتش"
+        );
       }
+      //
       if (
         error?.message === "Network Error" ||
         error?.message === "timeout exceeded"
@@ -105,7 +111,7 @@ export default function Card() {
         confirmButtonText: "حسنًا",
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setError(error.response.data.message);
       if (error.response?.status === 401) {
         dispatch(logoutUser());

@@ -12,6 +12,10 @@ import { Helmet } from "react-helmet-async";
 import Nav from "../nav/Nav";
 import Footer from "../../components/Footer/Footer";
 import Swal from "sweetalert2";
+import {
+  requestFirebaseNotificationPermission,
+  // storeFCMToken,
+} from "../../firebase";
 
 export default function Page() {
   const navigate = useNavigate();
@@ -24,44 +28,47 @@ export default function Page() {
   const [progressLog, setProgressLog] = useState(false);
   const [errors, setErrors] = useState({}); // إضافة حالة الأخطاء
   const [MessageError, setMessageError] = useState(""); // إضافة حالة الأخطاء
-
   const signIn = async (e) => {
     e.preventDefault();
     setProgressLog(true);
-    setErrors({}); // إعادة تعيين الأخطاء قبل إرسال الطلب
+    setErrors({});
     setMessageError("");
-    const formData = new FormData();
-    formData.append("phone_number", phone_number);
-    // console.log()
-    // formData.append("phone_number", `0${phone_number.trim().slice(3)}`);
-    formData.append("password", password.trim());
-    // formData.append("display_name", display_name.trim()); // إضافة الاسم التعريفي
-    formData.append("device_token", "asdasd"); // إضافة الاسم التعريفي
 
     try {
+      const formData = new FormData();
+      formData.append("phone_number", phone_number);
+      formData.append("password", password.trim());
+      formData.append("display_name", display_name.trim());
+
+      // أولاً: الحصول على FCM Token
+      const fcmToken = await requestFirebaseNotificationPermission();
+
+      // إذا وجدنا Token، نضيفه لبيانات تسجيل الدخول
+      if (fcmToken) {
+        formData.append("device_token", fcmToken);
+        console.log(fcmToken)
+      }
+
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}login`,
         formData
       );
+
+      // بعد نجاح تسجيل الدخول
       setProgressLog(false);
       dispatch(logIn());
-      navigate("/home");
+      console.log(res.data)
       localStorage.setItem("access_token", res.data.data.token);
-      localStorage.setItem("role", res.data.data.role_id);
-      // Handle successful login (e.g.,  redirect or store token)
+      localStorage.setItem("user_id", res.data.data.role_id);
+
+      navigate("/home");
     } catch (error) {
       setProgressLog(false);
-      console.log(error);
-      setErrors(error?.response?.data?.errors || {}); // تخزين الأخطاء
+      console.error("Login error:", error);
+      setErrors(error?.response?.data?.errors || {});
       setMessageError(error?.response?.data?.message);
-      Swal.fire({
-        icon: "warning",
-        title: "تنبيه",
-        text: "الرجاء التأكد من جميع الحقول أولاً",
-        confirmButtonText: "حسنًا",
-      });
     }
-  };
+};
   //
   // countries
 
@@ -88,6 +95,8 @@ export default function Page() {
   useEffect(() => {
     fetchCountries();
   }, []);
+  console.log(phone_number);
+  console.log(country_code);
   return (
     <>
       <Helmet>
@@ -127,7 +136,10 @@ export default function Page() {
                         zIndex: 1000,
                       }}
                       value={phone_number}
-                      onChange={(value) => setPhone_number(value)}
+                      onChange={(value, country, e, formattedValue) => {
+                        setPhone_number(value);
+                        setCountry_code(country.dialCode);
+                      }}
                     />
                     {errors?.phone_number && (
                       <p className="text-red-500 text-sm font-bold">
@@ -174,11 +186,7 @@ export default function Page() {
                     placeholder={`${t("password")}`}
                     className={`border-[#CDCDCD] px-3 border-[1px] text-black dark:text-white rounded-md bg-transparent  py-5 w-full focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]`}
                   />
-                  {MessageError && (
-                    <p className="text-red-500 text-sm font-bold">
-                      {t("theInfoIsIncorrect")}
-                    </p>
-                  )}
+
                   <button
                     type="button"
                     className={`absolute ${
@@ -195,7 +203,11 @@ export default function Page() {
                     )}
                   </button>
                 </div>
-
+                {MessageError && (
+                  <p className="my-1 text-red-500 text-sm font-bold">
+                    {t("theInfoIsIncorrect")}
+                  </p>
+                )}
                 <Link
                   to="/ForgotPassword"
                   className="dark:text-[#E1B145] text-[#275963] underline my-4 block"

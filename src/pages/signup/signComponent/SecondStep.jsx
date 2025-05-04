@@ -154,12 +154,12 @@ export default function SecondStep({
             <EyeIcon className="w-5 h-5" />
           )}
         </button>
-        {errors?.password && (
-          <p className="mt-1 block text-red-500 font-bold">
-            {t(errors.password[0])}
-          </p>
-        )}
       </div>
+      {errors?.password && (
+        <p className="mt-1 block text-red-500 font-bold">
+          {t(errors.password[0])}
+        </p>
+      )}
 
       {/* تأكيد كلمة المرور */}
       <div className="relative flex flex-col">
@@ -184,12 +184,12 @@ export default function SecondStep({
             <EyeIcon className="w-5 h-5" />
           )}
         </button>
-        {errors?.password_confirmation && (
-          <p className="mt-1 block text-red-500 font-bold">
-            {t(errors.password_confirmation[0])}
-          </p>
-        )}
       </div>
+      {errors?.password_confirmation && (
+        <p className="mt-1 block text-red-500 font-bold">
+          {t(errors.password_confirmation[0])}
+        </p>
+      )}
 
       {/* مربع الموافقة على الشروط */}
       <div className="flex flex-col">

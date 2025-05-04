@@ -24,7 +24,7 @@ export default function ExportIntern() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(100);
   const [body, setBody] = useState({
     current_page: 1,
     data: [],
@@ -71,9 +71,15 @@ export default function ExportIntern() {
       setBody(res.data?.data);
       console.log(res.data?.data);
     } catch (error) {
-      if (error.response?.status === 401) {
-        dispatch(logoutUser());
+      if (
+        error.response.data.message ===
+        "the requests are restricted between 11:45 PM and 12:45 AM."
+      ) {
+        alert(
+          "يتم تقييد الطلبات بين الساعة 11:45 مساءً و 12:45 صباحًا. بتوقيت جرينتش"
+        );
       }
+      //
       if (
         error?.message === "Network Error" ||
         error?.message === "timeout exceeded"

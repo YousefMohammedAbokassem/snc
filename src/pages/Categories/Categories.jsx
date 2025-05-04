@@ -31,9 +31,15 @@ export default function Categories() {
       );
       setCategories(res.data?.data || []);
     } catch (error) {
-      if (error.response?.status === 401) {
-        dispatch(logoutUser());
+      if (
+        error.response.data.message ===
+        "the requests are restricted between 11:45 PM and 12:45 AM."
+      ) {
+        alert(
+          "يتم تقييد الطلبات بين الساعة 11:45 مساءً و 12:45 صباحًا. بتوقيت جرينتش"
+        );
       }
+      //
       if (
         error?.message === "Network Error" ||
         error?.message === "timeout exceeded"
@@ -76,9 +82,15 @@ export default function Categories() {
       );
       setCategories(res.data?.data || []);
     } catch (error) {
-      if (error.response?.status === 401) {
-        dispatch(logoutUser());
+      if (
+        error.response.data.message ===
+        "the requests are restricted between 11:45 PM and 12:45 AM."
+      ) {
+        alert(
+          "يتم تقييد الطلبات بين الساعة 11:45 مساءً و 12:45 صباحًا. بتوقيت جرينتش"
+        );
       }
+      //
       if (
         error?.message === "Network Error" ||
         error?.message === "timeout exceeded"
@@ -100,6 +112,7 @@ export default function Categories() {
       setLoadingButton(false);
     }
   };
+  console.log(categories);
   return (
     <>
       {/* <Nav /> */}
@@ -107,7 +120,9 @@ export default function Categories() {
         <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
           <ul className="flex gap-2 opacity-25">
             <li className="cursor-pointer" onClick={() => navigate("/Events")}>
-              <span className="font-bold text-lg">{t("events")}</span>
+              <span className="font-bold text-lg text-center">
+                {t("events")}
+              </span>
             </li>
             <li>
               <span className="font-bold text-lg">{t(">")}</span>
@@ -159,7 +174,9 @@ export default function Categories() {
                 <div className="flex flex-row-reverse w-full">
                   {/* قسم المعلومات */}
                   <div className="info flex flex-col justify-center items-center self-end mb-4 w-[100px]">
-                    <h3 className="font-bold text-lg">{category.name}</h3>
+                    <h3 className="font-bold text-lg text-center">
+                      {category.name}
+                    </h3>
                     <Link
                       to={`/Categories/${category.id}?category=${category.name}`}
                       className="flex items-center gap-1 underline categoryShop"
@@ -203,7 +220,7 @@ export default function Categories() {
                   <div className="image w-full">
                     <img
                       src={`${import.meta.env.VITE_API_URL_IMAGE}${
-                        category.image
+                        category.logo
                       }`}
                       alt={category.name}
                       className="w-full h-[200px]  rounded-md"

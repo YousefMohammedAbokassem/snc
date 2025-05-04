@@ -14,16 +14,17 @@ export default function AddProduct({
   colors,
   measures,
   productsCategory,
-  setShowAddProduct,
-  setProductsCategory,
+  setShowEditProduct,
+  item,
 }) {
+  console.log(item);
   const [product, setProduct] = useState({
-    name: "",
-    price: "",
-    discount: "",
-    description: "",
+    name: item.name,
+    price: item.price_in_hun,
+    discount: item.discount,
+    description: item.description,
     // image: null,
-    product_category_id: "",
+    product_category_id: item.product_category_id,
     measure_ids: [],
     color_ids: [],
   });
@@ -71,6 +72,7 @@ export default function AddProduct({
     setErrors({});
     setProgressLog(true);
     const formData = new FormData();
+    formData.append("_method", "PUT");
     formData.append("name", product.name);
     formData.append("product_category_id", product.product_category_id);
     formData.append("price", product.price);
@@ -88,7 +90,7 @@ export default function AddProduct({
     console.log(product);
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}product/add`,
+        `${import.meta.env.VITE_API_URL}product/update/${item.id}`,
         formData,
         {
           headers: {
@@ -109,7 +111,7 @@ export default function AddProduct({
       setUploadProgress(0);
       // setProductsCategory((prev) => ({ ...prev, [name]: value }));
 
-      setShowAddProduct(false);
+      setShowEditProduct(false);
       Swal.fire({
         icon: "success",
         title: "نجاح",

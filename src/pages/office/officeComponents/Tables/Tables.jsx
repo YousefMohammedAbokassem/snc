@@ -14,6 +14,7 @@ import TransfareEvent from "./TransfareEvent/TransfareEvent";
 import EventInfo from "./EventInfo/EventInfo";
 import EventProducts from "./EventProducts/EventProducts";
 import HomeOffice from "./HomeOffice/HomeOffice";
+import ExportMyEvents from "./ExportMyEvents/ExportMyEvents";
 
 export default function Tables({ theTable }) {
   const { t } = useTranslation();
@@ -34,8 +35,11 @@ export default function Tables({ theTable }) {
         <ExportEventsNational />
       ) : theTable === "exportEventsInter" ? (
         <ExportEventsInter />
-      ) : theTable === "inComingEvents"&& localStorage.getItem("role") == 3 ? (
+      ) : theTable === "inComingEvents" && localStorage.getItem("role") == 3 ? (
         <InComingEvents />
+      ) : theTable === "exportEventsNational" &&
+        localStorage.getItem("role") == 3 ? (
+        <ExportMyEvents />
       ) : theTable === "financialCommission" ? (
         <FinancialCommission />
       ) : theTable === "completedReward" ? (

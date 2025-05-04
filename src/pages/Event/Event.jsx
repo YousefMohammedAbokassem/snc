@@ -33,9 +33,15 @@ export default function Event() {
       setCategories(res.data?.data?.categories || []);
     } catch (error) {
       console.log(error);
-      if (error.response?.status === 401) {
-        dispatch(logoutUser());
+      if (
+        error.response.data.message ===
+        "the requests are restricted between 11:45 PM and 12:45 AM."
+      ) {
+        alert(
+          "يتم تقييد الطلبات بين الساعة 11:45 مساءً و 12:45 صباحًا. بتوقيت جرينتش"
+        );
       }
+      //
       if (
         error?.message === "Network Error" ||
         error?.message === "timeout exceeded"
@@ -57,7 +63,7 @@ export default function Event() {
       setLoading(false);
     }
   };
-  console.log({market})
+  console.log({ market });
   const [products, setProducts] = useState([]);
   const [loadingStore, setLoadingStore] = useState(true);
   const fetchProduct = async () => {
@@ -74,9 +80,15 @@ export default function Event() {
       setProducts(res.data?.data?.data || []);
     } catch (error) {
       console.log(error);
-      if (error.response?.status === 401) {
-        dispatch(logoutUser());
+      if (
+        error.response.data.message ===
+        "the requests are restricted between 11:45 PM and 12:45 AM."
+      ) {
+        alert(
+          "يتم تقييد الطلبات بين الساعة 11:45 مساءً و 12:45 صباحًا. بتوقيت جرينتش"
+        );
       }
+      //
       if (
         error?.message === "Network Error" ||
         error?.message === "timeout exceeded"
@@ -98,7 +110,7 @@ export default function Event() {
       setLoadingStore(false);
     }
   };
-  console.log({products})
+  console.log({ products });
 
   useEffect(() => {
     fetchData();

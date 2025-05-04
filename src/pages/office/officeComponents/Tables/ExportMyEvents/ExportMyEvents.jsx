@@ -22,7 +22,7 @@ const head = [
   { content: "المبلغ الوازد" },
 ];
 
-export default function InComingEvents() {
+export default function ExportMyEvents() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -64,13 +64,14 @@ export default function InComingEvents() {
       const res = await axios.get(
         `${
           import.meta.env.VITE_API_URL
-        }local_event/get_money_received_transfers?page=${currentPage}`,
+        }international_event/get_money_received_transfers?page=${currentPage}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
         }
       );
+      console.log(res.data);
       setBody(res.data?.data);
       console.log(res.data.data);
     } catch (error) {

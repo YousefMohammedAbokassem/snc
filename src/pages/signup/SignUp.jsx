@@ -55,6 +55,7 @@ export default function Page() {
   const [country_code, setCountry_code] = useState("");
   const [countries, setCountries] = useState([]);
   const [countrySend, setCountrySend] = useState("");
+  const [errorsVerify, setErrorsVerify] = useState(null);
   const [errors, setErrors] = useState({
     address,
     birthday,
@@ -69,10 +70,9 @@ export default function Page() {
     place_of_birth,
     gender,
   });
-
   // استرجاع البيانات من sessionStorage عند تحميل الصفحة
   useEffect(() => {
-    const savedData = sessionStorage.getItem("signUpData");
+    const savedData = localStorage.getItem("signUpData");
     if (savedData) {
       const data = JSON.parse(savedData);
       setFirst_name(data.first_name || "");
@@ -117,7 +117,7 @@ export default function Page() {
       address,
       // country_code,
     };
-    sessionStorage.setItem("signUpData", JSON.stringify(data));
+    localStorage.setItem("signUpData", JSON.stringify(data));
   }, [
     first_name,
     last_name,
@@ -308,7 +308,8 @@ export default function Page() {
     } catch (error) {
       console.log(error);
       setProgressLog(false);
-      setErrors(error?.response?.data.message);
+      setErrorsVerify(error.response?.data.message);
+      setErrors(error?.response?.data?.errors);
     }
   };
   useEffect(() => {
@@ -402,6 +403,8 @@ export default function Page() {
                 otp={otp}
                 setOtp={setOtp}
                 progressLog={progressLog}
+                errorsVerify={errorsVerify}
+                errors={errors}
               />
             )}
 
