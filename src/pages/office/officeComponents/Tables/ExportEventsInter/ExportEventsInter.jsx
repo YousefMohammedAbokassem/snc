@@ -11,9 +11,9 @@ const head = [
   { content: "sequence" },
   { content: "date" },
   { content: "Timing" },
-  { content: "رقم هاتف المرسل إليه" },
-  { content: "اسم الفعالية" },
-  { content: "اسم المنتج" },
+  { content: "recipientPhoneNumber" },
+  { content: "eventName" },
+  { content: "productName" },
   { content: "digitTheExport" },
   { content: "Value" },
   { content: "commission" },
@@ -71,9 +71,9 @@ export default function ExportEventsInter() {
         }
       );
       setBody(res.data?.data);
-      console.log(res.data?.data);
+      // console.log(res.data?.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       if (
         error.response.data.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."

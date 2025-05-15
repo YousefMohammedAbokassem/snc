@@ -165,7 +165,7 @@ export default function Page() {
   const fetchCountries = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}countries`);
-      console.log(res.data.data);
+      // console.log(res.data.data);
       setPhoneLoading(false);
       setCountries([""]);
       res.data.data.map((ele) => {
@@ -230,8 +230,8 @@ export default function Page() {
     setProgressLog(true);
     setErrors({});
     const formData = new FormData(); // استخدام FormData لإرسال البيانات
-    formData.append("first_name", first_name.trim());
-    formData.append("last_name", last_name.trim());
+    // formData.append("first_name", first_name.trim());
+    // formData.append("last_name", last_name.trim());
     formData.append("display_name", display_name.trim());
     formData.append("phone_number", phone_number.slice(country_code?.length));
 
@@ -241,17 +241,17 @@ export default function Page() {
     formData.append("gender", gender.gender === "male" ? "m" : "f");
     formData.append("place_of_birth", place_of_birth.trim());
     const idCountry = countrySend.filter((ele) => {
-      console.log(ele);
-      console.log(country_code);
+      // console.log(ele);
+      // console.log(country_code);
       if (parseInt(ele.code) == parseInt(country_code)) {
-        console.log(ele.id);
+        // console.log(ele.id);
         return ele.id;
       }
     });
-    // console.log(idCountry[0]?.id)
+    // // console.log(idCountry[0]?.id)
     formData.append("country_id", idCountry[0]?.id);
-    console.log(idCountry);
-    console.log(idCountry[0]);
+    // console.log(idCountry);
+    // console.log(idCountry[0]);
     formData.append("birthday", moment(birthday).format("YYYY-MM-DD"));
     formData.append("card_number", encryptedData);
     formData.append("country_code", country_code);
@@ -272,7 +272,7 @@ export default function Page() {
 
       setProgressLog(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setProgressLog(false);
       setErrors(error?.response?.data.errors);
       Swal.fire({
@@ -306,7 +306,7 @@ export default function Page() {
       navigate("/signIn");
       setProgressLog(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setProgressLog(false);
       setErrorsVerify(error.response?.data.message);
       setErrors(error?.response?.data?.errors);
@@ -457,7 +457,11 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="image hidden sm:block sm:w-[40%] md:w-[50%] h-full fixed left-0 top-0 -z-10 ">
+        <div
+          className={`image hidden sm:block sm:w-[40%] md:w-[50%] h-full fixed ${
+            localStorage.getItem("i18nextLng") === "ar" ? "left-0 " : "right-0 "
+          } top-0 -z-10 `}
+        >
           <img
             src="/images/SingUp.jpg"
             alt="signUp image"

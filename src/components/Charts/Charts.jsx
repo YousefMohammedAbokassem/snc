@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import {
@@ -18,14 +19,14 @@ import {
   TablePagination,
 } from "@mui/material";
 
-export default function CryptoExchange() {
+export default function Charts() {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
   const [searchTerm, setSearchTerm] = useState("");
 
   const fetchData = async () => {
@@ -35,11 +36,11 @@ export default function CryptoExchange() {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}huns`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          "Accept-Language": localStorage.getItem("i18nextLng"), // إضافة header للغة العربية
         },
         // timeout: 10000,
       });
       setData(res.data?.data);
-      setLastUpdated(new Date());
     } catch (error) {
       console.error("Error fetching data:", error);
       setError(error);
@@ -62,8 +63,8 @@ export default function CryptoExchange() {
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 60000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(fetchData, 60000);
+    // return () => clearInterval(interval);
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -76,11 +77,23 @@ export default function CryptoExchange() {
   };
 
   const filteredData = data.filter((item) =>
-    item.country.toLowerCase().includes(searchTerm.toLowerCase())
+    item.country_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  const location = useLocation();
 
+  useEffect(() => {
+    if (location.state?.scrollTo === "balance") {
+      const element = document.getElementById("balance");
+      if (element) {
+        // تأخير بسيط لضمان تحميل الصفحة بالكامل
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+  }, [location.state]);
   return (
-    <div className="container my-8">
+    <div className="container my-8" id="balance">
       <Box
         sx={{
           // p: 3,
@@ -202,6 +215,7 @@ export default function CryptoExchange() {
                     "0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)",
                   mb: 2,
                   overflow: "hidden",
+                  overflow: "auto",
                 }}
               >
                 <Table
@@ -226,8 +240,32 @@ export default function CryptoExchange() {
                           borderBottom: "2px solid #e2e8f0",
                         }}
                       >
+                        {t("flag")}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          fontWeight: 600,
+                          fontSize: "1rem",
+                          color: "#4a5568",
+                          py: 2,
+                          borderBottom: "2px solid #e2e8f0",
+                        }}
+                      >
                         {t("country")}
                       </TableCell>
+                      {/* <TableCell
+                        align="center"
+                        sx={{
+                          fontWeight: 600,
+                          fontSize: "1rem",
+                          color: "#4a5568",
+                          py: 2,
+                          borderBottom: "2px solid #e2e8f0",
+                        }}
+                      >
+                        {t("currency")}
+                      </TableCell> */}
                       <TableCell
                         align="center"
                         sx={{
@@ -250,7 +288,7 @@ export default function CryptoExchange() {
                       )
                       .map((row) => (
                         <TableRow
-                          key={row.country}
+                          key={row.country_name}
                           sx={{
                             "&:nth-of-type(even)": {
                               bgcolor: "#f8fafc",
@@ -261,6 +299,24 @@ export default function CryptoExchange() {
                           }}
                         >
                           <TableCell
+                            align="center"
+                            sx={{
+                              borderBottom: "1px solid #edf2f7",
+                            }}
+                          >
+                            <img
+                              src={`${import.meta.env.VITE_API_URL_IMAGE}${
+                                row.country_flag
+                              }`}
+                              alt={row.country_name}
+                              style={{
+                                width: "40px",
+                                height: "auto",
+                                // borderRadius: "",
+                              }}
+                            />
+                          </TableCell>
+                          <TableCell
                             component="th"
                             align="center"
                             scope="row"
@@ -270,17 +326,34 @@ export default function CryptoExchange() {
                               borderBottom: "1px solid #edf2f7",
                             }}
                           >
-                            {row.country}
+                            {row.country_name}
                           </TableCell>
+                          {/* <TableCell
+                            align="center"
+                            sx={{
+                              fontWeight: 500,
+                              color: "#4a5568",
+                              borderBottom: "1px solid #edf2f7",
+                            }}
+                          >
+                            {row.country_currency}
+                          </TableCell> */}
                           <TableCell
                             align="center"
                             sx={{
                               fontWeight: 600,
                               color: "#275963",
                               borderBottom: "1px solid #edf2f7",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
                             }}
                           >
-                            {1 / row.value.toLocaleString()}
+                            <p>
+                              {row.country_currency} <bdi>{row.value}</bdi>{" "}
+                              {t("inFront")} SNC <bdi>1</bdi>
+                            </p>
+                            <img src="/images/7.png" alt="" width={60} />
                           </TableCell>
                         </TableRow>
                       ))}
@@ -290,7 +363,7 @@ export default function CryptoExchange() {
 
               {/* Pagination */}
               <TablePagination
-                rowsPerPageOptions={[10, 25, 50]}
+                rowsPerPageOptions={[25, 50, 100]}
                 component="div"
                 count={filteredData.length}
                 rowsPerPage={rowsPerPage}

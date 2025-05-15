@@ -17,7 +17,7 @@ export default function AddProduct({
   setShowEditProduct,
   item,
 }) {
-  console.log(item);
+  // console.log(item);
   const [product, setProduct] = useState({
     name: item.name,
     price: item.price_in_hun,
@@ -87,7 +87,7 @@ export default function AddProduct({
     product.color_ids.forEach((id, index) =>
       formData.append(`color_ids[${index}]`, id)
     );
-    console.log(product);
+    // console.log(product);
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}product/update/${item.id}`,
@@ -101,13 +101,13 @@ export default function AddProduct({
               (progress.loaded * 100) / progress.total
             );
             setUploadProgress(percent);
-            console.log(`Upload Progress: ${percent}%`);
+            // console.log(`Upload Progress: ${percent}%`);
           },
         }
       );
       setProgressLog(false);
-      console.log(res.data.data);
-      console.log(res.data);
+      // console.log(res.data.data);
+      // console.log(res.data);
       setUploadProgress(0);
       // setProductsCategory((prev) => ({ ...prev, [name]: value }));
 
@@ -120,7 +120,7 @@ export default function AddProduct({
       });
     } catch (error) {
       setUploadProgress(0);
-      console.log(error);
+      // console.log(error);
       if (
         error.response.data.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."

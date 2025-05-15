@@ -11,8 +11,8 @@ const head = [
   { content: "sequence" },
   { content: "date" },
   { content: "Timing" },
-  { content: "رقم هاتف المرسل" },
-  { content: "اسم المرسل" },
+  { content: "senderPhoneNumber" },
+  //   { content: "اسم المرسل" },
   { content: "digitTheExport" },
   { content: "Value" },
 ];

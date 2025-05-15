@@ -248,7 +248,7 @@ export default function ModernProducts() {
           {LoadingButton ? (
             <FaSpinner className="animate-spin" />
           ) : products?.next_page_url === null ? (
-            t("لا يوجد المزيد")
+            t("noMore")
           ) : (
             t("more")
           )}

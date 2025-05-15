@@ -1,33 +1,34 @@
 {
   "signup": "Sign Up",
   "createAnAcoount": "Create an Account",
-  "firstStep": "Step One: Enter Your Basic Information",
+  "firstStep": "Step One: Enter your basic information",
   "firstName": "First Name",
+  "name": "Name",
   "lastName": "Last Name",
   "gender": "Gender",
   "male": "Male",
   "female": "Female",
-  "national_number": "National Number",
+  "national_number": "National ID number as registered on the personal ID card",
   "birth_place": "Place of Birth",
   "birthDate": "Date of Birth",
   "next": "Next",
   "doYou": "Already have an account?",
   "logIn": "Log In",
-  "secondStep": "Step Two: Enter Your Subscription Information",
-  "thirdStep": "Step Three: Enter the Verification Code Sent to Your Phone",
-  "subscription_card_number": "Subscription Card Number",
-  "address_placeholder": "Residence Address (Area, Neighborhood, Street)",
+  "secondStep": "Step Two: Enter your subscription information",
+  "thirdStep": "Step Three: Enter the verification code sent to your phone number",
+  "subscription_card_number": "Subscription card number provided by the previous member",
+  "address_placeholder": "Residence address (area, neighborhood, street, building, floor)",
   "phone_number": "Phone Number",
   "password": "Password",
   "confirm_password": "Confirm Password",
   "I_agree": "By continuing, you agree to the",
-  "conditions": " Terms of Use and Privacy Policy.",
+  "conditions": " terms of use and policies.",
   "youDidNot": "Didn't receive a code?",
-  "reSend": "Resend",
+  "reSend": " Resend",
   "new_code": "New Code",
   "displayName": "Display Name",
   "didnotYou": "Don't have an account?",
-  "didYouForget": "Forgot your password?",
+  "didYouForget": "Forgot Password?",
   "youHaveTo": "You must agree to the site policy first",
   "send": "Send",
   "verification": "Verification",
@@ -43,23 +44,666 @@
   "ar": "Arabic",
   "en": "English",
   "search": "Search...",
-  "welcome": "Welcome to your electronic office... We are at your service and happy to cooperate for the success of the platform!",
+  "welcome": "Welcome to your electronic office...",
   "inComingNational": "National Financial Incoming Table",
   "exportNational": "National Financial Outgoing Table",
   "exportEvents": "Outgoing Purchase Table from National Events",
-  "inComingEvents": "Incoming Sales Table from National Events",
+  "inComingEvents": "Incoming Sales Table for National Events",
+  "exportEventsNational": "Incoming Sales Table for International Events",
   "inInter": "International Financial Incoming Table",
   "exportIntern": "International Financial Outgoing Table",
   "exportEventsInter": "Outgoing Purchase Table from International Events",
-  "financialCommission": "Financial Commission Table",
+  "financialCommission": "Financial Commissions Table",
   "completedReward": "Completed Rewards Table",
   "buyCards": "Subscription Card Purchase Table",
   "transfareEvent": "Transfer Operation",
   "sequence": "Sequence",
   "date": "Date",
-  "Timing": "Timing",
+  "Timing": "Time",
   "phone": "Phone",
-  "digitTheExport": "Transaction Number Exported From",
+  "digitTheExport": "Operation Number",
   "Value": "Value",
-  "itemsPerPage": "Items per page:"
+  "itemsPerPage": "Items per page:",
+  "from": "From",
+  "pages": "Pages",
+  "submit": "Submit",
+  "theInfoIsIncorrect": "The provided information is incorrect",
+  "categories": "Categories",
+  "showAll": "Show All",
+  "shopNow": "Shop Now",
+  "stores": "Stores",
+  "modernProducts": "Latest Products",
+  "reviews": "Reviews",
+  "more": "Load More",
+  "offers": "Offers",
+  "about_us": "About Us",
+  "marketing": "Marketing",
+  "services": "Services",
+  "branches": "Branches",
+  "events": "Events",
+  "support": "Support",
+  "help_center": "Help Center",
+  "privacy_policy": "Privacy Policy",
+  "contact_us": "Contact Us",
+  "site_map": "Site Map",
+  "newsletter": "Subscribe to our newsletter",
+  "enter_email": "Enter your email",
+  "subscribe": "Subscribe",
+  "social_media": "Social Media",
+  "all_rights_reserved": "All rights reserved",
+  "doyYouWantCreate": "Do you want to create an event?",
+  "filterBy": "Filter by",
+  "oops": "Oops! Page not found.",
+  "orSimply": "Or simply benefit from the experience of our consulting team.",
+  "backToHomePage": "Back to homepage",
+  "allEvents": "All Events",
+  "commission": "Commission",
+  "discountedAmount": "Discounted Amount",
+  "profile": "Profile",
+  "buyCardsSection": "Subscription Cards",
+  "generalNews": "General News",
+  "generalAdvertisements": "General Advertisements",
+  "zeroCard": "ZERO Card",
+  "bronzeCard": "BRONZE Card",
+  "vipCard": "VIP Card",
+  "silverCard": "SILVER Card",
+  "goldCard": "GOLD Card",
+  "eventCard": "Event Card",
+  "nationalPrice": "National Price",
+  "internationalPrice": "International Price",
+  "cardProperties": "Card Features",
+  "firstService": "First Service",
+  "secondService": "Second Service",
+  "thirdService": "Third Service",
+  "fourthService": "Fourth Service",
+  "fifthService": "Fifth Service",
+  "sixthService": "Sixth Service",
+  "seventhService": "Seventh Service",
+  "eighthService": "Eighth Service",
+  "ninthService": "Ninth Service",
+  "tenthService": "Tenth Service",
+  "manageSite": "Platform management service for its users",
+  "buyCard": "Buy Card",
+  "The first name field is required.": "The first name field is required.",
+  "The last name field is required.": "The last name field is required.",
+  "The display name field is required.": "The display name field is required.",
+  "The national id field is required.": "The national ID field is required.",
+  "The place of birth field is required.": "The place of birth field is required.",
+  "The birthday field must match the format Y-m-d.": "The birthday must match the format Y-m-d.",
+  "The card number doesn't exists, or it's belongs to a different user.": "The card number doesn't exist, or it belongs to a different user.",
+  "The address field is required.": "The address field is required.",
+  "The phone number field format is invalid.": "The phone number format is invalid.",
+  "The password field confirmation does not match.": "Password confirmation does not match.",
+  "The password field is required.": "The password field is required.",
+  "The password field must be at least 8 characters.": "The password must be at least 8 characters long.",
+  "The selected country code is invalid.": "The selected country code is invalid.",
+  "The country code does not match the selected country.": "The country code does not match the selected country.",
+  "The selected country id is invalid.": "The selected country ID is invalid.",
+  "enterValid": "Enter a valid phone number",
+  "detailsProduct": "Product Details",
+  "discount": "Discount",
+  "Taxes": "Taxes and Fees",
+  "amount": "Discounted Amount",
+  "senderPhone": "Sender",
+  "reciverPhone": "Receiver",
+  "reason": "Reason",
+  "cardType": "Card Type",
+  "quantity": "Quantity",
+  "reward": "Reward",
+  "The selected display name is invalid.": "The display name is invalid",
+  "The phone number field is required.": "The phone number field is required.",
+  "The selected phone number is invalid.": "The selected phone number is invalid.",
+  "eventInfo": "Event Information",
+  "eventProducts": "Event Products",
+  "logout": "Logout",
+  "login": "Login",
+  "noInternet": "No internet connection",
+  "pleaseCheckConnection": "Please check your connection and try again",
+  "retryConnection": "Retry Connection",
+  "checking": "Checking",
+  "stillOffline": "Still offline!",
+  "backOnline": "Back online!",
+  "youAreConnected": "You are now connected to the internet",
+  "tax": "Tax",
+  "crypto_exchange_rates": "Rates of 1 SNC against countries",
+  "search_country": "Search for a country",
+  "country": "Country",
+  "currency_value": "Value",
+  "change": "Change",
+  "rows_per_page": "Rows per page",
+  "no_data_available": "No data available",
+  "last_updated": "Last updated",
+  "requests_restricted": "Requests are restricted between 11:45 PM and 12:45 AM",
+  "data_fetch_error": "An error occurred while fetching data",
+  "refresh": "Refresh",
+  "The display name has already been taken.": "The display name is already taken, please choose another",
+  "The first name field must be at least 2 characters.": "The first name must be at least 2 characters",
+  "The last name field must be at least 2 characters.": "The last name must be at least 2 characters",
+  "The birthday field must be a date before today.": "The birthday must be a date before today",
+  "The code field is required.": "Enter the verification code",
+  "The code field must be 6 digits.": "The verification code must be 6 digits",
+  "serial_number": "Serial Number",
+  "card_type": "Card Type",
+  "card_number": "Card Number",
+  "is_active": "Card Status",
+  "commissionBuyCards": "Card Commission Table",
+  "flag": "Flag",
+  "displayNameSign": "Your display name is a pseudonym used later",
+  "cart.breadcrumb.arrow": ">",
+  "cart.breadcrumb.current": "Cart",
+  "cart.title": "Cart",
+  "cart.table.headers.products": "Products",
+  "cart.table.headers.price": "Price",
+  "cart.table.headers.quantity": "Quantity",
+  "cart.table.headers.remove": "Remove",
+  "cart.price.local": "Local Price:",
+  "cart.price.international": "International Price:",
+  "cart.total.title": "Total:",
+  "cart.total.international": "International Price",
+  "cart.total.local": "Local Price",
+  "cart.total.commissions": "Commissions",
+  "cart.total.taxes": "Taxes",
+  "cart.pay": "Pay",
+  "cart.delete.confirm.title": "Delete Confirmation",
+  "cart.delete.confirm.text": "Are you sure you want to delete this item?",
+  "cart.delete.cancel": "Cancel",
+  "cart.delete.confirm": "Delete",
+  "notifications.title": "Notifications",
+  "notifications.empty": "No new notifications.",
+  "notifications.close": "Close",
+
+  "address": "Address",
+  "birthday": "Birthday",
+  "national_id": "National ID",
+  "place_of_birth": "Place of Birth",
+  "local_balance": "Local Balance",
+  "international_balance": "International Balance",
+  "edit_profile": "Edit Profile",
+  "select_gender": "Select Gender",
+  "first_name": "First Name",
+  "last_name": "Last Name",
+  "save_changes": "Save Changes",
+  "loading_error": "An error occurred while loading the data.",
+  "inFront": "Rate to",
+  "cart.national_balance": "National Financial Balance",
+  "cart.convert_to_international": "Convert to International Money",
+  "cart.international_balance": "International Financial Balance",
+  "cart.convert_to_national": "Convert to National Money",
+  "cart.transfer_title_local_to_international": "Money Transfer (National to International)",
+  "cart.transfer_title_international_to_local": "Money Transfer (International to National)",
+  "cart.amount": "Amount",
+  "cart.cancel": "Cancel",
+  "cart.transfer": "Transfer",
+
+  "cardProperties": "Card Properties",
+  "firstService": "First Service",
+  "firstServiceDescription": "Get a lifetime electronic office within the HUN platform via its website WWW.HUN.CASH",
+  "secondService": "Second Service",
+  "secondServiceDescription": "Activate (payment + purchasing) operations for conducting commercial exchanges between platform users exclusively via your mobile number.",
+  "thirdService": "Third Service",
+  "thirdServiceDescription": "Get an immediate commission (shopping voucher) for every new user through your referral, once only, based on their classification within your international balance for your electronic office. You can transfer it to your local balance if desired, based on the weekly pricing set by the platform for your country.",
+  "thirdServicePoint1": "1- For the Bronze card, you get / 0.25 shopping voucher /.",
+  "thirdServicePoint2": "2- For the Silver card, you get / 0.50 shopping voucher /.",
+  "thirdServicePoint3": "3- For the Gold card, you get / 1.00 shopping voucher /.",
+  "thirdServicePoint4": "4- For the VIP card, you get / 2.50 shopping voucher /.",
+  "thirdServiceDisclaimer": "Note - Zero classified users do not earn a commission for a new user classified as Zero.",
+  "fourthService": "Fourth Service",
+  "fourthServiceDescription": "The holder of this classification is not eligible to participate in or enter the financial rewards program provided by the platform's management.",
+  "fifthService": "Fifth Service",
+  "fifthServiceDescription": "This card's value is restricted to the user only, without any international balance in their electronic office to begin commercial exchanges.",
+  "sixthService": "Sixth Service",
+  "sixthServiceDescription": "The user with this classification is entitled to withdraw their electronic financial balance worth /15 shopping vouchers/ every 24 hours from the withdrawal time.",
+  "seventhService": "Seventh Service",
+  "seventhServiceDescription": "The user with this classification is entitled to withdraw their national electronic financial balance fully whenever desired.",
+  "eighthService": "Eighth Service",
+  "eighthServiceDescription": "Increase your local financial balance at your electronic office. You can top up your local electronic currency balance through platform users or authorized branches.",
+  "ninthService": "Ninth Service",
+  "ninthServiceDescription": "Withdraw your local financial balance from your electronic office. You can withdraw your national electronic currency balance through platform users or authorized branches.",
+  "ninthServiceDisclaimer": "Note - In case the transfer is done through private offices, exchange services, and banks, the sending and receiving commission is on the user's account.",
+  "tenthService": "Tenth Service",
+  "tenthServiceDescription": "Benefit from offers, discounts, and bookings provided to you by events contracted with the platform worldwide.",
+  "tenthServiceDisclaimer": "Note: Prices listed for products and goods on contracted events' pages do not include shipping and delivery fees.",
+  "note": "Note",
+  "manageSite": "Manage Site",
+  "siteSecurityDescription": "Maintaining the confidentiality and privacy of the financial transactions you perform and archiving them within your electronic office while ensuring the preservation of the financial balance in your accounts in case you lose your mobile phone.",
+  "cardProperties": "Card Properties",
+  "bronzeDesc1": {
+    "title": "First Service",
+    "content": "Lifetime access to an electronic office on the HUN platform via its website WWW.HUN.CASH."
+  },
+  "bronzeDesc2": {
+    "title": "Second Service",
+    "content": "Activate (payment + purchase) operations for commercial exchanges between platform users exclusively via your phone number."
+  },
+  "bronzeDesc3": {
+    "title": "Third Service",
+    "content": "<p class='text-xl'>You receive an instant commission (purchase voucher) for each new user registered through you, once only, based on their classification into your international office balance. You may convert it to local balance according to the weekly exchange rate set by the platform administration in your country – as follows:</p><ul class='mt-2'><li>1- Bronze card: /0.25 purchase voucher/</li><li>2- Silver card: /0.50 purchase voucher/</li><li>3- Gold card: /1.00 purchase voucher/</li><li>4- VIP card: /2.50 purchase voucher/</li></ul>"
+  },
+  "bronzeDesc4": {
+    "title": "Fourth Service",
+    "content": "A /1.00 purchase voucher/ international balance is gifted to your office by HUN platform management to activate commercial exchange."
+  },
+  "bronzeDesc5": {
+    "title": "Fifth Service",
+    "content": "An international balance of /0 purchase vouchers/ is deposited in your office as a trust by HUN Platform – This service is currently suspended."
+  },
+  "bronzeDesc6": {
+    "title": "Sixth Service",
+    "content": "When your electronic office reaches /10/ users of bronze or higher classification, you get a first reward from HUN management of /2.5 purchase vouchers/ as international balance – one time only."
+  },
+  "bronzeDesc7": {
+    "title": "Seventh Service",
+    "content": "When your office reaches /20/ users (10 previous + 10 new) of bronze or higher classification, you get a second reward of /2.5 purchase vouchers/ as international balance – one time only."
+  },
+  "bronzeDesc8": {
+    "title": "Eighth Service",
+    "content": "When your office reaches /30/ users (20 previous + 10 new) of bronze or higher classification, you get a third reward of /2.5 purchase vouchers/ as international balance – one time only."
+  },
+  "bronzeDesc9": {
+    "title": "Ninth Service",
+    "content": "When your office reaches /40/ users (30 previous + 10 new) of bronze or higher classification, you get a fourth and final reward of /2.5 purchase vouchers/ as international balance – one time only."
+  },
+  "bronzeDesc10": {
+    "title": "Tenth Service",
+    "content": "Users of this classification are allowed to withdraw a financial electronic balance of /25 purchase vouchers/ every 24 hours from the withdrawal time."
+  },
+  "bronzeDesc11": {
+    "title": "Eleventh Service",
+    "content": "Increase your local electronic financial balance – You can top up your balance in national electronic currency through platform users, authorized branches, or contracted banks in your location – via one of the platform's electronic communication methods."
+  },
+  "bronzeDesc12": {
+    "title": "Twelfth Service",
+    "content": "<p>Withdraw your local financial balance from your electronic office – You can withdraw your balance in national electronic currency through platform users, authorized branches, or contracted banks in your area – via one of the platform’s communication methods.</p><p class='text-[#C92C2C] text-xl mt-2'>Note: If sending via private offices, exchanges, or banks, transfer fees are the user's responsibility.</p>"
+  },
+  "bronzeDesc13": {
+    "title": "Thirteenth Service",
+    "content": "<p>Benefit from offers, discounts, and bookings provided by entities contracted with the platform around the world.</p><p class='text-[#C92C2C] text-xl mt-2'>Note: The listed prices for products and goods on the partner page do not include shipping and delivery charges. Transfer fees are the user's responsibility.</p>"
+  },
+  "bronzeDesc14": {
+    "title": "Fourteenth Service",
+    "content": "Security & Protection: Preserve the confidentiality and privacy of your financial operations, archived in your electronic office, and ensure the safety of your financial block in case your mobile phone is lost."
+  },
+  "manageSite": {
+    "title": "Site Management",
+    "content": "Security & Protection: Preserve the confidentiality and privacy of your financial operations, archived in your electronic office, and ensure the safety of your financial block in case your mobile phone is lost."
+  },
+  "cardProperties": "Card Features",
+  "silver": {
+    "1": {
+      "title": "First Service",
+      "content": "You get a lifetime electronic office on the HUN platform via its website WWW.HUN.CASH"
+    },
+    "2": {
+      "title": "Second Service",
+      "content": "Activate (payment + purchase) operations for exclusive commercial exchanges between platform users via your phone number."
+    },
+    "3": {
+      "title": "Third Service",
+      "content": [
+        {
+          "text": "You get an instant commission (purchase voucher) for every new user through you, once only, based on their classification in your international balance. You can transfer it to local balance based on the weekly pricing by the platform’s admin for your country - as follows:"
+        },
+        { "text": "1- Bronze Card: 0.25 purchase voucher." },
+        { "text": "2- Silver Card: 0.50 purchase voucher." },
+        { "text": "3- Gold Card: 1.00 purchase voucher." },
+        { "text": "4- VIP Card: 2.50 purchase voucher." }
+      ]
+    },
+    "4": {
+      "title": "Fourth Service",
+      "content": "Your office is gifted a 3.00 purchase voucher international balance by HUN platform to activate trading."
+    },
+    "5": {
+      "title": "Fifth Service",
+      "content": "A fixed 0 purchase voucher is credited as a trust to your account by HUN – currently this service is paused."
+    },
+    "6": {
+      "title": "Sixth Service",
+      "content": "When you reach 10 users classified as Silver and above through your office, you receive a one-time international bonus of 5.0 purchase vouchers from HUN."
+    },
+    "7": {
+      "title": "Seventh Service",
+      "content": "At 20 users (previous 10 + 10 new) of Silver and above classification, you receive a second one-time international bonus of 5.0 purchase vouchers from HUN."
+    },
+    "8": {
+      "title": "Eighth Service",
+      "content": "At 30 users (previous 20 + 10 new) of Silver and above classification, you receive a third one-time international bonus of 5.0 purchase vouchers from HUN."
+    },
+    "9": {
+      "title": "Ninth Service",
+      "content": "At 40 users (previous 30 + 10 new) of Silver and above classification, you receive a final one-time international bonus of 5.0 purchase vouchers from HUN."
+    },
+    "10": {
+      "title": "Tenth Service",
+      "content": "Silver card users can spend up to 50 purchase vouchers every 24 hours from the time of spending."
+    },
+    "11": {
+      "title": "Eleventh Service",
+      "content": "You can increase your local balance in your electronic office using the national electronic currency via platform users, authorized branches, or partner banks in your area – through any platform communication method."
+    },
+    "12": {
+      "title": "Twelfth Service",
+      "content": [
+        {
+          "text": "You can withdraw your local balance using the national e-currency via platform users, authorized branches, or contracted banks in your area – through electronic contact with the platform."
+        },
+        {
+          "text": "Note: If transfer is done through private offices, exchanges, or banks, the user bears the transaction fees.",
+          "note": true
+        }
+      ]
+    },
+    "13": {
+      "title": "Thirteenth Service",
+      "content": [
+        {
+          "text": "Benefit from offers, discounts, and reservations offered by the platform’s partners worldwide."
+        },
+        {
+          "text": "Note: Prices of products/services listed on the partner activities page do not include shipping and delivery charges. The user bears the transaction fees.",
+          "note": true
+        }
+      ]
+    },
+    "manage": {
+      "title": "Management Service",
+      "content": "Security and protection: Maintain confidentiality of your financial transactions, archive them in your office, and ensure balance safety in case of mobile phone loss."
+    }
+  },
+  "cardProperties": "Card Features",
+  "silver": {
+    "1": {
+      "title": "First Service",
+      "content": "You get a lifetime electronic office on the HUN platform via its website WWW.HUN.CASH"
+    },
+    "2": {
+      "title": "Second Service",
+      "content": "Activate (payment + purchase) operations for exclusive commercial exchanges between platform users via your phone number."
+    },
+    "3": {
+      "title": "Third Service",
+      "content": [
+        {
+          "text": "You get an instant commission (purchase voucher) for every new user through you, once only, based on their classification in your international balance. You can transfer it to local balance based on the weekly pricing by the platform’s admin for your country - as follows:"
+        },
+        { "text": "1- Bronze Card: 0.25 purchase voucher." },
+        { "text": "2- Silver Card: 0.50 purchase voucher." },
+        { "text": "3- Gold Card: 1.00 purchase voucher." },
+        { "text": "4- VIP Card: 2.50 purchase voucher." }
+      ]
+    },
+    "4": {
+      "title": "Fourth Service",
+      "content": "Your office is gifted a 3.00 purchase voucher international balance by HUN platform to activate trading."
+    },
+    "5": {
+      "title": "Fifth Service",
+      "content": "A fixed 0 purchase voucher is credited as a trust to your account by HUN – currently this service is paused."
+    },
+    "6": {
+      "title": "Sixth Service",
+      "content": "When you reach 10 users classified as Silver and above through your office, you receive a one-time international bonus of 5.0 purchase vouchers from HUN."
+    },
+    "7": {
+      "title": "Seventh Service",
+      "content": "At 20 users (previous 10 + 10 new) of Silver and above classification, you receive a second one-time international bonus of 5.0 purchase vouchers from HUN."
+    },
+    "8": {
+      "title": "Eighth Service",
+      "content": "At 30 users (previous 20 + 10 new) of Silver and above classification, you receive a third one-time international bonus of 5.0 purchase vouchers from HUN."
+    },
+    "9": {
+      "title": "Ninth Service",
+      "content": "At 40 users (previous 30 + 10 new) of Silver and above classification, you receive a final one-time international bonus of 5.0 purchase vouchers from HUN."
+    },
+    "10": {
+      "title": "Tenth Service",
+      "content": "Silver card users can spend up to 50 purchase vouchers every 24 hours from the time of spending."
+    },
+    "11": {
+      "title": "Eleventh Service",
+      "content": "You can increase your local balance in your electronic office using the national electronic currency via platform users, authorized branches, or partner banks in your area – through any platform communication method."
+    },
+    "12": {
+      "title": "Twelfth Service",
+      "content": [
+        {
+          "text": "You can withdraw your local balance using the national e-currency via platform users, authorized branches, or contracted banks in your area – through electronic contact with the platform."
+        },
+        {
+          "text": "Note: If transfer is done through private offices, exchanges, or banks, the user bears the transaction fees.",
+          "note": true
+        }
+      ]
+    },
+    "13": {
+      "title": "Thirteenth Service",
+      "content": [
+        {
+          "text": "Benefit from offers, discounts, and reservations offered by the platform’s partners worldwide."
+        },
+        {
+          "text": "Note: Prices of products/services listed on the partner activities page do not include shipping and delivery charges. The user bears the transaction fees.",
+          "note": true
+        }
+      ]
+    },
+    "manage": {
+      "title": "Management Service",
+      "content": "Security and protection: Maintain confidentiality of your financial transactions, archive them in your office, and ensure balance safety in case of mobile phone loss."
+    }
+  },
+  "cardProperties": "Card Features",
+  "firstService": "Electronic Office",
+  "firstServiceDesc": "Lifetime access to an electronic office on the HUN platform via www.hun.cash.",
+  "secondService": "Payment & Purchase Activation",
+  "secondServiceDesc": "Enable payments and purchases for business exchanges exclusively among platform users using your mobile number.",
+  "thirdService": "Referral Commission",
+  "thirdServiceDesc": "You receive an instant (shopping voucher) commission for every new user you refer (once only), based on their classification, credited to your international balance. You can transfer it to local balance weekly according to HUN's pricing:",
+  "thirdServiceList": [
+    "1- Bronze card: 0.25 voucher.",
+    "2- Silver card: 0.50 voucher.",
+    "3- Gold card: 1.00 voucher.",
+    "4- VIP card: 2.50 vouchers."
+  ],
+  "fourthService": "Gift Balance",
+  "fourthServiceDesc": "A 5.00 shopping voucher is gifted to your electronic office by HUN to activate trading.",
+  "fifthService": "Security Deposit",
+  "fifthServiceDesc": "A fixed 0 voucher is held in trust by HUN. (Service currently suspended.)",
+  "sixthService": "First Reward",
+  "sixthServiceDesc": "When you have 10 gold or higher users, you receive a one-time reward of 10 vouchers.",
+  "seventhService": "Second Reward",
+  "seventhServiceDesc": "When you reach 20 gold or higher users (10 previous + 10 new), you receive a second one-time reward of 10 vouchers.",
+  "eighthService": "Third Reward",
+  "eighthServiceDesc": "When you reach 30 gold or higher users (20 previous + 10 new), you receive a third one-time reward of 10 vouchers.",
+  "ninthService": "Fourth Reward",
+  "ninthServiceDesc": "When you reach 40 gold or higher users (30 previous + 10 new), you receive a final one-time reward of 10 vouchers.",
+  "tenthService": "Daily Withdrawal",
+  "tenthServiceDesc": "Gold users can withdraw up to 100 vouchers every 24 hours.",
+  "eleventhService": "Add Local Balance",
+  "eleventhServiceDesc": "Add local currency to your account via other users, certified agents, or partner banks using electronic communication methods.",
+  "twelfthService": "Withdraw Local Balance",
+  "twelfthServiceDesc": "Withdraw local currency from your account via other users, certified agents, or partner banks using electronic communication methods.",
+  "twelfthNote": "Note: If sent via agents or banks, transfer fees are borne by the user.",
+  "therteenthService": "Offers & Discounts",
+  "therteenthServiceDesc": "Enjoy offers, discounts, and reservations from platform-affiliated businesses worldwide.",
+  "therteenthNote": "Note: Product prices do not include shipping. Transfer fees are borne by the user.",
+  "manageSite": "Security",
+  "manageSiteDesc": "Maintain privacy and archive your transactions. Your funds are protected even if you lose your phone.",
+  "cardProperties": "Card Features",
+  "vipCardDes": {
+    "service1": {
+      "title": "First Service",
+      "desc": "You receive a lifelong electronic office within the HUN platform via its website WWW.HUN.CASH"
+    },
+    "service2": {
+      "title": "Second Service",
+      "desc": "Activation of (payment + purchase) transactions to carry out commercial exchanges exclusively between platform users through your mobile number."
+    },
+    "service3": {
+      "title": "Third Service",
+      "desc": [
+        "You receive an instant commission (purchase voucher) for each new user you refer, only once, based on their classification, into your international balance. You may transfer it to the local balance according to weekly pricing by platform management in your country - as follows:",
+        "1- Bronze Card: / 0.25 voucher /.",
+        "2- Silver Card: / 0.50 voucher /.",
+        "3- Gold Card: / 1.00 voucher /.",
+        "4- VIP Card: / 2.50 voucher /."
+      ]
+    },
+    "service4": {
+      "title": "Fourth Service",
+      "desc": "A gift international balance of /10.00 voucher/ from HUN platform to activate your business exchange."
+    },
+    "service5": {
+      "title": "Fifth Service",
+      "desc": "A fixed international balance of /0 voucher/ is assigned as a trust deposit with HUN platform - this service is currently suspended."
+    },
+    "service6": {
+      "title": "Sixth Service",
+      "desc": "When your office reaches /10/ users with VIP classification, you receive a one-time reward of /25 voucher/ from HUN platform."
+    },
+    "service7": {
+      "title": "Seventh Service",
+      "desc": "When your office reaches /20/ VIP users (10 old + 10 new), you receive a second one-time reward of /25 voucher/ from HUN platform."
+    },
+    "service8": {
+      "title": "Eighth Service",
+      "desc": "When your office reaches /30/ VIP users (20 old + 10 new), you receive a third one-time reward of /25 voucher/ from HUN platform."
+    },
+    "service9": {
+      "title": "Ninth Service",
+      "desc": "When your office reaches /40/ VIP users (30 old + 10 new), you receive a fourth and final one-time reward of /25 voucher/ from HUN platform."
+    },
+    "service10": {
+      "title": "Tenth Service",
+      "desc": "VIP users are allowed to spend /005 voucher/ every 24 hours from the time of the last withdrawal."
+    },
+    "service11": {
+      "title": "Eleventh Service",
+      "desc": "Increase your local financial balance via other users, platform branches, or contracted banks – through one of the electronic communication channels with platform management."
+    },
+    "service12": {
+      "title": "Twelfth Service",
+      "desc": [
+        "Withdraw your local balance from your electronic office – through platform users, branches, or contracted banks – using platform's communication channels.",
+        "Note: In case of using external offices or banks, transfer/withdrawal fees are charged to the user."
+      ]
+    },
+    "service13": {
+      "title": "Thirteenth Service",
+      "desc": [
+        "Benefit from offers, discounts, and bookings from activities contracted with the platform globally.",
+        "Note: Prices for products shown on the partner activities page do not include shipping/delivery charges. Transfer/withdrawal fees are at the user’s expense."
+      ]
+    },
+    "manage": {
+      "title": "Account Management",
+      "desc": "Security & Safety: Your financial operations are securely archived within your office. Your balances are protected even in case of mobile phone loss."
+    }
+  },
+
+  "eventCardHead": {
+    "logo": "Logo",
+    "coverImage": "Cover Image",
+    "uploadImage": "Drag image here or browse files",
+    "infoTitle": "Event Information",
+    "name": "Name",
+    "license": "License",
+    "purpose": "Purpose",
+    "description": "Description",
+    "category": "Category",
+    "selectCategory": "Select a category",
+    "city": "City",
+    "selectCity": "Select a city",
+    "password": "Password",
+    "confirmPassword": "Confirm Password"
+  },
+  "recipientPhoneNumber": "Recipient's phone number",
+  "eventName": "Event name",
+  "productName": "Product name",
+  "senderPhoneNumber": "Sender's phone number",
+  "internal_transfers": "Internal Transfers",
+  "external_transfers": "External Transfers",
+  "fetch_error": "An error occurred while fetching data",
+  "phone_number": "Phone Number",
+  "country": "Country",
+  "local_transfer": "Local Transfer",
+  "international_transfer": "International Transfer",
+  "amount": "Amount",
+  "base_amount": "Base Amount",
+  "commission": "Commission",
+  "total_amount": "Total Amount",
+  "display_name": "Display Name",
+  "password": "Password",
+  "send": "Send",
+  "phone_number": "Phone Number",
+  "country": "Country",
+  "international_transfer": "International Transfer",
+  "amount": "Amount",
+  "base_amount": "Base Amount",
+  "commission": "Commission",
+  "total_amount": "Total Amount",
+  "display_name": "Display Name",
+  "password": "Password",
+  "transfer": "Transfer",
+  "currency_unit": "SNC",
+  "no_data": "No Data Available",
+  "whoUsNav": "Who Us",
+  "no_data_description": "Please try again later or make sure data is available.",
+  "whoUs": {
+    "title": "Who We Are",
+    "intro": "We are young entrepreneurial minds in providing digital business services in the smart world, through contracts, agreements, and deals with various economic events (public, joint, private) aiming to market their products, business, and trade and activate the feature of direct sales using comprehensive electronic money.",
+    "credentialsTitle": "Credentials and Documents",
+    "credentialsText": "This platform has a deposit certificate from the Syrian Arab Republic -- Ministry of Culture -- Number/4829/ dated 9/7/2023",
+    "timelineTitle": "Development Journey",
+    "timelineStage1": "Study and preparation phase",
+    "timelineStage2": "Trial and operation phase",
+    "timelineStage3": "Digital Bank",
+    "systemFeaturesTitle": "Digital System Features",
+    "systemFeature1": "An integrated digital economy system powered by AI technologies",
+    "systemFeature2": "Facilitating business processes and securing scientific and practical relations",
+    "systemFeature3": "Protecting and marketing innovations and inventions globally",
+    "systemFeature4": "Exclusive and secure electronic payment system",
+    "howItWorksTitle": "How the System Works",
+    "howItWorksStep1": "1. The user reads the joining terms and selects the appropriate subscription category",
+    "howItWorksStep2": "2. The form is filled out after obtaining the subscription card number",
+    "howItWorksStep3": "3. A verification message is sent to the mobile phone and the user’s digital office is created",
+    "howItWorksStep4": "4. The user can manage their financial files and track their profits through their digital office",
+    "economicBenefitsTitle": "Benefits for Economic Events",
+    "economicBenefit1": "Lower operational costs",
+    "economicBenefit2": "Faster global expansion",
+    "economicBenefit3": "Secure and integrated payment system",
+    "legalCommitmentTitle": "Our Legal Commitment",
+    "legalCommitmentText": "We confirm our full commitment to the laws of the country we operate within its administrative and geographical borders and all its systems, without violating international laws related to technological activities and digital transformation.",
+    "copyright": "All rights reserved"
+  },
+  "noMore": "There is no more",
+  "createEvent": "Create an event",
+  "logo": "Logo",
+  "backgroundImage": "Background Image",
+  "category": "Category",
+  "Add Product": "Add Product",
+  "Back to Products": "Back to Products",
+  "reviews": "reviews",
+  "Local Price": "Local Price",
+  "International Price": "International Price",
+  "Edit": "Edit",
+  "Delete": "Delete",
+  "Confirm Deletion": "Confirm Deletion",
+  "Are you sure you want to delete": "Are you sure you want to delete",
+  "Cancel": "Cancel",
+  "Yes, Delete": "Yes, Delete",
+  "Deleting...": "Deleting...",
+  "productForm": {
+    "name": "Product Name",
+    "price": "Price",
+    "discount": "Discount",
+    "description": "Description",
+    "category": "Product Category",
+    "selectCategory": "Select Category",
+    "colors": "Colors",
+    "sizes": "Sizes",
+    "dropImage": "Drag image here or browse files",
+    "publish": "Publish"
+  }
 }

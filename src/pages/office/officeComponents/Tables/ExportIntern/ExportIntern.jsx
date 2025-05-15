@@ -12,7 +12,7 @@ const head = [
   { content: "date" },
   { content: "Timing" },
   // { content: "هاتف المستقبل" },
-  { content: "المرسل اليه" },
+  { content: "recipientPhoneNumber" },
   { content: "digitTheExport" },
   { content: "Value" },
   { content: "commission" },
@@ -69,7 +69,7 @@ export default function ExportIntern() {
         }
       );
       setBody(res.data?.data);
-      console.log(res.data?.data);
+      // console.log(res.data?.data);
     } catch (error) {
       if (
         error.response.data.message ===

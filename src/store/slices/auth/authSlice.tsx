@@ -17,7 +17,7 @@ const authReducer = createSlice({
       localStorage.removeItem("access_token");
       localStorage.removeItem("authenticate");
       window.location.href = "/signIn";
-      // console.log('first')
+      // // console.log('first')
     },
     logIn: (state) => {
       state.authenticate = true;

@@ -36,7 +36,7 @@ export default function Basket() {
           },
         }
       );
-      console.log(res.data.data);
+      // console.log(res.data.data);
       setItems(res.data?.data || []);
     } catch (error) {
       if (
@@ -120,7 +120,7 @@ export default function Basket() {
   useEffect(() => {
     fetchAmount();
   }, []);
-  console.log(amount);
+  // console.log(amount);
   const [items, setItems] = useState([]);
   const timeout = useRef(null); // تحديد timeout باستخدام useRef
 
@@ -267,27 +267,34 @@ export default function Basket() {
               <span className="font-bold text-lg">{t("home")}</span>
             </li>
             <li>
-              <span className="font-bold text-lg">{t(">")}</span>
+              <span className="font-bold text-lg">
+                {t("cart.breadcrumb.arrow")}
+              </span>
             </li>
             <li>
-              <span className="font-bold text-lg">{t("السلة")}</span>
+              <span className="font-bold text-lg">
+                {t("cart.breadcrumb.current")}
+              </span>
             </li>
           </ul>
         </div>
-        <h2 className="text-2xl font-bold mb-12 text-center ">السلة</h2>
+
+        <h2 className="text-2xl font-bold mb-12 text-center ">
+          {t("cart.title")}
+        </h2>
+
         <div>
           <table className="w-full border-collapse text-center">
             <thead className="border-b">
               <tr>
-                <th className="p-3">المنتجات</th>
-                <th className="p-3">السعر</th>
-                <th className="p-3">الكمية</th>
-                <th className="p-3">إزالة</th>
+                <th className="p-3">{t("cart.table.headers.products")}</th>
+                <th className="p-3">{t("cart.table.headers.price")}</th>
+                <th className="p-3">{t("cart.table.headers.quantity")}</th>
+                <th className="p-3">{t("cart.table.headers.remove")}</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
-                // Skeleton Loader
                 <tr className="text-center border-b">
                   <td className="p-3 flex justify-center">
                     <div className="w-[150px] h-[200px] bg-gray-300 animate-pulse"></div>
@@ -308,7 +315,6 @@ export default function Basket() {
                   </td>
                 </tr>
               ) : (
-                // Content when data is loaded
                 items.map((item) => (
                   <tr key={item.id} className="text-center border-b">
                     <td className="p-3 flex justify-center">
@@ -323,7 +329,7 @@ export default function Basket() {
                     <td className="p-3">
                       {localStorage.getItem("authenticate") == "true" && (
                         <p className="priceLocal my-2">
-                          السعر الوطني:
+                          {t("cart.price.local")}
                           {item?.discount ? (
                             <>
                               <del className="text-red-500">
@@ -341,7 +347,7 @@ export default function Basket() {
                       )}
 
                       <p className="priceInter my-2 text-[#275963]">
-                        السعر الدولي:
+                        {t("cart.price.international")}
                         {item?.discount ? (
                           <>
                             <del className="text-red-500">
@@ -368,7 +374,7 @@ export default function Basket() {
                         </button>
                         <span className="w-8 text-center">{item.quantity}</span>
                         <button
-                          className="w-8 h-8 border border-black text-xl  flex items-center justify-center font-bold rounded-full"
+                          className="w-8 h-8 border border-black text-xl flex items-center justify-center font-bold rounded-full"
                           onClick={() => updateQuantity(item.id, -1)}
                         >
                           -
@@ -396,7 +402,6 @@ export default function Basket() {
         {/* المجموع والدفع */}
         {loadingAmount ? (
           <div className="mt-6 text-right flex flex-col items-center">
-            {/* Skeleton Loader for the amounts and button */}
             <div className="h-6 bg-gray-300 w-3/4 mb-2 animate-pulse"></div>
             <div className="h-6 bg-gray-300 w-1/2 mb-2 animate-pulse"></div>
             <div className="h-6 bg-gray-300 w-3/4 mb-2 animate-pulse"></div>
@@ -406,21 +411,25 @@ export default function Basket() {
         ) : items.length > 0 ? (
           <div className="mt-6 text-right flex flex-col items-center">
             <p className="text-xl font-bold">
-              المجموع:{" "}
+              {t("cart.total.title")}
               <span className="text-[#275963]">
-                {`السعر الدولي: ${amount.international_total}`}
+                {`${t("cart.total.international")}: ${
+                  amount.international_total
+                }`}
               </span>
               <br />
               <span className="text-[#275963]">
-                {`السعر المحلي: ${amount.local_total}`}
+                {`${t("cart.total.local")}: ${amount.local_total}`}
               </span>
               <br />
               <span className="text-[#275963]">
-                {`العمولات: ${amount.totalCommissionsAsValue}`}
+                {`${t("cart.total.commissions")}: ${
+                  amount.totalCommissionsAsValue
+                }`}
               </span>
               <br />
               <span className="text-[#275963]">
-                {`الضرائب: ${amount.totalTaxesAsValue}`}
+                {`${t("cart.total.taxes")}: ${amount.totalTaxesAsValue}`}
               </span>
             </p>
             <button
@@ -429,25 +438,26 @@ export default function Basket() {
               onClick={payBasket}
             >
               {loadingPay ? (
-                <FaSpinner className="animate-spin" /> // عرض أيقونة التحميل
+                <FaSpinner className="animate-spin" />
               ) : (
-                t("الدفع")
+                t("cart.pay")
               )}
             </button>
           </div>
         ) : (
           <NoDataFounded />
         )}
+
         <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-          <DialogTitle>تأكيد الحذف</DialogTitle>
+          <DialogTitle>{t("cart.delete.confirm.title")}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              هل أنت متأكد أنك تريد حذف هذا العنصر؟
+              {t("cart.delete.confirm.text")}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setOpenDialog(false)} color="primary">
-              إلغاء
+              {t("cart.delete.cancel")}
             </Button>
             <Button
               onClick={handleDeleteConfirm}
@@ -457,7 +467,7 @@ export default function Basket() {
               {loadingDelete ? (
                 <CircularProgress size={24} color="inherit" />
               ) : (
-                "حذف"
+                t("cart.delete.confirm")
               )}
             </Button>
           </DialogActions>

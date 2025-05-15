@@ -6,6 +6,7 @@ import { logoutUser } from "../../../../../store/slices/auth/authSlice";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function AddProduct({
   loadingM,
@@ -29,6 +30,7 @@ export default function AddProduct({
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const handleInputChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
@@ -85,7 +87,6 @@ export default function AddProduct({
     product.color_ids.forEach((id, index) =>
       formData.append(`color_ids[${index}]`, id)
     );
-    console.log(product);
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}product/add`,
@@ -99,13 +100,13 @@ export default function AddProduct({
               (progress.loaded * 100) / progress.total
             );
             setUploadProgress(percent);
-            console.log(`Upload Progress: ${percent}%`);
+            // console.log(`Upload Progress: ${percent}%`);
           },
         }
       );
       setProgressLog(false);
-      console.log(res.data.data);
-      console.log(res.data);
+      // console.log(res.data.data);
+      // console.log(res.data);
       setUploadProgress(0);
       // setProductsCategory((prev) => ({ ...prev, [name]: value }));
 
@@ -162,7 +163,7 @@ export default function AddProduct({
           <input
             type="text"
             name="name"
-            placeholder="اسم المنتج"
+            placeholder={t("productForm.name")}
             value={product.name}
             onChange={handleInputChange}
             className="border p-2 rounded-md w-full"
@@ -175,7 +176,7 @@ export default function AddProduct({
           <input
             type="number"
             name="price"
-            placeholder="السعر"
+            placeholder={t("productForm.price")}
             value={product.price}
             onChange={handleInputChange}
             className="border p-2 rounded-md w-full"
@@ -188,7 +189,7 @@ export default function AddProduct({
           <input
             type="number"
             name="discount"
-            placeholder="الخصم"
+            placeholder={t("productForm.discount")}
             value={product.discount}
             onChange={handleInputChange}
             className="border p-2 rounded-md w-full"
@@ -197,7 +198,7 @@ export default function AddProduct({
         <div className="col-span-2">
           <textarea
             name="description"
-            placeholder="الوصف"
+            placeholder={t("productForm.description")}
             value={product.description}
             onChange={handleInputChange}
             className="border p-2 rounded-md w-full"
@@ -209,14 +210,14 @@ export default function AddProduct({
       </div>
 
       <div className="mb-4">
-        <p className="font-semibold mb-2">فئة المنتج</p>
+        <p className="font-semibold mb-2">{t("productForm.category")}</p>
         <select
           name="product_category_id"
           value={product.product_category_id}
           onChange={handleInputChange}
           className="border p-2 rounded-md w-full"
         >
-          <option value="">اختر الفئة</option>
+          <option value="">{t("productForm.selectCategory")}</option>
           {productsCategory.map((cat) => (
             <option key={cat.id} value={cat.id}>
               {cat.name}
@@ -232,7 +233,7 @@ export default function AddProduct({
 
       <div className="mb-4">
         <FormControl fullWidth>
-          <InputLabel>الألوان</InputLabel>
+          <InputLabel>{t("productForm.colors")}</InputLabel>
           <Select
             multiple
             value={product.color_ids}
@@ -254,7 +255,7 @@ export default function AddProduct({
 
       <div className="mb-4">
         <FormControl fullWidth>
-          <InputLabel>القياسات</InputLabel>
+          <InputLabel>{t("productForm.sizes")}</InputLabel>
           <Select
             multiple
             value={product.measure_ids}
@@ -292,26 +293,9 @@ export default function AddProduct({
             />
           ) : (
             <div className="w-full flex flex-col items-center justify-center gap-2">
-              <div className="icon">
-                <svg
-                  width="44"
-                  height="39"
-                  viewBox="0 0 44 39"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M16.2981 12.2236C16.2981 14.4739 14.4739 16.2981 12.2236 16.2981C9.97326 16.2981 8.14904 14.4739 8.14904 12.2236C8.14904 9.97326 9.97326 8.14904 12.2236 8.14904C14.4739 8.14904 16.2981 9.97326 16.2981 12.2236Z"
-                    fill="#919EAB"
-                  />
-                  <path
-                    d="M5.43269 0C2.4323 0 0 2.4323 0 5.43269V32.5962C0 35.5965 2.4323 38.0288 5.43269 38.0288H38.0288C41.0292 38.0288 43.4615 35.5965 43.4615 32.5962V5.43269C43.4615 2.4323 41.0292 0 38.0288 0H5.43269ZM38.0288 2.71635C39.529 2.71635 40.7452 3.9325 40.7452 5.43269V23.089L30.4872 17.7997C29.9643 17.5382 29.3328 17.6407 28.9194 18.0541L18.8414 28.1322L11.6188 23.3171C11.0801 22.958 10.3628 23.029 9.90501 23.4868L2.71635 29.8798V5.43269C2.71635 3.9325 3.9325 2.71635 5.43269 2.71635H38.0288Z"
-                    fill="#919EAB"
-                  />
-                </svg>
-              </div>
+              <div className="icon">{/* SVG here */}</div>
               <span className="text-[#275963] text-lg">
-                اسحب الصورة هنا أو تصفح الملفات
+                {t("productForm.dropImage")}
               </span>
             </div>
           )}
@@ -325,16 +309,6 @@ export default function AddProduct({
       </div>
       {errors.images && <p className="text-red-500 text-sm">{errors.images}</p>}
 
-      {/* {product.image && (
-        <div className="grid grid-cols-1 gap-2">
-          <img
-            src={URL.createObjectURL(product.image)}
-            alt="منتج"
-            className="w-full h-16 object-cover rounded-md"
-          />
-        </div>
-      )} */}
-
       <button
         className="bg-[#275963] flex justify-center items-center gap-1 font-bold text-white px-4 py-2 rounded-md mt-4 w-full"
         onClick={publish}
@@ -346,7 +320,7 @@ export default function AddProduct({
             {uploadProgress == "100" ? uploadProgress - 1 : uploadProgress}%
           </>
         ) : (
-          "نشر"
+          t("productForm.publish")
         )}
       </button>
     </div>

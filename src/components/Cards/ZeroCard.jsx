@@ -14,55 +14,45 @@ export default function ZeroCard({ cardType }) {
             {t("firstService")}
           </h5>
           <div className="text-lg mt-2">
-            حصولك على مكتب إلكتروني مدى الحياة ضمن منصة HUN عبر موقعها
-            الالكتروني WWW.HUN.CASH
+            {t("firstServiceDescription")}
           </div>
         </li>
         {/* 2 */}
         <li className="mt-4">
           <h5 className="text-2xl font-bold text-[#275963]">
-            {" "}
             {t("secondService")}
           </h5>
           <div className="text-lg mt-2">
-            تفعيل عمليات (الدفع + الشراء) للقيام بالتبادلات التجارية بين مستخدمي
-            المنصة حصراً عبر رقمك الخلوي.
+            {t("secondServiceDescription")}
           </div>
         </li>
         {/* 3 */}
         <li className="mt-4">
           <h5 className="text-2xl font-bold text-[#275963]">
-            {" "}
             {t("thirdService")}
           </h5>
           <div className="text-lg mt-2">
             <p className="text-xl">
-              تحصل على عمولة فورية (قسيمة شرائية) عن كل مستخدم جديد عن طريقك
-              ولمرة واحدة فقط وبحسب تصنيفه ضمن رصيدك الدولي لمكتبك الالكتروني
-              ويمكنك تحويله للرصيد المحلي إذا رغبت وفق التسعير الأسبوعي من قبل
-              إدارة المنصة لبلدك - كالتالي:
+              {t("thirdServiceDescription")}
             </p>
             <ul className="mt-2">
-              <li>1- للبطاقة البرونزية تحصل على / 0.25 قسيمة شرائية /.</li>
-              <li>2- للبطاقة الفضية تحصل على / 0.50 قسيمة شرائية /.</li>
-              <li>3- للبطاقة الذهبية تحصل على / 1.00 قسيمة شرائية /.</li>{" "}
-              <li>4- للبطاقة VIP تحصل على / 2.50 قسيمة شرائية /.</li>
+              <li>{t("thirdServicePoint1")}</li>
+              <li>{t("thirdServicePoint2")}</li>
+              <li>{t("thirdServicePoint3")}</li>
+              <li>{t("thirdServicePoint4")}</li>
             </ul>
             <p className="text-[#C92C2C] text-xl mt-2">
-              تنويه - لا يستحق صاحب تصنيف زيرو أي عمولة مالية عن مستخدم جديد
-              تصنيفه زيرو.
+              {t("thirdServiceDisclaimer")}
             </p>
           </div>
         </li>
         {/* 4 */}
         <li className="mt-4">
           <h5 className="text-2xl font-bold text-[#275963]">
-            {" "}
             {t("fourthService")}
           </h5>
           <div className="text-lg mt-2">
-            لا يحق لصاحب هذا التصنيف المشاركة أو الدخول ببرنامج المكافآت المالية
-            المقدم من إدارة المنصة وتنحصر هذه
+            {t("fourthServiceDescription")}
           </div>
         </li>
         {/* 5 */}
@@ -71,8 +61,7 @@ export default function ZeroCard({ cardType }) {
             {t("fifthService")}
           </h5>
           <div className="text-lg mt-2">
-            تنحصر قيمة هذه البطاقة بالمستخدم فقط، دون تثبيت أي رصيد دولي له في
-            مكتبه الالكتروني للبدء بالتبادل التجاري.
+            {t("fifthServiceDescription")}
           </div>
         </li>
 
@@ -82,8 +71,7 @@ export default function ZeroCard({ cardType }) {
             {t("sixthService")}
           </h5>
           <div className="text-lg mt-2">
-            يحق لمستخدم هذه التصنيف بصرف رصيده المالي الالكتروني بقيمة/15 قسيمة
-            شرائية/ كل24ساعة من توقيت الصرف
+            {t("sixthServiceDescription")}
           </div>
         </li>
 
@@ -93,8 +81,7 @@ export default function ZeroCard({ cardType }) {
             {t("seventhService")}
           </h5>
           <div className="text-lg mt-2">
-            يحق لمستخدم هذه التصنيف بصرف رصيده المالي الإلكتروني الوطني بشكل
-            كامل لفعاليته متى يشاء.
+            {t("seventhServiceDescription")}
           </div>
         </li>
 
@@ -104,10 +91,7 @@ export default function ZeroCard({ cardType }) {
             {t("eighthService")}
           </h5>
           <div className="text-lg mt-2">
-            زيادة رصيدك المالي المحلي لدى مكتبك الإلكتروني - يمكنك زيادة رصيدك
-            المالي بالعملة الوطنية الإلكترونية عن طريق مستخدمي المنصة أو فروعها
-            المعتمدين أو البنوك المتعاقدة معها في أماكن تواجدك - عبر إحدى طرق
-            التواصل الإلكتروني مع إدارة المنصة.
+            {t("eighthServiceDescription")}
           </div>
         </li>
 
@@ -117,14 +101,10 @@ export default function ZeroCard({ cardType }) {
             {t("ninthService")}
           </h5>
           <div className="text-lg mt-2">
-            سحب رصيدك المالي المحلي من مكتبك الإلكتروني - يمكنك سحب رصيدك المالي
-            بالعملة الوطنية الإلكترونية عن طريق مستخدمي المنصة أو فروعها
-            المعتمدين أو البنوك المتعاقدة معها في أماكن تواجدك - عبر إحدى طرق
-            التواصل الإلكتروني مع إدارة المنصة.
+            {t("ninthServiceDescription")}
           </div>
           <p className="text-[#C92C2C] text-xl mt-2">
-            تنويه - في حال تم الإرسال عبر المكاتب الخاصة والصرافة والبنوك، فإن
-            عمولة الإرسال والاستلام على حساب المستخدم.
+            {t("ninthServiceDisclaimer")}
           </p>
         </li>
         {/* 10 */}
@@ -133,15 +113,9 @@ export default function ZeroCard({ cardType }) {
             {t("tenthService")}
           </h5>
           <div className="text-lg mt-2">
-            <p>
-              الاستفادة من العروض والحسومات والحجوزات المقدمة لك من الفعاليات
-              المتعاقدة مع المنصة في جميع أنحاء العالم.
-            </p>
+            <p>{t("tenthServiceDescription")}</p>
             <p className="text-[#C92C2C] text-xl mt-2">
-              <span className="font-bold">ملاحظة:</span> الأسعار
-              المسجلة للمنتجات والبضائع والموضحة في صفحة الفعاليات المتعاقدة مع
-              المنصة لا تشمل أجور الشحن والتوصيل، وتبقى عمولة الإرسال والاستلام
-              على حساب المستخدم.
+              <span className="font-bold">{t("note")}</span> {t("tenthServiceDisclaimer")}
             </p>
           </div>
         </li>
@@ -151,11 +125,7 @@ export default function ZeroCard({ cardType }) {
             {t("manageSite")}
           </h5>
           <div className="text-lg mt-2">
-            <p>
-              الحماية والأمان: الحفاظ على سرية وخصوصية العمليات المالية التي
-              تقوم بها وأرشفتها ضمن مكتبك الإلكتروني مع ضمان المحافظة على الكتلة
-              المالية المتواجدة بأرصدتك في حال فقدان هاتفك المحمول.
-            </p>
+            <p>{t("siteSecurityDescription")}</p>
           </div>
         </li>
       </ul>

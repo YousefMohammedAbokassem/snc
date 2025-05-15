@@ -8,18 +8,21 @@ import {
   Box,
   Avatar,
 } from "@mui/material";
-import NotificationsIcon from "@mui/icons-material/Notifications"; // أيقونة بديلة للإشعارات
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { useTranslation } from "react-i18next";
 
 const NotificationDialog = ({ open, setOpen, notifications }) => {
+  const { t } = useTranslation();
+
   return (
     <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
       <DialogTitle sx={{ textAlign: "center", fontWeight: "bold" }}>
-        الإشعارات
+        {t("notifications.title")}
       </DialogTitle>
       <DialogContent>
         {notifications.length === 0 ? (
           <Typography align="center" sx={{ py: 2 }}>
-            لا توجد إشعارات جديدة.
+            {t("notifications.empty")}
           </Typography>
         ) : (
           notifications.map((notif) => (
@@ -34,12 +37,10 @@ const NotificationDialog = ({ open, setOpen, notifications }) => {
                 "&:last-child": { borderBottom: "none" },
               }}
             >
-              {/* أيقونة الإشعار */}
               <Avatar sx={{ bgcolor: "#1976d2" }}>
                 <NotificationsIcon />
               </Avatar>
 
-              {/* تفاصيل الإشعار */}
               <Box sx={{ flexGrow: 1 }}>
                 <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                   {notif.title}
@@ -57,7 +58,7 @@ const NotificationDialog = ({ open, setOpen, notifications }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={() => setOpen(false)} color="primary">
-          إغلاق
+          {t("notifications.close")}
         </Button>
       </DialogActions>
     </Dialog>

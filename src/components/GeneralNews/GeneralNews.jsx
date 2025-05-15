@@ -17,9 +17,10 @@ export default function GeneralNews() {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}updates`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          "Accept-Language": localStorage.getItem("i18nextLng"), // إضافة header للغة العربية
         },
       });
-      setNews(res.data?.data);
+      setNews(res.data?.data.slice(0, 2));
     } catch (error) {
       console.error(error);
       if (
@@ -63,12 +64,12 @@ export default function GeneralNews() {
         <span className="font-bold text-lg text-[#1D1D1D] dark:text-[#fff]">
           {t("generalNews")}
         </span>
-        {/* <Link
-          to="/Categories"
+        <Link
+          to="/news"
           className="opacity-40 text-lg text-[#1D1D1D] dark:text-[#fff] dark:opacity-70"
         >
           {t("showAll")}
-        </Link> */}
+        </Link>
       </div>
 
       {/* News Container */}
@@ -94,9 +95,9 @@ export default function GeneralNews() {
                 className="flex p-8 gap-4 border-b border-b-[#B1B1B1] last:border-b-0"
               >
                 <div className="date w-[10%] flex items-center justify-center text-gray-600">
-                  {new Date(item.date).toLocaleDateString("ar-EG")}
+                  {new Date(item.date).toLocaleDateString("en")}
                 </div>
-                <div className="info flex-1">
+                <div className="info flex-1 px-4">
                   <span
                     className="px-4 py-1 text-white font-bold mb-3 inline-block rounded"
                     style={{ backgroundColor: item.color_code }}

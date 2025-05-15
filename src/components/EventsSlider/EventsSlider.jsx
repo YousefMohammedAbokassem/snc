@@ -25,6 +25,7 @@ export default function EventsSlider() {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}banners`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          "Accept-Language": localStorage.getItem("i18nextLng"), // إضافة header للغة العربية
         },
       });
       setBanners(res.data?.data);

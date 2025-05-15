@@ -35,6 +35,7 @@ export default function Profile() {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}my_profile`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          "Accept-Language": localStorage.getItem("i18nextLng"), // إضافة header للغة العربية
         },
       });
       setProfile(res.data?.data || null);
@@ -112,7 +113,7 @@ export default function Profile() {
       console.error("Error updating profile:", error);
     }
   };
-  console.log(profile);
+  // console.log(profile);
   return (
     <>
       {/* <Nav /> */}
@@ -133,88 +134,64 @@ export default function Profile() {
         ) : profile ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-right">
             <div>
-              <p className="text-gray-600">الاسم الأول</p>
+              <p className="text-gray-600">{t("gender")}</p>
               <p className="border border-gray-300 p-3 rounded-md">
-                {profile.first_name}
+                {profile.gender === "m" ? t("male") : t("female")}
               </p>
             </div>
             <div>
-              <p className="text-gray-600">اسم العائلة</p>
-              <p className="border border-gray-300 p-3 rounded-md">
-                {profile.last_name}
-              </p>
-            </div>
-            <div>
-              <p className="text-gray-600">الجنس</p>
-              <p className="border border-gray-300 p-3 rounded-md">
-                {profile.gender === "m" ? "ذكر" : "أنثى"}
-              </p>
-            </div>
-            <div>
-              <p className="text-gray-600">رقم الهاتف</p>
+              <p className="text-gray-600">{t("phone_number")}</p>
               <p className="border border-gray-300 p-3 rounded-md">
                 {profile.phone_number}+
               </p>
             </div>
             <div>
-              <p className="text-gray-600">العنوان</p>
+              <p className="text-gray-600">{t("address")}</p>
               <p className="border border-gray-300 p-3 rounded-md">
                 {profile.address}
               </p>
             </div>
             <div>
-              <p className="text-gray-600">تاريخ الميلاد</p>
+              <p className="text-gray-600">{t("birthday")}</p>
               <p className="border border-gray-300 p-3 rounded-md">
                 {profile.birthday}
               </p>
             </div>
             <div>
-              <p className="text-gray-600">الرقم الوطني</p>
+              <p className="text-gray-600">{t("national_id")}</p>
               <p className="border border-gray-300 p-3 rounded-md">
                 {profile.national_id}
               </p>
             </div>
             <div>
-              <p className="text-gray-600">مكان الولادة</p>
+              <p className="text-gray-600">{t("place_of_birth")}</p>
               <p className="border border-gray-300 p-3 rounded-md">
                 {profile.place_of_birth}
               </p>
             </div>
             <div>
-              <p className="text-gray-600">الرصيد المحلي</p>
+              <p className="text-gray-600">{t("local_balance")}</p>
               <p className="border border-gray-300 p-3 rounded-md">
                 {profile.local_financial_balance}
               </p>
             </div>
             <div>
-              <p className="text-gray-600">الرصيد الدولي</p>
+              <p className="text-gray-600">{t("international_balance")}</p>
               <p className="border border-gray-300 p-3 rounded-md">
                 SNC {profile.international_financial_balance}
               </p>
             </div>
           </div>
         ) : (
-          <div className="text-center text-red-500">
-            حدث خطأ أثناء تحميل البيانات
-          </div>
+          <div className="text-center text-red-500">{t("loading_error")}</div>
         )}
-
-        {/* <div className="mt-6 text-center">
-          <button
-            onClick={() => setIsOpen(true)}
-            className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-700"
-          >
-            تعديل الملف الشخصي
-          </button>
-        </div> */}
       </div>
-      {/* Dialog for Editing Profile */}
+
       <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
         className="fixed inset-0 flex items-center justify-center"
       >
-        {/* الخلفية السوداء مع إمكانية إغلاق الـ Dialog عند النقر عليها */}
         <div
           className="fixed inset-0 bg-black opacity-50"
           onClick={() => setIsOpen(false)}
@@ -222,20 +199,20 @@ export default function Profile() {
 
         <DialogPanel className="relative bg-white p-6 rounded-md shadow-lg max-w-md mx-auto w-full">
           <DialogTitle className="text-lg font-semibold mb-4 text-center">
-            تعديل الملف الشخصي
+            {t("edit_profile")}
           </DialogTitle>
 
           <form>
             {/* الجنس */}
             <div>
-              <label className="block text-gray-700">الجنس</label>
+              <label className="block text-gray-700">{t("gender")}</label>
               <Listbox value={formData.gender} onChange={handleGenderChange}>
                 <Listbox.Button className="border px-4 py-2 w-full text-right rounded-md">
                   {formData.gender
                     ? formData.gender === "m"
-                      ? "ذكر"
-                      : "أنثى"
-                    : "اختر الجنس"}
+                      ? t("male")
+                      : t("female")
+                    : t("select_gender")}
                 </Listbox.Button>
                 <Listbox.Options className="border rounded-md mt-1 bg-white shadow-lg">
                   {people.map((person) => (
@@ -246,7 +223,7 @@ export default function Profile() {
                             active ? "bg-teal-600 text-white" : ""
                           }`}
                         >
-                          {person.gender === "male" ? "ذكر" : "أنثى"}
+                          {person.gender === "male" ? t("male") : t("female")}
                         </span>
                       )}
                     </ListboxOption>
@@ -255,9 +232,10 @@ export default function Profile() {
               </Listbox>
             </div>
 
-            {/* مكان الولادة */}
             <div className="mt-4">
-              <label className="block text-gray-700">مكان الولادة</label>
+              <label className="block text-gray-700">
+                {t("place_of_birth")}
+              </label>
               <input
                 type="text"
                 name="place_of_birth"
@@ -267,9 +245,8 @@ export default function Profile() {
               />
             </div>
 
-            {/* العنوان */}
             <div className="mt-4">
-              <label className="block text-gray-700">العنوان</label>
+              <label className="block text-gray-700">{t("address")}</label>
               <input
                 type="text"
                 name="address"
@@ -279,9 +256,8 @@ export default function Profile() {
               />
             </div>
 
-            {/* تاريخ الميلاد */}
             <div className="mt-4">
-              <label className="block text-gray-700">تاريخ الميلاد</label>
+              <label className="block text-gray-700">{t("birthday")}</label>
               <input
                 type="date"
                 name="birthday"
@@ -291,9 +267,8 @@ export default function Profile() {
               />
             </div>
 
-            {/* رقم الهاتف */}
             <div className="mt-4">
-              <label className="block text-gray-700">رقم الهاتف</label>
+              <label className="block text-gray-700">{t("phone_number")}</label>
               <input
                 type="tel"
                 name="phone_number"
@@ -303,9 +278,8 @@ export default function Profile() {
               />
             </div>
 
-            {/* الاسم الأول */}
             <div className="mt-4">
-              <label className="block text-gray-700">الاسم الأول</label>
+              <label className="block text-gray-700">{t("first_name")}</label>
               <input
                 type="text"
                 name="first_name"
@@ -315,9 +289,8 @@ export default function Profile() {
               />
             </div>
 
-            {/* اسم العائلة */}
             <div className="mt-4">
-              <label className="block text-gray-700">اسم العائلة</label>
+              <label className="block text-gray-700">{t("last_name")}</label>
               <input
                 type="text"
                 name="last_name"
@@ -327,14 +300,13 @@ export default function Profile() {
               />
             </div>
 
-            {/* زر الحفظ */}
             <div className="mt-6 text-center">
               <button
                 type="button"
                 onClick={handleSubmit}
                 className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-700"
               >
-                حفظ التغييرات
+                {t("save_changes")}
               </button>
             </div>
           </form>

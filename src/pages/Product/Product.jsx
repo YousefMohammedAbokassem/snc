@@ -116,12 +116,12 @@ export default function Product() {
       setLoadingProduct(false);
     }
   };
-  console.log(productData);
+  // console.log(productData);
   useEffect(() => {
     fetchData();
     fetchProduct();
   }, [categoryStore, categoryProduct, id]);
-  console.log(productData);
+  // console.log(productData);
   // بيانات المنتج (يفترض أن تأتي من API)
   // const productData = {
   //   name: "product" || "برغر دبل مع الجبنة",

@@ -3,7 +3,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+body {
+  font-family: "Tajawal", sans-serif;
+}
 /* @import "./var"; */
 * {
   padding: 0;
@@ -150,9 +152,9 @@
     }
   }
 }
-.layerBlack{
+.layerBlack {
   position: relative;
-  &::before{
+  &::before {
     content: "";
     position: absolute;
     width: 100%;

@@ -32,7 +32,7 @@ export default function Event() {
       setMarket(res.data?.data || []);
       setCategories(res.data?.data?.categories || []);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       if (
         error.response.data.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
@@ -63,7 +63,7 @@ export default function Event() {
       setLoading(false);
     }
   };
-  console.log({ market });
+  // console.log({ market });
   const [products, setProducts] = useState([]);
   const [loadingStore, setLoadingStore] = useState(true);
   const fetchProduct = async () => {
@@ -79,7 +79,7 @@ export default function Event() {
       );
       setProducts(res.data?.data?.data || []);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       if (
         error.response.data.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
@@ -110,7 +110,7 @@ export default function Event() {
       setLoadingStore(false);
     }
   };
-  console.log({ products });
+  // console.log({ products });
 
   useEffect(() => {
     fetchData();
@@ -123,7 +123,7 @@ export default function Event() {
     selectedCategory === "all"
       ? products
       : products.filter((product) => product.category === selectedCategory);
-  console.log(market);
+  // console.log(market);
   return (
     <>
       {/* <Nav /> */}

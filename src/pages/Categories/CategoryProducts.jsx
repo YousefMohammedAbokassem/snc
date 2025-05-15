@@ -14,7 +14,7 @@ export default function CategoryProducts() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const category = searchParams.get("category");
-  console.log(category);
+  // console.log(category);
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
@@ -269,7 +269,7 @@ export default function CategoryProducts() {
             {LoadingButton ? (
               <FaSpinner className="animate-spin" />
             ) : products?.next_page_url === null ? (
-              t("لا يوجد المزيد")
+              t("noMore")
             ) : (
               t("more")
             )}

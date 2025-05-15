@@ -116,6 +116,7 @@ export default function EventProducts() {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}get_colors`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          "Accept-Language": localStorage.getItem("i18nextLng"), // إضافة header للغة العربية
         },
       });
       setColors(res.data?.data || []);
@@ -238,16 +239,16 @@ export default function EventProducts() {
     }
   };
   const [selectedProduct, setSelectedProduct] = useState(null);
-  console.log(products);
+  // console.log(products);
   return (
     <div className="px-8">
-      {/* map here */}
       <button
         onClick={() => setShowAddProduct(!showAddProduct)}
         className="bg-[#275963] text-white px-4 py-2 rounded-md mb-4 mr-auto block w-full"
       >
-        {showAddProduct ? t("رجوع إلى المنتجات") : t("إضافة منتج")}
+        {showAddProduct ? t("Back to Products") : t("Add Product")}
       </button>
+
       {!showAddProduct && !showEditProduct && (
         <div className="modern">
           {loading
@@ -277,13 +278,14 @@ export default function EventProducts() {
                         </span>
                       </div>
                     </div>
-                    {/* type */}
+
                     <p className="type my-2 font-semibold text-md">
                       {item?.name}
                     </p>
+
                     {localStorage.getItem("authenticate") == "true" && (
                       <p className="priceLocal my-2">
-                        السعر الوطني:
+                        {t("Local Price")}:
                         {item?.discount ? (
                           <>
                             <del className="text-red-500">
@@ -301,7 +303,7 @@ export default function EventProducts() {
                     )}
 
                     <p className="priceInter my-2 text-[#275963]">
-                      السعر الدولي:
+                      {t("International Price")}:
                       {item?.discount ? (
                         <>
                           <del className="text-red-500">
@@ -317,6 +319,7 @@ export default function EventProducts() {
                         <span>{item?.price_in_hun} SNC</span>
                       )}
                     </p>
+
                     <div className="flex justify-between items-center gap-2">
                       {localStorage.getItem("authenticate") == "true" && (
                         <>
@@ -325,7 +328,7 @@ export default function EventProducts() {
                               setSelectedProduct(item);
                               setShowEditProduct(true);
                             }}
-                            className="bg-[#275963] flex-1  justify-center text-white px-3 py-1 rounded-md text-sm flex items-center gap-1"
+                            className="bg-[#275963] flex-1 justify-center text-white px-3 py-1 rounded-md text-sm flex items-center gap-1"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -341,7 +344,7 @@ export default function EventProducts() {
                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                               />
                             </svg>
-                            تعديل
+                            {t("Edit")}
                           </button>
                           <button
                             onClick={() => {
@@ -364,19 +367,20 @@ export default function EventProducts() {
                                 d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                               />
                             </svg>
-                            حذف
+                            {t("Delete")}
                           </button>
                         </>
                       )}
                     </div>
+
                     {showDeleteConfirm && (
                       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                         <div className="bg-white p-6 rounded-lg max-w-md w-full">
                           <h3 className="text-lg font-semibold mb-4">
-                            تأكيد الحذف
+                            {t("Confirm Deletion")}
                           </h3>
                           <p className="mb-6">
-                            هل أنت متأكد أنك تريد حذف المنتج "
+                            {t("Are you sure you want to delete")} "
                             {productToDelete?.name}"؟
                           </p>
                           <div className="flex justify-end gap-3">
@@ -384,15 +388,14 @@ export default function EventProducts() {
                               onClick={() => setShowDeleteConfirm(false)}
                               className="px-4 py-2 border border-gray-300 rounded-md"
                             >
-                              إلغاء
+                              {t("Cancel")}
                             </button>
-
                             <button
                               onClick={handleDeleteProduct}
                               className="px-4 py-2 bg-red-500 text-white rounded-md"
                               disabled={loadingD}
                             >
-                              {loadingD ? "جار الحذف ..." : " نعم، احذف"}
+                              {loadingD ? t("Deleting...") : t("Yes, Delete")}
                             </button>
                           </div>
                         </div>
@@ -432,7 +435,6 @@ export default function EventProducts() {
           measures={measures}
           productsCategory={productsCategory}
           loadingP={loadingP}
-          // يمكنك إضافة أي props إضافية يحتاجها EditProduct
         />
       )}
     </div>

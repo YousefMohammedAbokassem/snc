@@ -25,6 +25,8 @@ import CategoryProducts from "./pages/Categories/CategoryProducts";
 import Nav from "./pages/nav/Nav";
 import NoInternet from "./components/NoInternet/NoInternet";
 import NoInternetPage from "./components/NoInternet/NoInternet";
+import WhoUs from "./pages/WhoUs/WhoUs";
+import News from "./pages/News/News";
 
 export default function Container() {
   const isAuth = useSelector((state) => state.auth.authenticate);
@@ -72,6 +74,8 @@ export default function Container() {
           <Route path="/Profile" element={<Profile />} />
           <Route path="/basket" element={<Basket />} />
           <Route path="/noInternet" element={<NoInternetPage />} />
+          <Route path="/WhoUs" element={<WhoUs />} />
+          <Route path="/News" element={<News />} />
           {/* </div> */}
         </Routes>
       </div>

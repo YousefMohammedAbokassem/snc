@@ -246,7 +246,7 @@ export default function Offers() {
           {LoadingButton ? (
             <FaSpinner className="animate-spin" />
           ) : Offers?.next_page_url === null ? (
-            t("لا يوجد المزيد")
+            t("noMore")
           ) : (
             t("more")
           )}

@@ -218,7 +218,7 @@ export default function AllEvents() {
             {LoadingButton ? (
               <FaSpinner className="animate-spin" />
             ) : events?.next_page_url === null ? (
-              t("لا يوجد المزيد")
+              t("noMore")
             ) : (
               t("more")
             )}

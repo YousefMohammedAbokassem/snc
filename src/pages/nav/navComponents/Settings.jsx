@@ -46,10 +46,16 @@ export default function Settings() {
   });
 
   useEffect(() => {
-    // i18n.changeLanguage(selected.code);
-    localStorage.setItem("i18nextLng", selected.code);
-    // changeLanguage()
-    dispatch(changeLanguage(selected.code));
+    const currentLang = localStorage.getItem("i18nextLng");
+
+    // إذا كانت اللغة قد تغيرت بالفعل
+    if (currentLang !== selected.code) {
+      localStorage.setItem("i18nextLng", selected.code);
+      dispatch(changeLanguage(selected.code));
+
+      // Reload the page only if the language has changed
+      window.location.reload();
+    }
   }, [selected, i18n]);
 
   // themes
@@ -97,13 +103,14 @@ export default function Settings() {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}notify/get`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          "Accept-Language": localStorage.getItem("i18nextLng"), // إضافة header للغة العربية
         },
       });
       setNotifications(res.data?.data || []);
 
-      console.log(res.data);
+      // console.log(res.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       if (error.response?.status === 401) {
         // dispatch(logoutUser());
       }
@@ -116,13 +123,15 @@ export default function Settings() {
   }, []);
   return (
     <div className="flex items-center gap-3 ">
-      {/* <div className="languagesList">
+      <div className="languagesList">
         <div className="flex flex-col">
           <Listbox value={selected} onChange={setSelected}>
             <div className="relative">
-              <Listbox.Button className="relative w-full cursor-default text-start px-8 rounded-md bg-transparent py-3 text-gray-900 dark:text-gray-200 focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]">
+              <Listbox.Button className="relative w-full cursor-default text-start  px-8 rounded-md bg-transparent py-3 text-gray-900 dark:text-gray-200 focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]">
                 <div className="flex items-center gap-2">
-                  <span className="block truncate">{t(selected.code)}</span>
+                  <span className="block truncate text-white">
+                    {t(selected.code)}
+                  </span>
                   <img
                     width={32}
                     height={32}
@@ -132,7 +141,7 @@ export default function Settings() {
                 </div>
                 <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                   <ChevronUpDownIcon
-                    className="w-5 h-5 text-gray-500"
+                    className="w-5 h-5 text-white"
                     aria-hidden="true"
                   />
                 </span>
@@ -173,7 +182,7 @@ export default function Settings() {
             </div>
           </Listbox>
         </div>
-      </div> */}
+      </div>
       <div className="icons flex items-center gap-3 mx-4">
         {/* <div className="w-[30px] h-[30px]">
           <button onClick={toggleTheme} aria-label="Toggle theme">

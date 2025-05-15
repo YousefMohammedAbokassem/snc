@@ -72,7 +72,7 @@ export default function InComingEvents() {
         }
       );
       setBody(res.data?.data);
-      console.log(res.data.data);
+      // console.log(res.data.data);
     } catch (error) {
       if (
         error.response.data.message ===

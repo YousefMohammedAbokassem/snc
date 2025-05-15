@@ -71,9 +71,9 @@ export default function ExportMyEvents() {
           },
         }
       );
-      console.log(res.data);
+      // console.log(res.data);
       setBody(res.data?.data);
-      console.log(res.data.data);
+      // console.log(res.data.data);
     } catch (error) {
       if (
         error.response.data.message ===

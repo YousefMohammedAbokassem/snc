@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 export default function TableRow({ currentData }) {
   const { t } = useTranslation();
-  console.log(currentData)
+  // console.log(currentData)
   return (
     <>
       {currentData.map((item) => (
@@ -16,13 +16,14 @@ export default function TableRow({ currentData }) {
           </td>
           <td className="px-6 py-8 text-center">{item.date}</td>
           <td className="px-6 py-8 text-center">{item.time}</td>
-          <td className="px-6 py-8 text-center">
-            {item.sender_phone_number}
-          </td>
+          <td className="px-6 py-8 text-center">{item.sender_phone_number}</td>
           <td className="px-6 py-8 text-center">{item.event_name}</td>
           <td className="px-6 py-8 text-center">{item.product_name}</td>
           <td className="px-6 py-8 text-center">{item.number_of_process}</td>
-          <td className="px-6 py-8 text-center"> {(item.amount / (1 - item.discount/100)).toFixed()}</td>
+          <td className="px-6 py-8 text-center">
+            {" "}
+            {(item.amount / (1 - item.discount / 100)).toFixed()}
+          </td>
           <td className="px-6 py-8 text-center">{item.commission} SNC</td>
           <td className="px-6 py-8 text-center">{item.discount}%</td>
           <td className="px-6 py-8 text-center">{item.tax} SNC</td>

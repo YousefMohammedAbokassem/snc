@@ -22,11 +22,12 @@ export default function HomeSlider() {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}banners`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          "Accept-Language": localStorage.getItem("i18nextLng"), // إضافة header للغة العربية
         },
       });
       setBanners(res.data?.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       if (
         error.response.data.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
@@ -65,7 +66,7 @@ export default function HomeSlider() {
     <Swiper
       pagination={{ dynamicBullets: true }}
       autoplay={{
-        delay: 300000,
+        delay: 3000,
         disableOnInteraction: false,
       }}
       effect="fade"

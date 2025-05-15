@@ -14,11 +14,13 @@ const menuItems = [
   "inInter",
   "exportIntern",
   "financialCommission",
+  "commissionBuyCards",
   "completedReward",
-  // "buyCards",
+  "buyCards",
   "transfareEvent",
   "eventInfo",
   "eventProducts",
+
 ];
 
 export default function Aside() {

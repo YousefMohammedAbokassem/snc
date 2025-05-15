@@ -11,9 +11,9 @@ const head = [
   { content: "sequence" },
   { content: "date" },
   { content: "Timing" },
-  { content: "رقم هاتف المرسل إليه" },
-  { content: "اسم الفعالية" },
-  { content: "اسم المنتج" },
+  { content: "recipientPhone" },
+  { content: "eventName" },
+  { content: "productName" },
   { content: "digitTheExport" },
   { content: "Value" },
   { content: "commission" },
@@ -72,7 +72,7 @@ export default function ExportEventsNational() {
         }
       );
       setBody(res.data?.data);
-      console.log(res.data.data);
+      // console.log(res.data.data);
     } catch (error) {
       if (
         error.response.data.message ===

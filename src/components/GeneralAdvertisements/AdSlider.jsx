@@ -24,6 +24,7 @@ export default function AdSlider() {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}adds`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          "Accept-Language": localStorage.getItem("i18nextLng"), // إضافة header للغة العربية
         },
       });
       setAds(res.data?.data || []);
@@ -69,7 +70,7 @@ export default function AdSlider() {
       {/* أزرار التنقل الخارجية */}
       <div
         onClick={() => swiperRef.current?.slidePrev()}
-        className="absolute top-0 left-0 z-10 bg-[#275963] h-[80%] flex items-center justify-center p-3 cursor-pointer"
+        className="absolute top-0 left-0 z-10 bg-[#275963] h-[73%] flex items-center justify-center p-1 sm:p-2 cursor-pointer"
       >
         <button className="text-white rounded-full">
           <svg
@@ -78,6 +79,7 @@ export default function AdSlider() {
             viewBox="0 0 21 36"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            className="w-[16px] h-[28px] sm:w-[21px] sm:h-[36px]"
           >
             <path d="M0 18L21 0L21 36L0 18Z" fill="white" />
           </svg>
@@ -85,7 +87,7 @@ export default function AdSlider() {
       </div>
       <div
         onClick={() => swiperRef.current?.slideNext()}
-        className="absolute top-0 right-0 z-10 bg-[#275963] h-[80%] flex items-center justify-center p-3 cursor-pointer"
+        className="absolute top-0 right-0 z-10 bg-[#275963] h-[73%] flex items-center justify-center p-1 sm:p-2 cursor-pointer"
       >
         <button className="text-white rounded-full">
           <svg
@@ -94,6 +96,7 @@ export default function AdSlider() {
             viewBox="0 0 21 36"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            className="w-[16px] h-[28px] sm:w-[21px] sm:h-[36px]"
           >
             <path d="M21 18L0 36L0 0L21 18Z" fill="white" />
           </svg>
@@ -103,7 +106,7 @@ export default function AdSlider() {
       {/* Swiper Slider */}
       <Swiper
         loop={true}
-        autoplay={{ delay: 5000 }}
+        autoplay={{ delay: 2000 }}
         grabCursor={true}
         spaceBetween={10}
         onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -140,7 +143,8 @@ export default function AdSlider() {
                     />
                   </div>
                   <span className="mt-2 text-lg opacity-50">
-                    {new Date(ad.date).toLocaleDateString("ar-EG")}
+                    {/* {new Date(ad.date).toLocaleDateString("ar-EG")} */}
+                    {new Date(ad.date).toLocaleDateString("en")}
                   </span>
                   <span className="mt-2 text-xl">{ad.title}</span>
                 </div>

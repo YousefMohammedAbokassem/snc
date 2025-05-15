@@ -13,6 +13,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function Currencies() {
   const [profile, setProfile] = useState(null);
@@ -22,7 +23,7 @@ export default function Currencies() {
   const [amount, setAmount] = useState("");
   const [transferType, setTransferType] = useState(null); // 'local' or 'international'
   const [isTransferring, setIsTransferring] = useState(false); // To control the spinner for transfer
-
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const fetchData = async () => {
@@ -31,6 +32,7 @@ export default function Currencies() {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}my_profile`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          "Accept-Language": localStorage.getItem("i18nextLng"), // إضافة header للغة العربية
         },
       });
       setProfile(res.data?.data || null);
@@ -89,7 +91,7 @@ export default function Currencies() {
           },
         }
       );
-      console.log("Transfer successful:", res.data);
+      // console.log("Transfer successful:", res.data);
       if (type === "local") {
         setOpenLocalDialog(false); // Close the local dialog
       } else {
@@ -123,10 +125,10 @@ export default function Currencies() {
             </svg>
           </div>
           <div>
-            <span>الرصيد المالي الوطني</span>
+            <span>{t("cart.national_balance")}</span>
             <div onClick={() => setOpenLocalDialog(true)}>
               <Button variant="outlined" color="success" fullWidth>
-                تحويل لمال دولي
+                {t("cart.convert_to_international")}
               </Button>
             </div>
           </div>
@@ -158,10 +160,10 @@ export default function Currencies() {
             </svg>
           </div>
           <div>
-            <span>الرصيد المالي الدولي</span>
+            <span>{t("cart.international_balance")}</span>
             <div onClick={() => setOpenInternationalDialog(true)}>
               <Button variant="outlined" color="warning" fullWidth>
-                تحويل لمال وطني
+                {t("cart.convert_to_national")}
               </Button>
             </div>
           </div>
@@ -177,26 +179,51 @@ export default function Currencies() {
 
       {/* Dialog for local transfer */}
       <Dialog open={openLocalDialog} onClose={() => setOpenLocalDialog(false)}>
-        <DialogTitle>تحويل الأموال (وطني لدولي)</DialogTitle>
+        <DialogTitle>
+          {t("cart.transfer_title_local_to_international")}
+        </DialogTitle>
         <DialogContent>
           <TextField
-            label="المبلغ"
+            label={t("cart.amount")}
             type="number"
             fullWidth
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (
+                value === "" ||
+                (parseInt(value) >= 1 && parseInt(value) % 1 === 0)
+              ) {
+                setAmount(value);
+              }
+            }}
+            inputProps={{
+              min: 1,
+              step: 1,
+            }}
+            onBlur={(e) => {
+              if (e.target.value && parseInt(e.target.value) % 1 !== 0) {
+                const correctedValue =
+                  Math.round(parseInt(e.target.value) / 1) * 1;
+                setAmount(correctedValue.toString());
+              }
+            }}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenLocalDialog(false)} color="primary">
-            إلغاء
+            {t("cart.cancel")}
           </Button>
           <Button
             onClick={() => handleTransfer("local")}
             color="primary"
             disabled={isTransferring}
           >
-            {isTransferring ? <CircularProgress size={24} /> : "تحويل"}
+            {isTransferring ? (
+              <CircularProgress size={24} />
+            ) : (
+              t("cart.transfer")
+            )}
           </Button>
         </DialogActions>
       </Dialog>
@@ -206,14 +233,35 @@ export default function Currencies() {
         open={openInternationalDialog}
         onClose={() => setOpenInternationalDialog(false)}
       >
-        <DialogTitle>تحويل الأموال (دولي لوطني)</DialogTitle>
+        <DialogTitle>
+          {t("cart.transfer_title_international_to_local")}
+        </DialogTitle>
         <DialogContent>
           <TextField
-            label="المبلغ"
+            label={t("cart.amount")}
             type="number"
             fullWidth
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (
+                value === "" ||
+                (parseInt(value) >= 1 && parseInt(value) % 1 === 0)
+              ) {
+                setAmount(value);
+              }
+            }}
+            inputProps={{
+              min: 1,
+              step: 1,
+            }}
+            onBlur={(e) => {
+              if (e.target.value && parseInt(e.target.value) % 1 !== 0) {
+                const correctedValue =
+                  Math.round(parseInt(e.target.value) / 1) * 1;
+                setAmount(correctedValue.toString());
+              }
+            }}
           />
         </DialogContent>
         <DialogActions>
@@ -221,14 +269,18 @@ export default function Currencies() {
             onClick={() => setOpenInternationalDialog(false)}
             color="primary"
           >
-            إلغاء
+            {t("cart.cancel")}
           </Button>
           <Button
             onClick={() => handleTransfer("international")}
             color="primary"
             disabled={isTransferring}
           >
-            {isTransferring ? <CircularProgress size={24} /> : "تحويل"}
+            {isTransferring ? (
+              <CircularProgress size={24} />
+            ) : (
+              t("cart.transfer")
+            )}
           </Button>
         </DialogActions>
       </Dialog>

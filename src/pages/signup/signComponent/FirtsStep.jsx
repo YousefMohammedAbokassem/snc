@@ -49,11 +49,11 @@ export default function FirstStep({
   errors,
 }) {
   const { t } = useTranslation(lng);
-  console.log(selected);
+  // console.log(selected);
   return (
     <div className="">
       {/* الاسم الأول واسم العائلة */}
-      <div className="flex items-start gap-4">
+      {/* <div className="flex items-start gap-4">
         <div className="w-1/2">
           <input
             type="text"
@@ -84,7 +84,7 @@ export default function FirstStep({
             </p>
           )}
         </div>
-      </div>
+      </div> */}
       {/* display name */}
       <div className="flex flex-col mt-6">
         <input
@@ -92,7 +92,7 @@ export default function FirstStep({
           name="displayName"
           value={display_name}
           onChange={(e) => setDisplay_name(e.target.value)}
-          placeholder={t("displayName")}
+          placeholder={t("displayNameSign")}
           className="border-[#CDCDCD] border-[1px] text-black dark:text-white rounded-md bg-transparent px-3 py-5 w-full focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]"
         />
         {errors?.display_name && (

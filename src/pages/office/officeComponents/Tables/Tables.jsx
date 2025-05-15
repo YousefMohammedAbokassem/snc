@@ -15,6 +15,8 @@ import EventInfo from "./EventInfo/EventInfo";
 import EventProducts from "./EventProducts/EventProducts";
 import HomeOffice from "./HomeOffice/HomeOffice";
 import ExportMyEvents from "./ExportMyEvents/ExportMyEvents";
+import BuyCards from "./BuyCards/BuyCards";
+import CommissionBuyCards from "./CommissionBuyCards/CommissionBuyCards";
 
 export default function Tables({ theTable }) {
   const { t } = useTranslation();
@@ -41,7 +43,9 @@ export default function Tables({ theTable }) {
         localStorage.getItem("role") == 3 ? (
         <ExportMyEvents />
       ) : theTable === "financialCommission" ? (
-        <FinancialCommission />
+        <FinancialCommission /> 
+      ) : theTable === "commissionBuyCards" ? (
+        <CommissionBuyCards /> 
       ) : theTable === "completedReward" ? (
         <CompletedReward />
       ) : theTable === "transfareEvent" ? (
@@ -52,6 +56,8 @@ export default function Tables({ theTable }) {
         <EventProducts />
       ) : theTable === "home" ? (
         <HomeOffice />
+      ) : theTable === "buyCards" ? (
+        <BuyCards />
       ) : (
         ""
       )}

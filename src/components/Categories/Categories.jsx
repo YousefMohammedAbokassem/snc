@@ -25,9 +25,9 @@ export default function Categories() {
           },
         }
       );
-      console.log(res.data);
+      // console.log(res.data);
       setCategories(res.data?.data?.data || []);
-      console.log(categories);
+      // console.log(categories);
     } catch (error) {
       if (
         error.response.data.message ===

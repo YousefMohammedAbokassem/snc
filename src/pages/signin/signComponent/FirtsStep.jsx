@@ -47,7 +47,7 @@ export default function FirstStep({
   setDisplay_name,
 }) {
   const { t } = useTranslation(lng);
-  console.log(selected);
+  // console.log(selected);
   return (
     <div className="">
       {/* الاسم الأول واسم العائلة */}

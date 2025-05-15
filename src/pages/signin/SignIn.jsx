@@ -34,7 +34,7 @@ export default function Page() {
     setErrors({});
     setMessageError("");
     const fcmToken = await requestFirebaseNotificationPermission();
-    console.log({fcmToken});
+    // console.log({fcmToken});
     try {
       const formData = new FormData();
       formData.append("phone_number", phone_number);
@@ -46,7 +46,7 @@ export default function Page() {
       // إذا وجدنا Token، نضيفه لبيانات تسجيل الدخول
       if (fcmToken) {
         formData.append("device_token", fcmToken);
-        console.log(fcmToken);
+        // console.log(fcmToken);
       }
 
       const res = await axios.post(
@@ -57,7 +57,7 @@ export default function Page() {
       // بعد نجاح تسجيل الدخول
       setProgressLog(false);
       dispatch(logIn());
-      console.log(res.data);
+      // console.log(res.data);
       localStorage.setItem("access_token", res.data.data.token);
       localStorage.setItem("user_id", res.data.data.role_id);
 
@@ -79,7 +79,7 @@ export default function Page() {
   const fetchCountries = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}countries`);
-      console.log(res.data.data);
+      // console.log(res.data.data);
       setPhoneLoading(false);
       setCountries([""]);
       res.data.data.map((ele) => {
@@ -95,8 +95,8 @@ export default function Page() {
   useEffect(() => {
     fetchCountries();
   }, []);
-  console.log(phone_number);
-  console.log(country_code);
+  // console.log(phone_number);
+  // console.log(country_code);
   return (
     <>
       <Helmet>
@@ -244,7 +244,11 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="image hidden sm:block sm:w-[40%] md:w-[50%] h-full fixed left-0 top-0 -z-10">
+        <div
+          className={`image hidden sm:block sm:w-[40%] md:w-[50%] h-full fixed ${
+            localStorage.getItem("i18nextLng") === "ar" ? "left-0 " : "right-0 "
+          } top-0 -z-10`}
+        >
           <img
             src="/images/SingUp.jpg"
             alt="signUp image"

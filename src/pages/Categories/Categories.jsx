@@ -112,7 +112,7 @@ export default function Categories() {
       setLoadingButton(false);
     }
   };
-  console.log(categories);
+  // console.log(categories);
   return (
     <>
       {/* <Nav /> */}
@@ -249,7 +249,7 @@ export default function Categories() {
             {LoadingButton ? (
               <FaSpinner className="animate-spin" />
             ) : categories?.next_page_url === null ? (
-              t("لا يوجد المزيد")
+              t("noMore")
             ) : (
               t("more")
             )}

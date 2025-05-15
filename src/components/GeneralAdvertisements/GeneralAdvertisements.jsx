@@ -13,6 +13,7 @@ export default function GeneralAdvertisements() {
         </span>
       </div>
       <AdSlider />
+      <hr className="mt-10" />
     </div>
   );
 }

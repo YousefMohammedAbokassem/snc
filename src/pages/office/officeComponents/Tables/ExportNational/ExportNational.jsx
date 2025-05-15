@@ -12,7 +12,8 @@ const head = [
   { content: "date" },
   { content: "Timing" },
   { content: "phone" },
-  { content: "اسم المرسل إليه" },
+  // { content: "اسم المرسل إليه" },
+
   { content: "digitTheExport" },
   { content: "Value" },
   { content: "commission" },
@@ -69,7 +70,7 @@ export default function ExportNational() {
         }
       );
       setBody(res.data?.data);
-      console.log(res.data.data);
+      // console.log(res.data.data);
     } catch (error) {
       if (
         error.response.data.message ===

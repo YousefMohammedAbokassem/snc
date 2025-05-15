@@ -12,7 +12,7 @@ const head = [
   { content: "date" },
   { content: "Timing" },
   { content: "phone" },
-  { content: "اسم المرسل" },
+  //   { content: "اسم المرسل" },
   { content: "digitTheExport" },
   { content: "Value" },
 ];
@@ -67,7 +67,7 @@ export default function InComingNational() {
         }
       );
       setBody(res.data?.data);
-      console.log(res.data.data);
+      // console.log(res.data.data);
     } catch (error) {
       if (
         error.response.data.message ===

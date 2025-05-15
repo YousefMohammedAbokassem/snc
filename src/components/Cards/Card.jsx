@@ -22,7 +22,7 @@ export default function Card() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const id = params.get("id");
-  console.log(id);
+  // console.log(id);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
@@ -40,7 +40,7 @@ export default function Card() {
 
   const fetchData = async () => {
     setLoading(true);
-    console.log(id);
+    // console.log(id);
     try {
       const res = await axios.get(
         `${import.meta.env.VITE_API_URL}card_type/${id}`,
@@ -51,7 +51,7 @@ export default function Card() {
         }
       );
       setCard(res.data?.data);
-      console.log(res.data.data);
+      // console.log(res.data.data);
     } catch (error) {
       console.error(error);
       if (
@@ -111,7 +111,7 @@ export default function Card() {
         confirmButtonText: "حسنًا",
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setError(error.response.data.message);
       if (error.response?.status === 401) {
         dispatch(logoutUser());
@@ -150,7 +150,7 @@ export default function Card() {
   return (
     <>
       {/* <Nav /> */}
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 mt-8">
         <div className="flex justify-between items-center text-[#1D1D1D] mb-6">
           <ul className="flex gap-2 opacity-25">
             <li className="cursor-pointer" onClick={() => navigate("/home")}>
@@ -183,12 +183,12 @@ export default function Card() {
                 alt={cardType}
                 className="w-full h-full"
               />
-              <div className="absolute right-0 bottom-0 text-white text-lg mb-2 flex items-center justify-between w-full">
+              <div className="absolute gap-2 right-0 bottom-4 text-white text-lg mb-1 flex items-center justify-center w-full">
                 <span className="mx-2">
                   {t("nationalPrice")} {card?.price_in_country}
                 </span>
                 <span className="mx-2">
-                  {t("internationalPrice")} : {card?.price}
+                  {t("internationalPrice")} : {card?.price} SNC
                 </span>
               </div>
             </>

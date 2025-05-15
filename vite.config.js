@@ -3,6 +3,12 @@ import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugin = {
+  server: {
+    headers: {
+      "Content-Security-Policy":
+        "script-src 'self' 'unsafe-inline' https://www.gstatic.com",
+    },
+  },
   registerType: "prompt",
   srcDir: "public",
   filename: "firebase-messaging-sw.js", // 🔥 ملف FCM
