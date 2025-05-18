@@ -77,4 +77,29 @@ const manifestForPlugin = {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), VitePWA(manifestForPlugin)],
+  
+  // إعدادات جديدة مضافة لدعم Firebase و top-level await
+  build: {
+    target: 'esnext', // يدعم top-level await
+    chunkSizeWarningLimit: 1600, // زيادة الحد المسموح لحجم الملفات
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: 'esnext', // يدعم top-level await
+      supported: {
+        'top-level-await': true // تمكين دعم top-level await
+      }
+    },
+    exclude: ['firebase', 'firebase/app', 'firebase/messaging'] // استبعاد Firebase من التحسين التلقائي
+  },
+  
+  // إعدادات خاصة بـ PWA
+  pwa: {
+    workbox: {
+      globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg}'],
+      maximumFileSizeToCacheInBytes: 5000000 // 5MB
+    },
+    includeAssets: ['**/*'],
+    manifest: manifestForPlugin.manifest
+  }
 });
