@@ -57,7 +57,9 @@ export default function CommissionBuyCards() {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}get_registered_commissions?page=${currentPage}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }get_registered_commissions?page=${currentPage}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -67,7 +69,7 @@ export default function CommissionBuyCards() {
       setBody(res.data?.data);
     } catch (error) {
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -85,7 +87,7 @@ export default function CommissionBuyCards() {
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(

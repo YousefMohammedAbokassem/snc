@@ -121,7 +121,7 @@ export default function AddProduct({
       setUploadProgress(0);
       console.log(error);
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -139,7 +139,7 @@ export default function AddProduct({
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(

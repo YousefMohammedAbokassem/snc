@@ -34,7 +34,7 @@ export default function Event() {
     } catch (error) {
       // console.log(error);
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -52,7 +52,7 @@ export default function Event() {
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -81,7 +81,7 @@ export default function Event() {
     } catch (error) {
       // console.log(error);
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -99,7 +99,7 @@ export default function Event() {
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(

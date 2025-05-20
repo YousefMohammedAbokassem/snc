@@ -41,7 +41,7 @@ export default function Product() {
       setProducts(res.data?.data || []);
     } catch (error) {
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -59,7 +59,7 @@ export default function Product() {
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -87,7 +87,7 @@ export default function Product() {
       setProductData(res.data?.data || []);
     } catch (error) {
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -105,7 +105,7 @@ export default function Product() {
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -173,7 +173,7 @@ export default function Product() {
       });
       navigate("/basket");
     } catch (error) {
-      setError(error.response.data.message);
+      setError(error?.response?.data?.message);
       Swal.fire({
         icon: "warning",
         title: "تنبيه",

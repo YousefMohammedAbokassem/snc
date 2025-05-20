@@ -16,6 +16,7 @@ export default function HomeSlider() {
   const [banners, setBanners] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -27,9 +28,10 @@ export default function HomeSlider() {
       });
       setBanners(res.data?.data);
     } catch (error) {
-      // console.log(error);
+      console.log(error.message);
+
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -47,7 +49,7 @@ export default function HomeSlider() {
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(

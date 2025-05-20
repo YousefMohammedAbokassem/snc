@@ -28,7 +28,7 @@ export default function Offers() {
       setOffers(res.data?.data || []);
     } catch (error) {
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -46,7 +46,7 @@ export default function Offers() {
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -75,7 +75,7 @@ export default function Offers() {
       setOffers(res.data?.data || []);
     } catch (error) {
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -93,7 +93,7 @@ export default function Offers() {
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(

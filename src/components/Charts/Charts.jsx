@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import {
@@ -28,7 +28,7 @@ export default function Charts() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(25);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const navigate = useNavigate();
   const fetchData = async () => {
     setLoading(true);
     setError(null);
@@ -44,7 +44,6 @@ export default function Charts() {
     } catch (error) {
       console.error("Error fetching data:", error);
       setError(error);
-
       if (
         error.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
@@ -54,7 +53,10 @@ export default function Charts() {
         error?.message === "Network Error" ||
         error?.message === "timeout exceeded"
       ) {
-        setError(new Error(t("data_fetch_error")));
+        if (location.pathname !== "/noInternet") {
+          localStorage.setItem("location", location.pathname + location.search);
+          // navigate("/noInternet");
+        }
       }
     } finally {
       setLoading(false);

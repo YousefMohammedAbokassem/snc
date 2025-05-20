@@ -343,6 +343,7 @@ export default function Page() {
                 {t("createAnAcoount")}
               </h1>
             </form>
+
             <Stepper
               lng={localStorage.getItem("i18next")}
               currentStep={currentStep}

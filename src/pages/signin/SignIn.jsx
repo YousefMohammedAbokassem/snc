@@ -60,8 +60,20 @@ export default function Page() {
       // console.log(res.data);
       localStorage.setItem("access_token", res.data.data.token);
       localStorage.setItem("user_id", res.data.data.role_id);
-
-      navigate("/home");
+      if (res.data.message === "Wait for code verification") {
+        localStorage.setItem(
+          "signUpData",
+          JSON.stringify({
+            currentStep: 2,
+            phone: phone_number.slice(country_code.length),
+            code: country_code,
+          })
+        );
+        navigate("/signUp");
+      } else {
+        navigate("/home");
+      }
+      console.log(res.data);
     } catch (error) {
       setProgressLog(false);
       console.error("Login error:", error);

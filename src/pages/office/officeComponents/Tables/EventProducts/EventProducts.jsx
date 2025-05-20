@@ -31,7 +31,7 @@ export default function EventProducts() {
       setProducts(res.data?.data || []);
     } catch (error) {
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -49,7 +49,7 @@ export default function EventProducts() {
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -78,7 +78,7 @@ export default function EventProducts() {
       setMeasures(res.data?.data || []);
     } catch (error) {
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -96,7 +96,7 @@ export default function EventProducts() {
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -122,7 +122,7 @@ export default function EventProducts() {
       setColors(res.data?.data || []);
     } catch (error) {
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -140,7 +140,7 @@ export default function EventProducts() {
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -168,7 +168,7 @@ export default function EventProducts() {
       setProductsCategory(res.data?.data || []);
     } catch (error) {
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -186,7 +186,7 @@ export default function EventProducts() {
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(

@@ -55,7 +55,7 @@ export default function Card() {
     } catch (error) {
       console.error(error);
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -73,7 +73,7 @@ export default function Card() {
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -112,7 +112,7 @@ export default function Card() {
       });
     } catch (error) {
       // console.log(error);
-      setError(error.response.data.message);
+      setError(error?.response?.data?.message);
       if (error.response?.status === 401) {
         dispatch(logoutUser());
         navigate("/signIn");

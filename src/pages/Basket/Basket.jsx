@@ -40,7 +40,7 @@ export default function Basket() {
       setItems(res.data?.data || []);
     } catch (error) {
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -58,7 +58,7 @@ export default function Basket() {
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -88,7 +88,7 @@ export default function Basket() {
       setAmount(res.data?.data || []);
     } catch (error) {
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -106,7 +106,7 @@ export default function Basket() {
         }
       }
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "the requests are restricted between 11:45 PM and 12:45 AM."
       ) {
         alert(
@@ -173,7 +173,7 @@ export default function Basket() {
       );
       fetchAmount();
     } catch (error) {
-      setError(error.response.data.message);
+      setError(error?.response?.data?.message);
       if (error.response?.status === 401) {
         dispatch(logoutUser());
         navigate("/signIn");
@@ -243,11 +243,11 @@ export default function Basket() {
       });
       navigate("/home");
     } catch (error) {
-      setError(error.response.data.message);
+      setError(error?.response?.data?.message);
       Swal.fire({
         icon: "error",
         title: "خطأ",
-        text: error.response.data.message,
+        text: error?.response?.data?.message,
         confirmButtonText: "حسنًا",
       });
       if (error.response?.status === 401) {
