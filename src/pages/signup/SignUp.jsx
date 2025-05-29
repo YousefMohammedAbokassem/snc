@@ -225,38 +225,44 @@ export default function Page() {
     if (isChecked === false) {
       setShowIsChecked(true);
       return null;
-    } else {
     }
+
     setProgressLog(true);
     setErrors({});
-    const formData = new FormData(); // استخدام FormData لإرسال البيانات
-    // formData.append("first_name", first_name.trim());
-    // formData.append("last_name", last_name.trim());
-    formData.append("display_name", display_name.trim());
-    formData.append("phone_number", phone_number.slice(country_code?.length));
+    const formData = new FormData();
 
+    // 1. تطبيع رقم الهاتف
+    let normalizedPhone = phone_number;
+
+    // إذا كان الرقم يحتوي على صفر زائد بعد رمز الدولة
+    if (phone_number.startsWith(`${country_code}0`)) {
+      normalizedPhone = `${country_code}${phone_number.slice(
+        country_code.length + 1
+      )}`;
+    }
+    console.log(normalizedPhone);
+    console.log(normalizedPhone.slice(country_code.length));
+    // 2. إرسال الرقم بدون رمز الدولة
+    formData.append("phone_number", normalizedPhone.slice(country_code.length));
+
+    // 3. إضافة باقي البيانات
+    formData.append("display_name", display_name.trim());
     formData.append("password", password.trim());
     formData.append("password_confirmation", password_confirmation.trim());
     formData.append("national_id", national_id.trim());
     formData.append("gender", gender.gender === "male" ? "m" : "f");
     formData.append("place_of_birth", place_of_birth.trim());
-    const idCountry = countrySend.filter((ele) => {
-      // console.log(ele);
-      // console.log(country_code);
-      if (parseInt(ele.code) == parseInt(country_code)) {
-        // console.log(ele.id);
-        return ele.id;
-      }
-    });
-    // // console.log(idCountry[0]?.id)
-    formData.append("country_id", idCountry[0]?.id);
-    // console.log(idCountry);
-    // console.log(idCountry[0]);
     formData.append("birthday", moment(birthday).format("YYYY-MM-DD"));
     formData.append("card_number", encryptedData);
     formData.append("country_code", country_code);
     formData.append("address", address);
     formData.append("device_token", "sdxfhcgvhjkl");
+
+    // 4. إضافة country_id
+    const idCountry = countrySend.find(
+      (ele) => parseInt(ele.code) === parseInt(country_code)
+    );
+    formData.append("country_id", idCountry?.id);
 
     try {
       const res = await axios.post(
@@ -264,15 +270,14 @@ export default function Page() {
         formData
       );
 
-      // dispatch(logIn());
-      localStorage.setItem("phone", phone_number.slice(country_code?.length));
+      localStorage.setItem(
+        "phone",
+        normalizedPhone.slice(country_code.length)
+      );
       localStorage.setItem("code", country_code);
-      // navigate("/home");
       goToNextStep();
-
       setProgressLog(false);
     } catch (error) {
-      // console.log(error);
       setProgressLog(false);
       setErrors(error?.response?.data.errors);
       Swal.fire({

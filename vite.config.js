@@ -12,9 +12,9 @@ const manifestForPlugin = {
   registerType: "prompt",
   srcDir: "public",
   filename: "firebase-messaging-sw.js", // 🔥 ملف FCM
-  includeAssets: ["favicon.ico", "apple-touc-icon.png", "src.png"],
+  includeAssets: ["apple-touc-icon.png", "src.png"],
   manifest: {
-    name: "SNC APP",
+    name: "SNC",
     short_name: "SNC",
     description: "this is th syrian new coin",
     icons: [
@@ -61,8 +61,8 @@ const manifestForPlugin = {
         src: "images/sy2.jpg",
       },
       {
-        src: "snc.png",
-        type: "image/png",
+        src: "images/PNG.png",
+        type: "image/png", 
       },
     ],
     theme_color: "#181818",
@@ -77,29 +77,29 @@ const manifestForPlugin = {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), VitePWA(manifestForPlugin)],
-  
+
   // إعدادات جديدة مضافة لدعم Firebase و top-level await
   build: {
-    target: 'esnext', // يدعم top-level await
+    target: "esnext", // يدعم top-level await
     chunkSizeWarningLimit: 1600, // زيادة الحد المسموح لحجم الملفات
   },
   optimizeDeps: {
     esbuildOptions: {
-      target: 'esnext', // يدعم top-level await
+      target: "esnext", // يدعم top-level await
       supported: {
-        'top-level-await': true // تمكين دعم top-level await
-      }
+        "top-level-await": true, // تمكين دعم top-level await
+      },
     },
-    exclude: ['firebase', 'firebase/app', 'firebase/messaging'] // استبعاد Firebase من التحسين التلقائي
+    exclude: ["firebase", "firebase/app", "firebase/messaging"], // استبعاد Firebase من التحسين التلقائي
   },
-  
+
   // إعدادات خاصة بـ PWA
   pwa: {
     workbox: {
-      globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg}'],
-      maximumFileSizeToCacheInBytes: 5000000 // 5MB
+      globPatterns: ["**/*.{js,css,html,ico,png,svg,jpg}"],
+      maximumFileSizeToCacheInBytes: 5000000, // 5MB
     },
-    includeAssets: ['**/*'],
-    manifest: manifestForPlugin.manifest
-  }
+    includeAssets: ["**/*"],
+    manifest: manifestForPlugin.manifest,
+  },
 });

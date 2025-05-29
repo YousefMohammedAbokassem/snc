@@ -705,5 +705,6 @@
     "sizes": "Sizes",
     "dropImage": "Drag image here or browse files",
     "publish": "Publish"
-  }
+  },
+  "price": "price"
 }

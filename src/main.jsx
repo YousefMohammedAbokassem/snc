@@ -43,7 +43,6 @@ const setupNotifications = async () => {
     // console.log("New foreground message: ", payload);
     const { title, body, icon } = payload.notification;
     if (Notification.permission === "granted") {
-      console.log("first");
       new Notification(title, {
         icon,
         body,

@@ -25,7 +25,10 @@ export default function Nav() {
     <nav className="bg-[#275963] z-50 shadow-lg px-6 py-3 rounded-bl-lg">
       <div className="container mx-auto flex justify-between items-center">
         {/* شعار الموقع */}
-        <div className="w-20 -mb-2 cursor-pointer" onClick={() => navigate("home")}>
+        <div
+          className="w-20 -mb-2 cursor-pointer"
+          onClick={() => navigate("home")}
+        >
           <img src={`/images/WHITE.png`} className="w-full h-full" alt="logo" />
         </div>
 
@@ -125,10 +128,10 @@ export default function Nav() {
           </NavLink>
           <NavLink
             className="text-white font-medium hover:text-gray-300 transition"
-            to="/contactUs"
             onClick={() => setIsOpen(false)}
+            to="/whoUs"
           >
-            {t("contactUs")}
+            {t("whoUsNav")}
           </NavLink>
           {/* <Search /> */}
           <Settings />

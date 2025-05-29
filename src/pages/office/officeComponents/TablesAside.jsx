@@ -16,7 +16,7 @@ export default function TablesAside() {
     }
   }, [location]);
   return (
-    <div className="flex-1">
+    <div className="flex-1 max-w-[1000px] lg:max-w-full overflow-x-auto">
       <HeaderPageTable title={table} />
       <Tables theTable={table} />
     </div>

@@ -204,6 +204,11 @@ export default function FirstStep({
           className="bg-transparent border-[#CDCDCD] border-[1px] text-black dark:text-white rounded-md px-3 py-5 pl-10 w-full focus:outline focus:outline-[3px] focus:outline-[#275963] dark:focus:outline-[#E1B145]"
           popperClassName="react-datepicker-popper"
           calendarClassName="react-datepicker"
+          showYearDropdown
+          showMonthDropdown
+          dropdownMode="select"
+          yearDropdownItemNumber={100} // عدد السنوات المعروضة
+          scrollableYearDropdown // لتمكين التمرير للسنوات البعيدة
           dayClassName={() =>
             "hover:bg-[#275963] hover:text-white dark:hover:bg-[#E1B145] dark:hover:text-black"
           }

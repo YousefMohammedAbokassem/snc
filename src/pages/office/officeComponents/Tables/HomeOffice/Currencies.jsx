@@ -36,6 +36,7 @@ export default function Currencies() {
         },
       });
       setProfile(res.data?.data || null);
+      console.log(res.data.data);
     } catch (error) {
       if (
         error?.response?.data?.message ===
@@ -168,11 +169,15 @@ export default function Currencies() {
             </div>
           </div>
         </div>
-        <div className="money">
+        <div className="money flex items-center">
           {loading ? (
             <Skeleton width="100px" />
           ) : (
-            profile?.international_financial_balance
+            <>
+              <img src="/images/7.png" alt="" width={40} />
+
+              <span>{profile?.international_financial_balance} </span>
+            </>
           )}
         </div>
       </div>
