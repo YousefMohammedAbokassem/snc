@@ -16,7 +16,7 @@ const manifestForPlugin = {
   manifest: {
     name: "SNC",
     short_name: "SNC",
-    description: "this is th syrian new coin",
+    description: "this is SNC",
     icons: [
       {
         src: "./android-chrome-192x192.png",
